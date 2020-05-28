@@ -1,10 +1,8 @@
-import oo.SetPlayers;
+import oo.ShortAnswer;
 
 public class Main {
     public static void main(String[] args) {
-        SetPlayers s = new SetPlayers();
-
-        s.display();
-        s.selectPlayer().display();
+        ShortAnswer tf = new ShortAnswer("lol?", "false");
+        System.out.println(tf.checkAnswer("false"));
     }
 }
