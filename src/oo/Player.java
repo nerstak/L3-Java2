@@ -1,7 +1,10 @@
 package oo;
 
+/**
+ * Class player
+ */
 public class Player {
-    private int number;
+    private final int number;
     private String name;
     private int score;
     private PlayerStatus status;
@@ -40,5 +43,14 @@ public class Player {
         return status;
     }
 
-    // TODO: display() (srly?); updateScore(gameState);
+    @Override
+    public String toString() {
+        return "[Name = " + name + "; Number = " + number + "; Score = " + score + "; Status = " + status.toString() + "]";
+    }
+
+    public void display() {
+        System.out.println(this.toString());
+    }
+
+    // TODO: updateScore(gameState);
 }
