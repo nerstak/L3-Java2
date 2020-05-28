@@ -2,7 +2,7 @@ package oo;
 
 import java.util.Vector;
 
-public class MCQ extends AbstractType {
+public class MCQ extends AbstractStatement {
     private Vector<String> answers;
 
     public MCQ(String text, String answer1, String answer2, String answer3, String correctAnswer) {

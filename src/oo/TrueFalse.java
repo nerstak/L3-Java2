@@ -1,6 +1,6 @@
 package oo;
 
-public class TrueFalse extends AbstractType {
+public class TrueFalse extends AbstractStatement {
     public TrueFalse(String text, boolean correctAnswer) {
         super(text, correctAnswer);
         this.correctAnswer = correctAnswer;

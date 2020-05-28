@@ -1,6 +1,6 @@
 package oo;
 
-public class ShortAnswer extends AbstractType {
+public class ShortAnswer extends AbstractStatement {
     public ShortAnswer(String text, String correctAnswer) {
         super(text, correctAnswer);
     }
