@@ -3,19 +3,12 @@ package oo;
 /**
  * Parent class for all question types
  */
-public abstract class AbstractType {
+public abstract class AbstractType<T> implements Type {
     protected String text;
+    protected T correctAnswer;
 
-    public AbstractType(String text) {
+    public AbstractType(String text, T correctAnswer) {
         this.text = text;
-    }
-
-    protected String getText() {
-        return text;
-    }
-
-    @Override
-    public String toString() {
-        return text;
+        this.correctAnswer = correctAnswer;
     }
 }
