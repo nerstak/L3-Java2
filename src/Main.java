@@ -1,11 +1,10 @@
-import oo.Player;
+import oo.SetPlayers;
 
 public class Main {
     public static void main(String[] args) {
-        Player p1 = new Player();
-        Player p2 = new Player();
+        SetPlayers s = new SetPlayers();
 
-        System.out.println(p1.getStatus() + " " + p1.getNumber());
-        System.out.println(p2.getStatus() + " " + p2.getNumber());
+        s.display();
+        s.selectPlayer().display();
     }
 }

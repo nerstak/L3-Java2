@@ -1,10 +1,14 @@
 package oo;
 
-public class Player {
-    private int number;
+/**
+ * Class player
+ */
+public class Player implements Runnable {
+    private final int number;
     private String name;
     private int score;
     private PlayerStatus status;
+    private long timer;
 
     private static int globalPlayerNumber = 100;
 
@@ -40,5 +44,23 @@ public class Player {
         return status;
     }
 
-    // TODO: display() (srly?); updateScore(gameState);
+    @Override
+    public String toString() {
+        return "[Name = " + name + "; Number = " + number + "; Score = " + score + "; Status = " + status.toString() + "]";
+    }
+
+    public void display() {
+        System.out.println(this.toString());
+    }
+
+    @Override
+    public void run() {
+        timer = System.currentTimeMillis();
+        while (status == PlayerStatus.selected) {
+            long currentTimer = System.currentTimeMillis() - timer;
+        }
+    }
+
+
+    // TODO: updateScore(gameState);
 }
