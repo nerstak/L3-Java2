@@ -1,11 +1,11 @@
-package oo;
+package oo.Questions;
 
 import java.util.Vector;
 
-public class MCQ extends AbstractStatement {
-    private Vector<String> answers;
+public class MCQ<T extends String> extends AbstractStatement<T> {
+    private final Vector<String> answers;
 
-    public MCQ(String text, String answer1, String answer2, String answer3, String correctAnswer) {
+    public MCQ(String text, String answer1, String answer2, String answer3, T correctAnswer) {
         super(text, correctAnswer);
         this.answers = new Vector<>() {{
             add(answer1);
@@ -22,7 +22,7 @@ public class MCQ extends AbstractStatement {
     public String toString() {
         String string = "MQC: " + text + ":\n";
         for (String s : answers) {
-            string += "   " + s + "\n ";
+            string += "   " + s + "\n";
         }
         string += "Correct answer: " + correctAnswer;
         return string;
@@ -34,7 +34,7 @@ public class MCQ extends AbstractStatement {
     }
 
     @Override
-    public <T> boolean checkAnswer(T t) {
+    public boolean checkAnswer(T t) {
         return correctAnswer.equals(t);
     }
 }

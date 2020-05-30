@@ -1,7 +1,7 @@
-package oo;
+package oo.Questions;
 
-public class ShortAnswer extends AbstractStatement {
-    public ShortAnswer(String text, String correctAnswer) {
+public class ShortAnswer<T extends String> extends AbstractStatement<T> {
+    public ShortAnswer(String text, T correctAnswer) {
         super(text, correctAnswer);
     }
 
@@ -18,7 +18,7 @@ public class ShortAnswer extends AbstractStatement {
     }
 
     @Override
-    public <T> boolean checkAnswer(T t) {
+    public boolean checkAnswer(T t) {
         return correctAnswer.equals(t);
     }
 }

@@ -1,9 +1,9 @@
-package oo;
+package oo.Questions;
 
 import java.util.ArrayList;
 
 public class Themes {
-    private ArrayList<String> listThemes;
+    private final ArrayList<String> listThemes;
     private int indicator = -1;
 
     public Themes() {
@@ -53,7 +53,7 @@ public class Themes {
             listThemes.set(i, newTheme);
             return true;
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             return false;
         }
     }

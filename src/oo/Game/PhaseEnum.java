@@ -1,4 +1,4 @@
-package oo;
+package oo.Game;
 
 public enum PhaseEnum {
     Phase1,

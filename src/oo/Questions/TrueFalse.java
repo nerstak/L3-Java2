@@ -1,7 +1,7 @@
-package oo;
+package oo.Questions;
 
-public class TrueFalse extends AbstractStatement {
-    public TrueFalse(String text, boolean correctAnswer) {
+public class TrueFalse<T extends Boolean> extends AbstractStatement<T> {
+    public TrueFalse(String text, T correctAnswer) {
         super(text, correctAnswer);
         this.correctAnswer = correctAnswer;
     }
@@ -19,11 +19,11 @@ public class TrueFalse extends AbstractStatement {
     }
 
     @Override
-    public <T> boolean checkAnswer(T t) {
+    public boolean checkAnswer(T t) {
         try {
-            return (boolean) t == (boolean) correctAnswer;
+            return t == correctAnswer;
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             return false;
         }
     }

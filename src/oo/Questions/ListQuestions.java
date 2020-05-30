@@ -1,9 +1,9 @@
-package oo;
+package oo.Questions;
 
 import java.util.LinkedList;
 
 public class ListQuestions {
-    private LinkedList<Question> listQuestions;
+    private final LinkedList<Question<?>> listQuestions;
 
     public ListQuestions() {
         listQuestions = new LinkedList<>();
@@ -14,7 +14,7 @@ public class ListQuestions {
      *
      * @param q Question to add
      */
-    public void addQuestion(Question q) {
+    public void addQuestion(Question<?> q) {
         listQuestions.add(q);
     }
 
@@ -30,7 +30,7 @@ public class ListQuestions {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder("List of Questions: \n");
-        for (Question q : listQuestions) {
+        for (Question<?> q : listQuestions) {
             s.append(q.toString());
         }
         return s.toString();

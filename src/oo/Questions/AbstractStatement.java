@@ -1,9 +1,9 @@
-package oo;
+package oo.Questions;
 
 /**
  * Parent class for all question types
  */
-public abstract class AbstractStatement<T> implements Statement {
+public abstract class AbstractStatement<T> implements Statement<T> {
     protected String text;
     protected T correctAnswer;
 

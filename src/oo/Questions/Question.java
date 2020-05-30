@@ -1,10 +1,12 @@
-package oo;
+package oo.Questions;
 
-public class Question<T extends AbstractStatement> {
-    private int number;
-    private String theme;
-    private Difficulty difficulty;
-    private T statement;
+import oo.Game.Difficulty;
+
+public class Question<T extends AbstractStatement<T>> {
+    private final int number;
+    private final String theme;
+    private final Difficulty difficulty;
+    private final T statement;
 
     private static int questionNumber = 0;
 
@@ -33,12 +35,11 @@ public class Question<T extends AbstractStatement> {
 
     @Override
     public String toString() {
-        return "Question{" +
-                "number=" + number +
-                ", theme='" + theme + '\'' +
-                ", difficulty=" + difficulty +
-                "\n statement=" + statement.toString() +
-                '}';
+        return "Question: " +
+                "number = " + number +
+                ", theme = '" + theme + '\'' +
+                ", difficulty = " + difficulty +
+                "\n statement = \n" + statement.toString();
     }
 
     public void display() {
