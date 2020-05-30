@@ -1,5 +1,8 @@
 package oo.Questions;
 
+import ProjectUtilities.JSONParser;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Themes {
@@ -7,10 +10,19 @@ public class Themes {
     private int indicator = -1;
 
     public Themes() {
-        listThemes = new ArrayList<>() {{
-            add("lol");
-            add("mdr");
-        }};
+        listThemes = new ArrayList<>();
+        readThemes();
+    }
+
+    /**
+     * Read list of every themes
+     */
+    private void readThemes() {
+        JSONObject themes = JSONParser.parseFile("themes.json");
+        assert themes != null;
+        for (Object j : themes.getJSONArray("themes")) {
+            listThemes.add(String.valueOf(j));
+        }
     }
 
     public int getIndicator() {
@@ -43,7 +55,6 @@ public class Themes {
 
     /**
      * Replace theme at specified index
-     *
      * @param i        Index
      * @param newTheme Theme to replace
      * @return Integrity of the operation
