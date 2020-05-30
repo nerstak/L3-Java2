@@ -1,4 +1,4 @@
-package oo;
+package oo.Players;
 
 /**
  * Class player
@@ -6,7 +6,7 @@ package oo;
 public class Player implements Runnable {
     private final int number;
     private String name;
-    private int score;
+    private final int score;
     private PlayerStatus status;
     private long timer;
 

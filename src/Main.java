@@ -1,10 +1,13 @@
-import oo.SetPlayers;
+import oo.Game.Difficulty;
+import oo.Questions.MCQ;
+import oo.Questions.Question;
 
 public class Main {
     public static void main(String[] args) {
-        SetPlayers s = new SetPlayers();
-
-        s.display();
-        s.selectPlayer().display();
+        MCQ<String> m = new MCQ<>("lol", "mo", "kp", "jo", "mo");
+        m.display();
+        System.out.println(m.checkAnswer("mo"));
+        Question<?> q = new Question(m, "mdr", Difficulty.easy);
+        q.display();
     }
 }

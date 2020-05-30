@@ -1,4 +1,4 @@
-package oo;
+package oo.Players;
 
 public enum PlayerStatus {
     selected("Selected"),
@@ -7,7 +7,7 @@ public enum PlayerStatus {
     eliminated("Eliminated"),
     waiting("Waiting");
 
-    private String meaning;
+    private final String meaning;
 
     PlayerStatus(String meaning) {
         this.meaning = meaning;
