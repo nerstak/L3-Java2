@@ -11,4 +11,9 @@ public abstract class AbstractStatement<T> implements Statement {
         this.text = text;
         this.correctAnswer = correctAnswer;
     }
+
+    @Override
+    public String getText() {
+        return text;
+    }
 }

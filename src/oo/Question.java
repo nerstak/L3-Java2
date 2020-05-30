@@ -45,5 +45,5 @@ public class Question<T extends AbstractStatement> {
         System.out.println(this.toString());
     }
 
-    // TODO: select() ??? No idea what it means
+    // TODO: input() ??? No idea what it means
 }

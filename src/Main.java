@@ -1,8 +1,10 @@
-import oo.ShortAnswer;
+import oo.Themes;
 
 public class Main {
     public static void main(String[] args) {
-        ShortAnswer tf = new ShortAnswer("lol?", "false");
-        System.out.println(tf.checkAnswer("false"));
+        Themes t = new Themes();
+        t.display();
+        t.alterTheme(3, "ptdr");
+        t.display();
     }
 }
