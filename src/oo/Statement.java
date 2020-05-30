@@ -1,9 +1,9 @@
 package oo;
 
 public interface Statement {
-    public void display();
+    void display();
 
-    public <T> boolean checkAnswer(T t);
+    <T> boolean checkAnswer(T t);
 
-    public String getText();
+    String getText();
 }
