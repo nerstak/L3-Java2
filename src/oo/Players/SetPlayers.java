@@ -11,7 +11,8 @@ public class SetPlayers {
     public SetPlayers() {
         listPlayers = new Vector<>();
         for (int i = 0; i < sizeSet; i++) {
-            listPlayers.add(new Player());
+        	String playerName = Character.toString((char) (65 + i));
+            listPlayers.add(new Player(playerName));
         }
     }
 
