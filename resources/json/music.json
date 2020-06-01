@@ -1,0 +1,27 @@
+{
+  "questions": [
+    {
+      "type": "MCQ",
+      "difficulty": "1",
+      "text": "What is the name of Mozart?",
+      "answers": [
+        "Mozart",
+        "Bethoven",
+        "Wolfang"
+      ],
+      "correctAnswer": "Wolfang"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "What is the first metal band?",
+      "correctAnswer": "Black Sabbath"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "2",
+      "text": "'Pumped up Kicks' was inspired by school shootings.",
+      "correctAnswer": "True"
+    }
+  ]
+}

@@ -1,8 +1,14 @@
 package oo.Questions;
 
+import org.json.JSONObject;
+
 public class ShortAnswer<T extends String> extends AbstractStatement<T> {
     public ShortAnswer(String text, T correctAnswer) {
         super(text, correctAnswer);
+    }
+
+    public ShortAnswer(JSONObject json) throws IllegalStateException {
+        super(json.getString("text"), (T) json.getString("correctAnswer"));
     }
 
     @Override
