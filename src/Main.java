@@ -3,10 +3,9 @@ import oo.Questions.MCQ;
 import oo.Questions.Question;
 import oo.Questions.Themes;
 
-import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         MCQ<String> m = new MCQ<>("lol", "mo", "kp", "jo", "mo");
         m.display();
         System.out.println(m.checkAnswer("mo"));

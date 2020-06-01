@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 public class ListQuestions {
     private final LinkedList<Question<?>> listQuestions;
+    private int selected = -1;
 
     public ListQuestions() {
         listQuestions = new LinkedList<>();
