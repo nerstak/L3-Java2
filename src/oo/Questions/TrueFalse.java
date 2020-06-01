@@ -1,9 +1,14 @@
 package oo.Questions;
 
+import org.json.JSONObject;
+
 public class TrueFalse<T extends Boolean> extends AbstractStatement<T> {
     public TrueFalse(String text, T correctAnswer) {
         super(text, correctAnswer);
-        this.correctAnswer = correctAnswer;
+    }
+
+    public TrueFalse(JSONObject json) throws IllegalStateException {
+        super(json.getString("text"), (T) Boolean.valueOf(json.getString("correctAnswer")));
     }
 
     @Override

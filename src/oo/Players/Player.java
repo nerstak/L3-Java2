@@ -1,12 +1,14 @@
 package oo.Players;
 
+import oo.Game.PhaseEnum;
+
 /**
  * Class player
  */
 public class Player implements Runnable {
     private final int number;
     private String name;
-    private final int score;
+    private int score;
     private PlayerStatus status;
     private long timer;
 
@@ -62,5 +64,20 @@ public class Player implements Runnable {
     }
 
 
-    // TODO: updateScore(gameState);
+    public void updateScore(PhaseEnum phase) {
+        switch (phase) {
+            case Phase1: {
+                score += 2;
+                break;
+            }
+            case Phase2: {
+                score += 3;
+                break;
+            }
+            case Phase3: {
+                score += 5;
+                break;
+            }
+        }
+    }
 }

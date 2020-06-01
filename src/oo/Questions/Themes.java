@@ -1,5 +1,9 @@
 package oo.Questions;
 
+import ProjectUtilities.JSONParser;
+import oo.Game.PhaseEnum;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Themes {
@@ -7,10 +11,20 @@ public class Themes {
     private int indicator = -1;
 
     public Themes() {
-        listThemes = new ArrayList<>() {{
-            add("lol");
-            add("mdr");
-        }};
+        listThemes = new ArrayList<>();
+        readThemes();
+    }
+
+    /**
+     * Read list of every themes
+     */
+    private void readThemes() {
+        JSONObject themes = JSONParser.parseFile("themes.json");
+        assert themes != null;
+        listThemes.clear();
+        for (Object j : themes.getJSONArray("themes")) {
+            listThemes.add(String.valueOf(j));
+        }
     }
 
     public int getIndicator() {
@@ -43,7 +57,6 @@ public class Themes {
 
     /**
      * Replace theme at specified index
-     *
      * @param i        Index
      * @param newTheme Theme to replace
      * @return Integrity of the operation
@@ -79,22 +92,21 @@ public class Themes {
      *
      * @return Index of the theme selected
      */
-    public int selectTheme() {
+    public int selectTheme(PhaseEnum phase) {
         //TODO: Should depends on the phase: 1 -> sequential; 2 -> Random; 3 -> Preselected
-        // Phase1
-        if (indicator < 0) {
-            indicator = 0;
-        } else {
-            indicator = indicator++ % listThemes.size();
+        if (phase == PhaseEnum.Phase1) {
+            if (indicator < 0) {
+                indicator = 0;
+            } else {
+                indicator = indicator++ % listThemes.size();
+            }
+        } else if (phase == PhaseEnum.Phase2) {
+            int newI;
+            do {
+                newI = (int) (Math.random() * listThemes.size());
+            } while (indicator == newI);
+            indicator = newI;
         }
-
-        /* Phase2
-        int newI;
-        do {
-            newI = (int) (Math.random() * listThemes.size());
-        } while (indicator == newI);
-        indicator = newI;
-        */
 
         return indicator;
     }

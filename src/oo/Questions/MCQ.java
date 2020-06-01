@@ -1,5 +1,7 @@
 package oo.Questions;
 
+import org.json.JSONObject;
+
 import java.util.Vector;
 
 public class MCQ<T extends String> extends AbstractStatement<T> {
@@ -12,6 +14,15 @@ public class MCQ<T extends String> extends AbstractStatement<T> {
             add(answer2);
             add(answer3);
         }};
+    }
+
+    public MCQ(JSONObject json) throws IllegalStateException {
+        super(json.getString("text"), (T) json.getString("correctAnswer"));
+
+        this.answers = new Vector<>();
+        for (int i = 0; i < 3; i++) {
+            answers.add(json.getJSONArray("answers").getString(i));
+        }
     }
 
     public Vector<String> getAnswers() {
