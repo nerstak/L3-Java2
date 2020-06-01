@@ -8,17 +8,31 @@ import java.util.LinkedList;
 
 public class ListQuestions {
     private final LinkedList<Question<?>> listQuestions;
-    private int selected = -1;
+    private final int selected = -1;
 
     public ListQuestions(String theme) {
         listQuestions = new LinkedList<>();
         JSONObject json = JSONParser.parseFile(theme + ".json");
 
-        assert json != null;
+        if (json != null) {
+            readQuestionJSON(json, theme);
+        }
+    }
+
+    /**
+     * Read a JSON object storing questions
+     *
+     * @param json  JSON object
+     * @param theme Theme loaded
+     */
+    private void readQuestionJSON(JSONObject json, String theme) {
+        // Reading the JSON object by object
+        // Note that using try-catch statements allows to skip a question with syntax errors
         for (Object o : json.getJSONArray("questions")) {
             JSONObject tmp = (JSONObject) o;
             AbstractStatement<?> s = null;
 
+            // Creating the Statement
             switch (tmp.getString("type")) {
                 case "MCQ": {
                     try {
@@ -48,12 +62,19 @@ public class ListQuestions {
                     throw new IllegalStateException("Unexpected value: " + tmp.getString("type"));
             }
 
-            if (s != null)
-                listQuestions.add(new Question(
-                        s,
-                        theme,
-                        Difficulty.values()[tmp.getInt("difficulty")])
-                );
+            if (s != null) {
+                // Creating the question
+                try {
+                    listQuestions.add(new Question(
+                            s,
+                            theme,
+                            Difficulty.values()[tmp.getInt("difficulty")])
+                    );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
         }
     }
 
@@ -80,7 +101,7 @@ public class ListQuestions {
         StringBuilder s = new StringBuilder("List of Questions: \n");
         for (Question<?> q : listQuestions) {
             s.append(q.toString());
-            s.append("\n");
+            s.append("\n\n");
         }
         return s.toString();
     }
