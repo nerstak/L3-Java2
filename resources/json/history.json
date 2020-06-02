@@ -21,7 +21,7 @@
       "type": "TrueFalse",
       "difficulty": "1",
       "text": "Alan Shepard was the first man in space.",
-      "correctAnswer": "False"
+      "correctAnswer": "Falses"
     },
     {
       "type": "MCQ",
