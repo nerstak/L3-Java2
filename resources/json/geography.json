@@ -1,0 +1,50 @@
+{
+  "questions": [
+    {
+      "type": "MCQ",
+      "difficulty": "1",
+      "text": "Which desert is the biggest in the world?",
+      "answers": [
+        "Sahara",
+        "Painted Desert",
+        "Gobi Desert"
+      ],
+      "correctAnswer": "Sahara"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "3",
+      "text": "Which city is located on two continents?",
+      "correctAnswer": "Istanbul"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "2",
+      "text": "There is 4 quadripoints in the world (geographical point that touches the border of four distinct nations).",
+      "correctAnswer": "Falses"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "2",
+      "text": "The Ring of Fire is an area containing... ",
+      "answers": [
+        "Small deserts",
+        "Active volcanoes",
+        "Heavy Industries"
+      ],
+      "correctAnswer": "Active volcanoes"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "Which country has the most time zones?",
+      "correctAnswer": "France"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "1",
+      "text": "China is the most populated country.",
+      "correctAnswer": "True"
+    }
+  ]
+}

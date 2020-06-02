@@ -1,0 +1,50 @@
+{
+  "questions": [
+    {
+      "type": "MCQ",
+      "difficulty": "3",
+      "text": "How many years did the 'Hundred Years War' last?",
+      "answers": [
+        "103",
+        "116",
+        "124"
+      ],
+      "correctAnswer": "116"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "In which year was JFK shot?",
+      "correctAnswer": "1963"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "1",
+      "text": "Alan Shepard was the first man in space.",
+      "correctAnswer": "Falses"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "1",
+      "text": "Which Gallic leader fought against Ceasar?",
+      "answers": [
+        "Asterix",
+        "Vercingetorix",
+        "Ambigatos"
+      ],
+      "correctAnswer": "Vercingetorix"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "When did the Kingdom of Prussia fell?",
+      "correctAnswer": "1918"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "2",
+      "text": "2,000 persons died during Salem witch trials",
+      "correctAnswer": "False"
+    }
+  ]
+}

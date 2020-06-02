@@ -68,8 +68,8 @@ public class ListQuestions {
                     listQuestions.add(new Question(
                             s,
                             theme,
-                            Difficulty.values()[tmp.getInt("difficulty")])
-                    );
+                            Difficulty.fromInteger(tmp.getInt("difficulty"))
+                    ));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

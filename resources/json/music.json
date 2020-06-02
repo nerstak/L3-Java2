@@ -13,7 +13,7 @@
     },
     {
       "type": "ShortAnswer",
-      "difficulty": "2",
+      "difficulty": "3",
       "text": "What is the first metal band?",
       "correctAnswer": "Black Sabbath"
     },
@@ -21,6 +21,29 @@
       "type": "TrueFalse",
       "difficulty": "2",
       "text": "'Pumped up Kicks' was inspired by school shootings.",
+      "correctAnswer": "True"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "2",
+      "text": "What is the theme of the song 'This Is America'?",
+      "answers": [
+        "Racism",
+        "Patriotism",
+        "American Dream"
+      ],
+      "correctAnswer": "Racism"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "What is the year of the death of Michael Jackson?",
+      "correctAnswer": "2009"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "3",
+      "text": "Monaco’s national orchestra is bigger that its army.",
       "correctAnswer": "True"
     }
   ]
