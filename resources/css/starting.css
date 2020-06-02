@@ -1,0 +1,13 @@
+GridPane {
+    -fx-background-color: #5a5a5a;
+}
+
+.label {
+    -fx-font-size: 13pt;
+    -fx-font-family: "Roboto";
+    -fx-text-fill: white;
+    -fx-opacity: 0.6;
+}
+
+.button {
+}
