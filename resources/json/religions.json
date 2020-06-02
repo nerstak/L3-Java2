@@ -14,7 +14,7 @@
     },
     {
       "type": "MCQ",
-      "difficutly": "3",
+      "difficulty": "3",
       "text": "Which monster is not the child of Loki?",
       "answers": [
         "Sleipnir",

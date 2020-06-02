@@ -1,7 +1,27 @@
 {
-  "name": "json",
-  "version": "1.0.0",
-  "dependencies": {
-    
-  }
+  "questions": [
+    {
+      "type": "ShortAnswer",
+      "difficulty": "1",
+      "text": "How many gold medals did Usain Bolt win?",
+      "correctAnswer": "8"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "2",
+      "text": "There is always a gap of 4 years between each Olympic Games?",
+      "correctAnswer": "False"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "3",
+      "text": "Which country organized the World Championship of Handball in 2015?",
+      "answers": [
+        "France",
+        "Qatar",
+        "Slovenia"
+      ],
+      "correctAnswer": "Qatar"
+    }
+  ]
 }
