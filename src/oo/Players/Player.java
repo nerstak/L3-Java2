@@ -27,7 +27,7 @@ public class Player implements Runnable {
         this.score = 0;
         this.number = globalPlayerNumber;
         globalPlayerNumber += 10;
-        this.status = PlayerStatus.waiting;
+        this.status = PlayerStatus.inactive;
     }
 
     public void setName(String s) {

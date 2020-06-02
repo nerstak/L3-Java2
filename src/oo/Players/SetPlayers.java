@@ -1,6 +1,7 @@
 package oo.Players;
 
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 public class SetPlayers {
     Vector<Player> listPlayers;
@@ -28,5 +29,14 @@ public class SetPlayers {
     public Player selectPlayer() {
         int n = (int) (Math.random() * sizeSet);
         return listPlayers.get(n);
+    }
+
+
+    public Vector<Player> selectPlayers(PlayerStatus ps) {
+        return listPlayers.stream().filter(c -> c.getStatus() == ps).collect(Collectors.toCollection(Vector::new));
+    }
+
+    public int countPlayers(PlayerStatus ps) {
+        return (int) listPlayers.stream().filter(c -> c.getStatus() == ps).count();
     }
 }

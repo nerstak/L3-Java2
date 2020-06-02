@@ -44,4 +44,4 @@ For JavaFX, you will need to go further and follow the (tutorial)[https://openjf
 
 ## Usage <a name = "usage"></a>
 
-Run the application, using the main function located in `src/Main.java` as a target.
+Run the application, using the main function located in `src/Project.Main.java` as a target.
