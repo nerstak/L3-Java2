@@ -1,0 +1,12 @@
+{
+  "scenes": [
+    {
+      "name": "Starting",
+      "path": "src/Scenes/Starting/Starting.fxml"
+    },
+    {
+      "name": "MCQ",
+      "path": "src/Scenes/MCQ/MCQ.fxml"
+    }
+  ]
+}

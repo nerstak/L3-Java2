@@ -1,4 +1,4 @@
-package GUI;
+package Scenes.MCQ;
 
 
 import Project.Main;

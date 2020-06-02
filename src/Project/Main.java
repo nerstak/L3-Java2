@@ -1,20 +1,15 @@
 package Project;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import oo.Players.PlayerStatus;
 import oo.Players.SetPlayers;
 
-import java.io.File;
-import java.net.URL;
-
 
 public class Main extends Application {
     public static SetPlayers listPlayers;
+    public static SceneManager sceneManager;
 
     public static void main(String[] args) {
         /*MCQ<String> m = new MCQ<>("lol", "mo", "kp", "jo", "mo");
@@ -28,6 +23,8 @@ public class Main extends Application {
         ListQuestions l = new ListQuestions("music");
         l.display();*/
         listPlayers = new SetPlayers();
+
+        // TMP
         do {
             listPlayers.selectPlayer().setStatus(PlayerStatus.waiting);
         } while (listPlayers.countPlayers(PlayerStatus.waiting) < 4);
@@ -36,13 +33,15 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        URL url = new File("resources/fxml/MCQ.fxml").toURI().toURL();
-        Parent root = FXMLLoader.load(url);
+    public void start(Stage primaryStage) {
+        // Setting window parameter
         primaryStage.setTitle("Weakest Link - The new entertainment game for the whole family");
         primaryStage.getIcons().add(new Image("file:resources/img/weakest-link-icon.png"));
-        primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
+
+        // Scene manager
+        sceneManager = new SceneManager(primaryStage);
+        sceneManager.activate("Starting");
     }
 }

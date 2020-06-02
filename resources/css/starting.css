@@ -11,6 +11,6 @@ GridPane {
 
 #welcomeLabel {
     -fx-font-family: Impact;
-    -fx-font-size: 30pt;
+    -fx-font-size: 25pt;
     -fx-font-weight: bold;
 }

@@ -1,5 +1,6 @@
-package GUI;
+package Scenes.Starting;
 
+import Project.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -8,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
-public class Starting {
+public class StartingController {
     @FXML
     public Label welcomeLabel;
     public GridPane gridPane;
@@ -31,5 +32,6 @@ public class Starting {
         alert.setContentText("But isn't cool??");
 
         alert.showAndWait();
+        Main.sceneManager.activate("MCQ");
     }
 }
