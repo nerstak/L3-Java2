@@ -110,7 +110,18 @@ public class Themes {
 
         return indicator;
     }
-
-    //TODO: SelectFiveThemes()
-
+    
+    /**
+     * Select 5 themes
+     *
+     * @param  current phase, determine the rules to select themes
+     * @return 5 index of selected themes
+     */
+    public int[] selectFiveThemes(PhaseEnum phase) {
+    	int[] themesIndex = new int[5];
+    	for (int i = 0; i < 5; i++) {
+    		themesIndex[i] = selectTheme(phase);
+    	}
+    	return themesIndex;
+    }
 }
