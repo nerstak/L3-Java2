@@ -14,7 +14,7 @@ import oo.Questions.Question;
 
 public class MCQController {
     public Label timerLabel;
-    public Label phaseInformations;
+    public Label phaseInformation;
     public Label question;
     public Button firstAnswer;
     public Button secondAnswer;
@@ -29,6 +29,7 @@ public class MCQController {
     private TableColumn<Player, String> playerActive;
 
     public MCQController() {
+        // TMP, just proof of concept
         String t = Main.themes.getAtIndex(1);
         ListQuestions lq = new ListQuestions(t);
         do {
@@ -79,5 +80,6 @@ public class MCQController {
             alert.setContentText("The real answer was " + mcq.getCorrectAnswer());
         }
         alert.showAndWait();
+        Main.sceneManager.activate("Transition");
     }
 }

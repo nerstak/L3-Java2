@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 public class SetPlayers {
     Vector<Player> listPlayers;
 
-
     private static final int sizeSet = 20;
 
     public SetPlayers() {
@@ -29,6 +28,12 @@ public class SetPlayers {
     public Player selectPlayer() {
         int n = (int) (Math.random() * sizeSet);
         return listPlayers.get(n);
+    }
+
+    public Player selectPlayer(PlayerStatus ps) {
+        Vector<Player> list = selectPlayers(ps);
+        int index = (int) (Math.random() * list.size());
+        return list.get(index);
     }
 
 

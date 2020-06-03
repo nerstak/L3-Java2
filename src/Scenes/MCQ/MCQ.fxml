@@ -43,8 +43,8 @@
                                     <children>
                                         <Label fx:id="timerLabel" text="Timer" GridPane.columnIndex="2"
                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-                                        <Label fx:id="phaseInformations" text="Phase info" GridPane.halignment="CENTER"
-                                               GridPane.valignment="CENTER"/>
+                                        <Label fx:id="phaseInformation" text="Phase information"
+                                               GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
                                         <Label fx:id="question" alignment="CENTER" prefHeight="94.0" prefWidth="158.0"
                                                text="Question" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS"
                                                wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER"
