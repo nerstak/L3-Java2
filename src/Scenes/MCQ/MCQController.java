@@ -30,7 +30,7 @@ public class MCQController {
 
     public MCQController() {
         // TMP, just proof of concept
-        String t = Main.themes.getAtIndex(1);
+        String t = Main.themes.getAtIndex(((int) (Math.random() * 10)));
         ListQuestions lq = new ListQuestions(t);
         do {
             questionT = lq.selectQuestion();
