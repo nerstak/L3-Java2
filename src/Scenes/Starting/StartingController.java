@@ -29,7 +29,7 @@ public class StartingController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText("OK, so in reality, we don't have more");
-        alert.setContentText("But isn't cool??");
+        alert.setContentText("Or do we?");
 
         alert.showAndWait();
         Main.sceneManager.activate("MCQ");

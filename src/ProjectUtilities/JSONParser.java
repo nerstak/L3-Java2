@@ -11,8 +11,8 @@ import java.nio.file.Paths;
  * All paths are relatives to the "resources" folder
  */
 public class JSONParser {
-    private static String resourcesPath = "resources/";
-    private static String jsonPath = "json/";
+    private static final String resourcesPath = "resources/";
+    private static final String jsonPath = "json/";
 
     /**
      * Parse a JSON file and return a JSON object
@@ -22,15 +22,15 @@ public class JSONParser {
      */
     public static JSONObject parseFile(String path) {
         try {
-            String s = "";
+            StringBuilder s = new StringBuilder();
 
             // Reading all fill at once
             for (String line : Files.readAllLines(Paths.get(resourcesPath + jsonPath + path))) {
-                s += line + " \n";
+                s.append(line).append(" \n");
             }
 
             // Converting to JSON object
-            return new JSONObject(s);
+            return new JSONObject(s.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }

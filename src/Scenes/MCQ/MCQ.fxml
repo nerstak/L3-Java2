@@ -4,11 +4,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+<AnchorPane prefHeight="366.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.MCQ.MCQController">
     <children>
-        <SplitPane dividerPositions="0.21178027796161483" layoutX="-7.0" layoutY="-7.0" prefHeight="407.0"
-                   prefWidth="606.0">
+        <SplitPane dividerPositions="0.21178027796161483" layoutX="-7.0" layoutY="-7.0" prefHeight="400.0"
+                   prefWidth="600.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>

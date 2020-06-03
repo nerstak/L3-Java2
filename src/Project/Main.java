@@ -24,7 +24,7 @@ public class Main extends Application {
         l.display();*/
         listPlayers = new SetPlayers();
 
-        // TMP
+        // TMP - Should not be conserved like this, as we need to select players
         do {
             listPlayers.selectPlayer().setStatus(PlayerStatus.waiting);
         } while (listPlayers.countPlayers(PlayerStatus.waiting) < 4);
