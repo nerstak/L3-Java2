@@ -5,10 +5,7 @@ import Project.Main;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import oo.Players.Player;
 import oo.Players.PlayerStatus;
 import oo.Questions.ListQuestions;
@@ -23,7 +20,8 @@ public class MCQController {
     public Button secondAnswer;
     public Button thirdAnswer;
 
-    private Question questionT;
+    private Question<?> questionT;
+    private final MCQ<String> mcq;
 
     @FXML
     private TableView<Player> personTable;
@@ -36,6 +34,7 @@ public class MCQController {
         do {
             questionT = lq.selectQuestion();
         } while (!(questionT.getStatement() instanceof MCQ));
+        mcq = (MCQ<String>) questionT.getStatement();
 
     }
 
@@ -66,5 +65,19 @@ public class MCQController {
     }
 
     private void submitAnswer(int index) {
+        String selectAnswer = mcq.getAnswers().get(index);
+        boolean result = mcq.checkAnswer(selectAnswer);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+
+        if (result) {
+            alert.setHeaderText("Wow ur good");
+            alert.setContentText("The answer was indeed " + selectAnswer);
+        } else {
+            alert.setHeaderText("boooh");
+            alert.setContentText("The real answer was " + mcq.getCorrectAnswer());
+        }
+        alert.showAndWait();
     }
 }
