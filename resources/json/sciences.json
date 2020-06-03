@@ -1,0 +1,27 @@
+{
+  "questions": [
+    {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "What does DNA stand for?",
+      "correctAnswer": "Deoxyribonucleic acid"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "1",
+      "text": "Is a bear carnivore?",
+      "correctAnswer": "False"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "3",
+      "text": "What is the domain of UV?",
+      "answers": [
+        "370-180",
+        "350-180",
+        "380-200 nm"
+      ],
+      "correctAnswer": "380-200 nm"
+    }
+  ]
+}
