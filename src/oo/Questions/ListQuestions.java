@@ -113,5 +113,9 @@ public class ListQuestions {
         System.out.println(this.toString());
     }
 
-    // TODO: SelectQuestion()
+    // TODO: NOT compliant, should be changed to respect book of charges
+    public Question<?> selectQuestion() {
+        int index = (int) (Math.random() * listQuestions.size());
+        return listQuestions.get(index);
+    }
 }
