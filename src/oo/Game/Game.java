@@ -2,6 +2,7 @@ package oo.Game;
 
 import Project.SceneManager;
 import javafx.application.Application;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import oo.Players.Player;
@@ -10,11 +11,11 @@ import oo.Players.SetPlayers;
 import oo.Questions.Themes;
 
 public class Game extends Application {
-    private static SetPlayers listPlayers;
-    private static Themes themes;
-    private static SceneManager sceneManager;
-    private static Player currentPlayer;
-    private static Phase currentPhase;
+	private SetPlayers listPlayers;
+	private Themes themes;
+	private Player currentPlayer;
+	private Phase currentPhase;
+	private SceneManager sceneManager;
 	
 	public Game () {
         listPlayers = new SetPlayers();
