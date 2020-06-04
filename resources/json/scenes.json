@@ -11,6 +11,10 @@
     {
       "name": "Transition",
       "path": "src/Scenes/Transition/Transition.fxml"
+    },
+    {
+      "name": "Themes",
+      "path": "src/Scenes/AjouterSupprimer/Themes.fxml"
     }
   ]
 }

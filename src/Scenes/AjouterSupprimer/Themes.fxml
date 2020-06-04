@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="414.0" prefWidth="896.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.AjouterSupprimer.ThemesController">
    <children>
-      <TabPane layoutX="5.0" layoutY="5.0" prefHeight="484.0" prefWidth="913.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="themesInterface" layoutX="5.0" layoutY="5.0" prefHeight="484.0" prefWidth="913.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Theme 1">
             <content>
@@ -22,10 +22,9 @@
                               <Button layoutX="663.0" layoutY="9.0" mnemonicParsing="false" text="Delete" />
                            </children>
                         </Pane>
-                        <TableView layoutX="23.0" layoutY="14.0" prefHeight="386.0" prefWidth="864.0">
+                        <TableView fx:id="questionTable" layoutX="23.0" layoutY="14.0" prefHeight="386.0" prefWidth="864.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="ID" />
-                            <TableColumn prefWidth="790.0" text="Questions" />
+                            <TableColumn fx:id="questionColumn" prefWidth="790.0" text="Questions" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>

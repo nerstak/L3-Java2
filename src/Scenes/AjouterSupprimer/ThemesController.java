@@ -17,15 +17,11 @@ public class ThemesController {
 
     @FXML
     private void initialize() {
-        for(int i =0; i < themes.getSize(); i++)
+        int i = 0;
+        for(Tab tab : themesInterface.getTabs())
         {
-            Tab tab = new Tab(themes.getAtIndex(i));
-
-            TableView<ListQuestions> tableView = new TableView();
-            //TableColumn<int, Question> tableColumn = new TableColumn<int, Question>();
-
-
-            themesInterface.getTabs().add(tab);
+            if(i < themes.getSize())
+                tab.setText(themes.getAtIndex(i++));
         }
     }
 
