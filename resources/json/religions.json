@@ -1,0 +1,27 @@
+{
+  "questions": [
+    {
+      "type": "TrueFalse",
+      "difficulty": "1",
+      "text": "Had jews been victimized all the time?",
+      "correctAnswer": "False"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "According to the Bible, who is the first man who could do miracles",
+      "correctAnswer": "Abraham"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "3",
+      "text": "Which monster is not the child of Loki?",
+      "answers": [
+        "Sleipnir",
+        "Fenrir",
+        "Angrboda"
+      ],
+      "correctAnswer": "Angrboda"
+    }
+  ]
+}

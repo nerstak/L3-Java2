@@ -3,13 +3,17 @@ package Project;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import oo.Players.Player;
 import oo.Players.PlayerStatus;
 import oo.Players.SetPlayers;
+import oo.Questions.Themes;
 
 
 public class Main extends Application {
     public static SetPlayers listPlayers;
+    public static Themes themes;
     public static SceneManager sceneManager;
+    public static Player currentPlayer;
 
     public static void main(String[] args) {
         /*MCQ<String> m = new MCQ<>("lol", "mo", "kp", "jo", "mo");
@@ -23,6 +27,7 @@ public class Main extends Application {
         ListQuestions l = new ListQuestions("music");
         l.display();*/
         listPlayers = new SetPlayers();
+        themes = new Themes();
 
         // TMP - Should not be conserved like this, as we need to select players
         do {

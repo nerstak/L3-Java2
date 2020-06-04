@@ -15,9 +15,10 @@ import java.util.HashMap;
 /**
  * Scene manager
  * It is used to move between different interfaces
+ * May need to be redesigned as it needs to instantiate a new Scene everytime
  */
 public class SceneManager {
-    private final HashMap<String, Scene> screenList = new HashMap<>();
+    private final HashMap<String, URL> screenList = new HashMap<>();
     private final Stage main;
 
     public SceneManager(Stage main) {
@@ -41,23 +42,22 @@ public class SceneManager {
 
                     // Path to FXML
                     URL url = new File(json.getString("path")).toURI().toURL();
-                    Parent root = FXMLLoader.load(url);
 
-                    screenList.put(json.getString("name"), new Scene(root));
+                    screenList.put(json.getString("name"), url);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
-
+/*
     public void addScreen(String name, Scene scene) {
         screenList.put(name, scene);
     }
 
     public void deleteScreen(String name) {
         screenList.remove(name);
-    }
+    }*/
 
     /**
      * Active a screen and put it on top
@@ -66,7 +66,13 @@ public class SceneManager {
      */
     public void activate(String name) {
         if (screenList.get(name) != null) {
-            main.setScene(screenList.get(name));
+            try {
+                Parent root = FXMLLoader.load(screenList.get(name));
+                main.setScene(new Scene(root));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }
