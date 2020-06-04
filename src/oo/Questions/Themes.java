@@ -31,6 +31,8 @@ public class Themes {
         return indicator;
     }
 
+    public int getSize() {return listThemes.size();}
+
     public String getAtIndex(int index) {
         if (index >= 0 && index < listThemes.size()) {
             return listThemes.get(index);
