@@ -15,6 +15,10 @@
     {
       "name": "Themes",
       "path": "src/Scenes/AjouterSupprimer/Themes.fxml"
+    },
+    {
+      "name": "AddQuestion",
+      "path": "src/Scenes/AjouterSupprimer/AddQuestion.fxml"
     }
   ]
 }
