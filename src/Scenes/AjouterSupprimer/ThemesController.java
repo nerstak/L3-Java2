@@ -24,13 +24,11 @@ public class ThemesController {
 
     @FXML
     private void initialize() {
-        int i = 0;
-        // TODO: 04/06/2020 : change the foreach to create the number of tabs in function of the number of themes
-        for(Tab tab : themesInterface.getTabs())
-        {
-            if(i < themes.getSize())
-            {
-                tab.setText(themes.getAtIndex(i++));
+
+        for(int i = 0; i < themes.getSize(); i++) {
+            // TODO: 05/06/2020 : create the tabs in the code and not in the .fxlm (if we do not have 10 themes for some reasons) 
+            Tab tab = themesInterface.getTabs().get(i);
+            tab.setText(themes.getAtIndex(i));
 
 
 // TODO: 04/06/2020 : The aim is to create automatically the table filled with all the questions
@@ -42,13 +40,14 @@ public class ThemesController {
                 questionColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.toString()));
                 questionTable.setItems(FXCollections.observableArrayList(listQuestions));
                 questionTable.getColumns().add(questionColumn);tab.setContent(questionTable);
-*/
 
-            }
+*/
         }
     }
 
     @FXML
     private void handleButtonAdd(){Main.sceneManager.activate("AddQuestion");}
 
+    @FXML
+    private void handleButtonBack() {Main.sceneManager.activate("Starting");}
 }
