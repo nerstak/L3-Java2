@@ -16,8 +16,6 @@ import oo.Questions.Question;
 import java.net.URL;
 
 public class MCQController {
-    public Label timerLabel;
-    public Label phaseInformation;
     public Label question;
     public Button firstAnswer;
     public Button secondAnswer;

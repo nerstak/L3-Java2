@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <GridPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="73.0" prefWidth="463.0"
-          xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Scenes.TopBar.TopBar">
+          xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Scenes.Subscenes.TopBar.TopBar">
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
     </rowConstraints>

@@ -1,4 +1,4 @@
-package Scenes.TopBar;
+package Scenes.Subscenes.TopBar;
 
 import Project.Main;
 import ProjectUtilities.Utilities;

@@ -9,16 +9,24 @@
       "path": "src/Scenes/MCQ/MCQ.fxml"
     },
     {
+      "name": "SA",
+      "path": "src/Scenes/SA/SA.fxml"
+    },
+    {
+      "name": "TF",
+      "path": "src/Scenes/TF/TF.fxml"
+    },
+    {
       "name": "Transition",
       "path": "src/Scenes/Transition/Transition.fxml"
     },
     {
       "name": "TablePlayer",
-      "path": "src/Scenes/TablePlayer/TablePlayer.fxml"
+      "path": "src/Scenes/Subscenes/TablePlayer/TablePlayer.fxml"
     },
     {
       "name": "TopBar",
-      "path": "src/Scenes/TopBar/TopBar.fxml"
+      "path": "src/Scenes/Subscenes/TopBar/TopBar.fxml"
     }
   ]
 }
