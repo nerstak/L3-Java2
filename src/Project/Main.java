@@ -1,8 +1,10 @@
 package Project;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import oo.Players.Player;
 import oo.Players.PlayerStatus;
 import oo.Players.SetPlayers;
@@ -44,6 +46,17 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image("file:resources/img/weakest-link-icon.png"));
         primaryStage.setResizable(false);
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(
+                new EventHandler<WindowEvent>() {
+                    public void handle(WindowEvent we) {
+                        // Required to force shutdown of the application after closing window
+                        if (currentPlayer != null) {
+                            currentPlayer.setStatus(PlayerStatus.waiting);
+                        }
+                    }
+                }
+        );
 
         // Scene manager
         sceneManager = new SceneManager(primaryStage);
