@@ -14,6 +14,8 @@ public class Player implements Runnable {
     private long currentTimer;
     private Thread thread;
 
+    private volatile boolean stop;
+
     private static int globalPlayerNumber = 100;
 
     public Player() {
@@ -37,10 +39,14 @@ public class Player implements Runnable {
     }
 
     public void setStatus(PlayerStatus p) {
-        this.status = p;
+        status = p;
         if (status == PlayerStatus.selected) {
             thread = new Thread(this);
+            thread.setName(name);
+            thread.setDaemon(true);
             thread.start();
+        } else {
+            stop();
         }
     }
 
@@ -71,14 +77,23 @@ public class Player implements Runnable {
 
     @Override
     public void run() {
+        stop = false;
         long timer = System.currentTimeMillis();
-        while (status == PlayerStatus.selected) {
+        while (!stop) {
             currentTimer = System.currentTimeMillis() - timer;
         }
 
         durationTimer = durationTimer + currentTimer;
+        System.out.println(name + " " + durationTimer);
         currentTimer = 0;
-        thread.interrupt();
+        thread = null;
+    }
+
+    /**
+     * Stop a thread
+     */
+    private void stop() {
+        stop = true;
     }
 
     public long getTimer() {

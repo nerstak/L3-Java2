@@ -51,7 +51,9 @@ public class Main extends Application {
                 new EventHandler<WindowEvent>() {
                     public void handle(WindowEvent we) {
                         // Required to force shutdown of the application after closing window
-                        currentPlayer.setStatus(PlayerStatus.waiting);
+                        if (currentPlayer != null) {
+                            currentPlayer.setStatus(PlayerStatus.waiting);
+                        }
                     }
                 }
         );
