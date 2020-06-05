@@ -2,10 +2,17 @@ package Scenes.MCQ;
 
 
 import Project.Main;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.Duration;
 import oo.Players.Player;
 import oo.Players.PlayerStatus;
 import oo.Questions.ListQuestions;
@@ -26,7 +33,9 @@ public class MCQController {
     @FXML
     private TableView<Player> personTable;
     @FXML
-    private TableColumn<Player, String> playerActive;
+    private TableColumn<Player, String> playerName;
+    @FXML
+    private TableColumn<Player, String> playerStatus;
 
     public MCQController() {
         // TMP, just proof of concept
@@ -41,8 +50,15 @@ public class MCQController {
 
     @FXML
     private void initialize() {
-        playerActive.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
-        personTable.setItems(FXCollections.observableArrayList(Main.listPlayers.selectPlayers(PlayerStatus.waiting)));
+        playerName.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
+        playerStatus.setCellValueFactory(c -> new SimpleStringProperty(
+                c.getValue().getStatus().toString()
+        ));
+
+
+        ObservableList<Player> observableList = FXCollections.observableArrayList(Main.listPlayers.selectPlayers(PlayerStatus.waiting));
+        observableList.addAll(Main.listPlayers.selectPlayers(PlayerStatus.selected));
+        personTable.setItems(observableList);
 
         question.setText(questionT.getStatement().getText());
         firstAnswer.setText(((MCQ<?>) questionT.getStatement()).getAnswers().get(0));
