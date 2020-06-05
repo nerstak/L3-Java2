@@ -29,7 +29,7 @@ public class TransitionController {
             Main.currentPlayer = Main.listPlayers.selectPlayer(PlayerStatus.waiting);
             Main.currentPlayer.setStatus(PlayerStatus.selected);
 
-            Main.sceneManager.activate("TF");
+            Main.sceneManager.activate("MCQ");
         });
     }
 
