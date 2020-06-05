@@ -2,23 +2,18 @@ package Scenes.MCQ;
 
 
 import Project.Main;
-import ProjectUtilities.Utilities;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.util.Duration;
-import oo.Players.Player;
-import oo.Players.PlayerStatus;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import oo.Questions.ListQuestions;
 import oo.Questions.MCQ;
 import oo.Questions.Question;
+
+import java.net.URL;
 
 public class MCQController {
     public Label timerLabel;
@@ -27,16 +22,12 @@ public class MCQController {
     public Button firstAnswer;
     public Button secondAnswer;
     public Button thirdAnswer;
+    public AnchorPane tableAnchor;
+    public AnchorPane topAnchor;
 
     private Question<?> questionT;
     private final MCQ<String> mcq;
 
-    @FXML
-    private TableView<Player> personTable;
-    @FXML
-    private TableColumn<Player, String> playerName;
-    @FXML
-    private TableColumn<Player, String> playerStatus;
 
     public MCQController() {
         // TMP, just proof of concept
@@ -50,22 +41,23 @@ public class MCQController {
 
     @FXML
     private void initialize() {
-        playerName.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
-        playerStatus.setCellValueFactory(c -> new SimpleStringProperty(
-                c.getValue().getStatus().toString()
-        ));
+        // Loading sub nodes
+        try {
+            tableAnchor.getChildren().setAll(
+                    (Node) FXMLLoader.load(
+                            (URL) Main.sceneManager.getSceneUrl("TablePlayer")));
 
-
-        ObservableList<Player> observableList = FXCollections.observableArrayList(Main.listPlayers.selectPlayers(PlayerStatus.waiting));
-        observableList.addAll(Main.listPlayers.selectPlayers(PlayerStatus.selected));
-        personTable.setItems(observableList);
+            topAnchor.getChildren().setAll(
+                    (Node) FXMLLoader.load(
+                            (URL) Main.sceneManager.getSceneUrl("TopBar")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         question.setText(questionT.getStatement().getText());
         firstAnswer.setText(((MCQ<?>) questionT.getStatement()).getAnswers().get(0));
         secondAnswer.setText(((MCQ<?>) questionT.getStatement()).getAnswers().get(1));
         thirdAnswer.setText(((MCQ<?>) questionT.getStatement()).getAnswers().get(2));
-
-        displayTimer();
     }
 
     @FXML
@@ -99,30 +91,5 @@ public class MCQController {
         }
         alert.showAndWait();
         Main.sceneManager.activate("Transition");
-    }
-
-    /**
-     * Display the timer
-     */
-    private void displayTimer() {
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0),
-                        new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent actionEvent) {
-                                long timer = Main.currentPlayer.getTimer();
-
-                                String seconds = Utilities.lengthTime(String.valueOf(timer / 1000 % 60));
-                                String minutes = Utilities.lengthTime(String.valueOf(timer / 1000000 % 60));
-                                String hours = Utilities.lengthTime(String.valueOf(timer / 1000000000));
-
-                                timerLabel.setText(hours + "h " + minutes + "m " + seconds + "s");
-                            }
-                        }
-                ),
-                new KeyFrame(Duration.seconds(1))
-        );
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
     }
 }

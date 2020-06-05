@@ -11,6 +11,14 @@
     {
       "name": "Transition",
       "path": "src/Scenes/Transition/Transition.fxml"
+    },
+    {
+      "name": "TablePlayer",
+      "path": "src/Scenes/TablePlayer/TablePlayer.fxml"
+    },
+    {
+      "name": "TopBar",
+      "path": "src/Scenes/TopBar/TopBar.fxml"
     }
   ]
 }
