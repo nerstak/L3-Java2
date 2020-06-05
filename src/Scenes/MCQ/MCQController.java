@@ -2,6 +2,7 @@ package Scenes.MCQ;
 
 
 import Project.Main;
+import ProjectUtilities.Utilities;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -45,7 +46,6 @@ public class MCQController {
             questionT = lq.selectQuestion();
         } while (!(questionT.getStatement() instanceof MCQ));
         mcq = (MCQ<String>) questionT.getStatement();
-
     }
 
     @FXML
@@ -64,6 +64,8 @@ public class MCQController {
         firstAnswer.setText(((MCQ<?>) questionT.getStatement()).getAnswers().get(0));
         secondAnswer.setText(((MCQ<?>) questionT.getStatement()).getAnswers().get(1));
         thirdAnswer.setText(((MCQ<?>) questionT.getStatement()).getAnswers().get(2));
+
+        displayTimer();
     }
 
     @FXML
@@ -97,5 +99,30 @@ public class MCQController {
         }
         alert.showAndWait();
         Main.sceneManager.activate("Transition");
+    }
+
+    /**
+     * Display the timer
+     */
+    private void displayTimer() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0),
+                        new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent actionEvent) {
+                                long timer = Main.currentPlayer.getTimer();
+
+                                String seconds = Utilities.lengthTime(String.valueOf(timer / 1000 % 60));
+                                String minutes = Utilities.lengthTime(String.valueOf(timer / 1000000 % 60));
+                                String hours = Utilities.lengthTime(String.valueOf(timer / 1000000000));
+
+                                timerLabel.setText(hours + "h " + minutes + "m " + seconds + "s");
+                            }
+                        }
+                ),
+                new KeyFrame(Duration.seconds(1))
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 }

@@ -10,7 +10,9 @@ public class Player implements Runnable {
     private String name;
     private int score;
     private PlayerStatus status;
-    private long timer;
+    private long durationTimer;
+    private long currentTimer;
+    private Thread thread;
 
     private static int globalPlayerNumber = 100;
 
@@ -36,6 +38,10 @@ public class Player implements Runnable {
 
     public void setStatus(PlayerStatus p) {
         this.status = p;
+        if (status == PlayerStatus.selected) {
+            thread = new Thread(this);
+            thread.start();
+        }
     }
 
     public int getNumber() {
@@ -65,12 +71,19 @@ public class Player implements Runnable {
 
     @Override
     public void run() {
-        timer = System.currentTimeMillis();
+        long timer = System.currentTimeMillis();
         while (status == PlayerStatus.selected) {
-            long currentTimer = System.currentTimeMillis() - timer;
+            currentTimer = System.currentTimeMillis() - timer;
         }
+
+        durationTimer = durationTimer + currentTimer;
+        currentTimer = 0;
+        thread.interrupt();
     }
 
+    public long getTimer() {
+        return durationTimer + currentTimer;
+    }
 
     public void updateScore(PhaseEnum phase) {
         switch (phase) {
