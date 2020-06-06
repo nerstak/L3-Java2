@@ -110,7 +110,22 @@ public class Themes {
 
         return indicator;
     }
-
-    //TODO: SelectFiveThemes()
-
+    
+    /**
+     * Select 5 random themes
+     *
+     * @param  current phase, determine the rules to select themes
+     * @return 5 index of selected themes
+     */
+    public ArrayList<Integer> selectFiveRandomThemes(PhaseEnum phase) {
+    	ArrayList<Integer> themesIndex = new ArrayList<Integer>();
+    	int newIndex;
+    	for (int i = 0; i < 5; i++) {
+    		do {
+    			newIndex = (int) (Math.random() * listThemes.size()); 
+    		} while (themesIndex.contains(newIndex));
+    		themesIndex.add(newIndex);
+    	}
+    	return themesIndex;
+    }
 }
