@@ -7,10 +7,6 @@
     {
       "name": "MCQ",
       "path": "src/Scenes/MCQ/MCQ.fxml"
-    },
-    {
-      "name": "Transition",
-      "path": "src/Scenes/Transition/Transition.fxml"
     }
   ]
 }
