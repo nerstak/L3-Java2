@@ -18,6 +18,7 @@ import java.awt.*;
 
 public class ThemesController {
     private Themes themes = new Themes();
+    public static String themeSelected = "";
 
     @FXML
     private TabPane themesInterface;
@@ -46,8 +47,14 @@ public class ThemesController {
     }
 
     @FXML
-    private void handleButtonAdd(){Main.sceneManager.activate("AddQuestion");}
+    private void handleButtonAdd(){
+        Tab tab = themesInterface.getSelectionModel().getSelectedItem();
+        themeSelected = tab.getText();
+        Main.sceneManager.activate("AddQuestion");
+    }
 
     @FXML
     private void handleButtonBack() {Main.sceneManager.activate("Starting");}
+
+    public static String getThemeSelected(){return themeSelected;}
 }

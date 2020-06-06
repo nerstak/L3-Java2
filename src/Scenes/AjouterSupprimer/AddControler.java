@@ -1,8 +1,11 @@
 package Scenes.AjouterSupprimer;
 
 import Project.Main;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -10,7 +13,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import oo.Game.Difficulty;
+import oo.Questions.*;
 
+import javax.xml.transform.stream.StreamSource;
 import java.awt.*;
 
 public class AddControler {
@@ -21,7 +27,7 @@ public class AddControler {
     public TextField TextAnswer3;
     public TextField CorrectAnswer;
     public TextField Text;
-    public ChoiceBox Difficulty;
+    public ChoiceBox difficulty;
     public ChoiceBox typeQuestion;
 
     private String errorMsg = "";
@@ -33,7 +39,7 @@ public class AddControler {
         TextAnswer2.setEditable(false);
         TextAnswer3.setEditable(false);
 
-        typeQuestion.getItems().addAll(null, "TrueFalse", "ShortAnswer", "MCQ");
+        typeQuestion.getItems().addAll("", "TrueFalse", "ShortAnswer", "MCQ");
         typeQuestion.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
@@ -57,7 +63,7 @@ public class AddControler {
         });
 
 
-        Difficulty.getItems().addAll(null, "1", "2", "3");
+        difficulty.getItems().addAll("", 1, 2, 3);
 
     }
 
@@ -68,8 +74,10 @@ public class AddControler {
     private void handleButtonAdd(){
         if(checkAll())
         {
-            Difficulty.getSelectionModel().select(null);
-            typeQuestion.getSelectionModel().select(null);
+            creatingNewQuestion();
+            // TODO: 06/06/2020 add the question on the json file
+            difficulty.getSelectionModel().select(0);
+            typeQuestion.getSelectionModel().select(0);
             Text.setText("");
             CorrectAnswer.setText("");
             TextAnswer1.setText("");
@@ -83,17 +91,17 @@ public class AddControler {
         errorMsg = "";
 
         // all of this is just to have a message with all the errors to print
-        if(Difficulty.getValue() == null)
-            errorMsg += "Difficulty is NULL\n";
+        if(difficulty.getValue() == null)
+            errorMsg += "difficulty is NULL\n";
         if(Text.getText().equals(""))
             errorMsg += "There is no Text\n";
         boolean check = checkType();
 
         // if we have a difficulty, a text and the question correct
-        if(Difficulty.getValue() != null && !Text.getText().equals("") && check)
+        if(difficulty.getValue() != null && !Text.getText().equals("") && check)
             return true;
 
-        missingParameter();
+        missingParameters();
         return false;
     }
 
@@ -153,8 +161,41 @@ public class AddControler {
     }
 
 
+    private void creatingNewQuestion() {
+        AbstractStatement<?> s = null;
+        ListQuestions lq = new ListQuestions(ThemesController.getThemeSelected());
+        switch ((String) typeQuestion.getValue()) {
+
+            case "TrueFalse": {
+
+                // just to be sure the answer corresponds to the json file
+                Boolean answer;
+                if(CorrectAnswer.getText().equalsIgnoreCase("true"))
+                    answer = true;
+                else
+                    answer = false;
+
+                s = new TrueFalse(Text.getText(), answer);
+                break;
+            }
+
+            case "MCQ": {
+                s = new MCQ(Text.getText(), TextAnswer1.getText(), TextAnswer2.getText(), TextAnswer3.getText(), CorrectAnswer.getText());
+                break;
+            }
+
+            default: {
+                s = new ShortAnswer(Text.getText(), CorrectAnswer.getText());
+                break;
+            }
+        }
+
+        lq.addQuestion(new Question(s, ThemesController.getThemeSelected(), Difficulty.fromInteger((Integer) difficulty.getValue()) ));
+        lq.display();
+    }
+
     @FXML
-    private void missingParameter()
+    private void missingParameters()
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Error in creation of a Question");

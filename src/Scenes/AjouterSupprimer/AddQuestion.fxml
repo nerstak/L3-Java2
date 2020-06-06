@@ -35,7 +35,7 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="Difficulty" layoutX="453.0" layoutY="102.0" prefHeight="9.0" prefWidth="66.0" />
+      <ChoiceBox fx:id="difficulty" layoutX="453.0" layoutY="102.0" prefHeight="9.0" prefWidth="66.0" />
       <Label layoutX="39.0" layoutY="161.0" text="Text">
          <font>
             <Font size="26.0" />
