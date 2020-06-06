@@ -2,9 +2,11 @@ package oo.Questions;
 
 import ProjectUtilities.JSONParser;
 import oo.Game.Difficulty;
+import oo.Game.PhaseEnum;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public class ListQuestions {
     private final LinkedList<Question<?>> listQuestions;
@@ -113,9 +115,21 @@ public class ListQuestions {
         System.out.println(this.toString());
     }
 
-    // TODO: NOT compliant, should be changed to respect book of charges
-    public Question<?> selectQuestion() {
-        int index = (int) (Math.random() * listQuestions.size());
-        return listQuestions.get(index);
+    public Question<?> selectQuestion(PhaseEnum phaseEnum) {
+        LinkedList<Question<?>> filteredQuestions = (LinkedList<Question<?>>) switch (phaseEnum) {
+            case Phase1 ->
+                    listQuestions
+                    .stream()
+                    .filter(q -> q.getDifficulty() == Difficulty.easy)
+                    .collect(Collectors.toList());
+            case Phase2 -> listQuestions
+                    .stream()
+                    .filter(q -> q.getDifficulty() == Difficulty.medium)
+                    .collect(Collectors.toList());
+            default -> listQuestions;
+        };
+
+        int index = (int) (Math.random() * filteredQuestions.size());
+        return filteredQuestions.get(index);
     }
 }
