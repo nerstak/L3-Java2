@@ -1,20 +1,21 @@
 package oo.Game;
 
+import Project.Main;
 import Project.SceneManager;
-import javafx.application.Application;
-import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import oo.Players.Player;
 import oo.Players.PlayerStatus;
 import oo.Players.SetPlayers;
-import oo.Questions.Themes;
+import oo.Questions.*;
+
+import java.util.ArrayList;
 
 public class Game {
-	private SetPlayers listPlayers;
-	private Themes themes;
-	private Player currentPlayer;
-	private Phase currentPhase;
+	private static Themes allThemes;
+
+	private ListQuestions nextQuestions;
+	private final SetPlayers listPlayers;
+	private final Themes themes;
+	private PhaseEnum currentPhase;
 	private SceneManager sceneManager;
 
 	public SetPlayers getListPlayers () {
@@ -26,44 +27,115 @@ public class Game {
 	}
 
 	public Player getCurrentPlayer () {
-		return currentPlayer;
+		return listPlayers.selectPlayer(PlayerStatus.selected);
 	}
 
-	public void setCurrentPlayer (Player p) {
-		currentPlayer = p;
+	public PhaseEnum getCurrentPhase () {
+		return currentPhase;
 	}
-	
+
+	/**
+	 * Create a new Themes instance and call the method readThemes on it
+	 */
+	public static void initializeAllThemes () {
+		allThemes = new Themes();
+		allThemes.readThemes();
+	}
+
 	public Game () {
+		if (allThemes == null)
+			initializeAllThemes();
+
         listPlayers = new SetPlayers();
         themes = new Themes();
-	}
+		nextQuestions = new ListQuestions();
+		currentPhase = null;
 
-	public void start () {
+		nextPhase();
 		selectFourPlayersRandomly();
 	}
-	
-	private void setWindowParameters (Stage primaryStage) {
-        primaryStage.setTitle("Weakest Link - The new entertainment game for the whole family");
-        primaryStage.getIcons().add(new Image("file:resources/img/weakest-link-icon.png"));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+
+	/**
+	 * Handle the result of a question and execute the logic between this question and the next one
+	 *
+	 * @param isCorrect was the answer correct
+	 */
+	public void handleResult (boolean isCorrect) {
+		Main.sceneManager.activate("MCQ");
+		getCurrentPlayer().updateScore(currentPhase);
+		nextQuestion();
 	}
-	
+
+	/**
+	 * Execute the logic between a question and the next one
+	 */
+	private void nextQuestion () {
+		if (nextQuestions.size() <= 0)
+			nextPhase();
+		chooseNextPlayer();
+
+		Question nextQuestion = nextQuestions.get(0);
+		// TODO: display depending on type of question (MCQ, TrueFalse, ShortAnswer)
+//		if (nextQuestion.getStatement() instanceof MCQ) {
+//			sceneManager.activate("MCQ", Question);
+//		} else if (nextQuestion.getStatement() instanceof TrueFalse) {
+//			sceneManager.activate("TrueFalse", Question);
+//		} else if (nextQuestion.getStatement() instanceof ShortAnswer) {
+//			sceneManager.activate("MCQ", ShortAnswer);
+//		}
+	}
+
+	/**
+	 * Set the old selected player to hasPlayed
+	 * Then, if no waiting player left, set all players that have played to waiting
+	 * Finally, choose a new selected player among waiting players
+	 */
+	private void chooseNextPlayer() {
+		if (Main.game.getCurrentPlayer() != null) {
+			Main.game.getCurrentPlayer().setStatus(PlayerStatus.hasPlayed);
+		}
+
+		if (listPlayers.countPlayers(PlayerStatus.waiting) == 0) {
+			while (listPlayers.countPlayers(PlayerStatus.hasPlayed) != 0) {
+				listPlayers.selectPlayer(PlayerStatus.hasPlayed).setStatus(PlayerStatus.waiting);
+			}
+		}
+
+		listPlayers.selectPlayer(PlayerStatus.waiting).setStatus(PlayerStatus.selected);
+	}
+
+	/**
+	 * Set 4 players among a list to waiting
+	 */
 	private void selectFourPlayersRandomly () {
         do {
             listPlayers.selectPlayer().setStatus(PlayerStatus.waiting);
         } while (listPlayers.countPlayers(PlayerStatus.waiting) < 4);
 	}
-	
-//	Phases du jeu
-//	Le jeu de Question / Réponse à réaliser comprendra trois phases où 4 joueurs s’affrontent autour de
-//	questions sur 10 thèmes :
-//	Phase I :
-//	Dans cette phase, le jeu se déroule entre 4 joueurs choisis aléatoirement. Un thème parmi 10 est
-//	sélectionné automatiquement du tableau dans un ordre séquentiel (un indicateur du dernier thème
-//	sélectionné est mis à jour, après le choix du 10ème thème, on revient au premier).
-//	Une question de niveau facile est sélectionnée pour chacun des joueurs selon une politique RoundRobin (i.e de manière circulaire). Les 4 joueurs répondent à leurs questions séparément, le score est
-//	incrémenté de 2 si la réponse donnée est correcte.
+
+	/**
+	 * Change the current phase and set variables linked to the new phase
+	 */
+	private void nextPhase () {
+		ArrayList<Integer> currentThemesIndex = new ArrayList<>();
+		nextQuestions = new ListQuestions();
+
+		if (currentPhase == null) {
+			currentPhase = PhaseEnum.Phase1;
+			currentThemesIndex.add(allThemes.selectTheme(PhaseEnum.Phase1));
+			ListQuestions possibleQuestions = new ListQuestions(allThemes.getAtIndex(currentThemesIndex.get(0)));
+			for (int i = 0; i < 4; i++) {
+				nextQuestions.addQuestion(possibleQuestions.selectQuestion(PhaseEnum.Phase1));
+			}
+		} else if (currentPhase == PhaseEnum.Phase1) {
+			// TODO: attendre la réponse du prof par rapport au fait qu'on a une méthode pour séléctionner 5 thèmes mais qu'il faut en séléctionner 6 pour la phase 2
+			// TODO: sélectionner 6 thèmes
+			currentPhase = PhaseEnum.Phase2;
+		} else if (currentPhase == PhaseEnum.Phase2) {
+			currentPhase = PhaseEnum.Phase3;
+		}
+	}
+
 //	Phase II :
 //	Le jeu se déroule entre les trois joueurs gagnants de la phase I. Cette phase propose deux questions
 //	de niveau moyen pour chaque joueur (une question par thème choisi).
@@ -76,5 +148,6 @@ public class Game {
 //	Phase III :
 //	Dans cette phase, le jeu se déroule entre les deux joueurs gagnants de la phase II. Les questions
 //	porteront sur trois thèmes choisis par le concepteur du jeu. Le score du joueur donnant la bonne
-//	réponse est incrémenté de 5. 
+//	réponse est incrémenté de 5.
 }
+
