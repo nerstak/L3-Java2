@@ -23,11 +23,11 @@ public class TransitionController {
         // a function when scene is showed
 
         anchor.setOnMouseMoved(e -> {
-            if (Main.currentPlayer != null) {
-                Main.currentPlayer.setStatus(PlayerStatus.waiting);
+            if (Main.game.getCurrentPlayer() != null) {
+                Main.game.getCurrentPlayer().setStatus(PlayerStatus.waiting);
             }
-            Main.currentPlayer = Main.listPlayers.selectPlayer(PlayerStatus.waiting);
-            Main.currentPlayer.setStatus(PlayerStatus.selected);
+            Main.game.setCurrentPlayer(Main.game.getListPlayers().selectPlayer(PlayerStatus.waiting));
+            Main.game.getCurrentPlayer().setStatus(PlayerStatus.selected);
 
             Main.sceneManager.activate("MCQ");
         });

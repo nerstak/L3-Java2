@@ -30,7 +30,7 @@ public class MCQController {
 
     public MCQController() {
         // TMP, just proof of concept
-        String t = Main.themes.getAtIndex(((int) (Math.random() * 10)));
+        String t = Main.game.getThemes().getAtIndex(((int) (Math.random() * 10)));
         ListQuestions lq = new ListQuestions(t);
         do {
             questionT = lq.selectQuestion();
@@ -42,7 +42,7 @@ public class MCQController {
     @FXML
     private void initialize() {
         playerActive.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
-        personTable.setItems(FXCollections.observableArrayList(Main.listPlayers.selectPlayers(PlayerStatus.waiting)));
+        personTable.setItems(FXCollections.observableArrayList(Main.game.getListPlayers().selectPlayers(PlayerStatus.waiting)));
 
         question.setText(questionT.getStatement().getText());
         firstAnswer.setText(((MCQ<?>) questionT.getStatement()).getAnswers().get(0));

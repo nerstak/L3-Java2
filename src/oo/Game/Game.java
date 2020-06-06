@@ -10,30 +10,36 @@ import oo.Players.PlayerStatus;
 import oo.Players.SetPlayers;
 import oo.Questions.Themes;
 
-public class Game extends Application {
+public class Game {
 	private SetPlayers listPlayers;
 	private Themes themes;
 	private Player currentPlayer;
 	private Phase currentPhase;
 	private SceneManager sceneManager;
+
+	public SetPlayers getListPlayers () {
+		return listPlayers;
+	}
+
+	public Themes getThemes() {
+		return themes;
+	}
+
+	public Player getCurrentPlayer () {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer (Player p) {
+		currentPlayer = p;
+	}
 	
 	public Game () {
         listPlayers = new SetPlayers();
         themes = new Themes();
 	}
-	
-	public void _start() {
-		launch();
-	}
 
-	@Override
-	public void start (Stage primaryStage) throws Exception {
-		setWindowParameters(primaryStage);
-		
-        selectFourPlayersRandomly();
-
-        sceneManager = new SceneManager(primaryStage);
-        sceneManager.activate("Starting");
+	public void start () {
+		selectFourPlayersRandomly();
 	}
 	
 	private void setWindowParameters (Stage primaryStage) {
