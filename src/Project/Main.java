@@ -22,7 +22,6 @@ public class Main extends Application {
         l.display();*/
 
     	game = new Game();
-    	game.start();
 		launch();
     }
 
