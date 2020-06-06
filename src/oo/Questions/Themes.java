@@ -18,7 +18,7 @@ public class Themes {
     /**
      * Read list of every themes
      */
-    private void readThemes() {
+    public void readThemes() {
         JSONObject themes = JSONParser.parseFile("themes.json");
         assert themes != null;
         listThemes.clear();
