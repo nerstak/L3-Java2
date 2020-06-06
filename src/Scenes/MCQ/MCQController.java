@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import oo.Game.Phase;
 import oo.Players.Player;
 import oo.Players.PlayerStatus;
 import oo.Questions.ListQuestions;
@@ -28,12 +29,13 @@ public class MCQController {
     @FXML
     private TableColumn<Player, String> playerActive;
 
+    // TODO : delete once the constructor with question as parameter is ready
     public MCQController() {
         // TMP, just proof of concept
         String t = Main.game.getThemes().getAtIndex(((int) (Math.random() * 10)));
         ListQuestions lq = new ListQuestions(t);
         do {
-            questionT = lq.selectQuestion();
+            questionT = lq.selectQuestion(Main.game.getCurrentPhase());
         } while (!(questionT.getStatement() instanceof MCQ));
         mcq = (MCQ<String>) questionT.getStatement();
 
@@ -80,6 +82,7 @@ public class MCQController {
             alert.setContentText("The real answer was " + mcq.getCorrectAnswer());
         }
         alert.showAndWait();
-        Main.sceneManager.activate("Transition");
+
+        Main.game.handleResult(result);
     }
 }
