@@ -56,5 +56,7 @@ public class ThemesController {
     @FXML
     private void handleButtonBack() {Main.sceneManager.activate("Starting");}
 
+    // TODO: 06/06/2020 faire la fonction delete 
+    
     public static String getThemeSelected(){return themeSelected;}
 }

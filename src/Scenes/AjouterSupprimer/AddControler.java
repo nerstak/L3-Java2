@@ -1,23 +1,14 @@
 package Scenes.AjouterSupprimer;
 
 import Project.Main;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import oo.Game.Difficulty;
 import oo.Questions.*;
-
-import javax.xml.transform.stream.StreamSource;
-import java.awt.*;
 
 public class AddControler {
 
@@ -49,7 +40,7 @@ public class AddControler {
                     TextAnswer2.setEditable(true);
                     TextAnswer3.setEditable(true);
                 }
-                // if not, we should not be able to write in the TextFields (I reset them to prevent from errors)
+                // if not, we should not be able to write in the TextFields (I reset them to prevent errors)
                 else
                 {
                     TextAnswer1.setEditable(false);
@@ -106,8 +97,7 @@ public class AddControler {
     }
 
 
-    private boolean checkType()
-    {
+    private boolean checkType(){
         if(CorrectAnswer.getText().equals("") || typeQuestion.getValue() == null)
         {
             if(typeQuestion.getValue() == null)
@@ -161,10 +151,10 @@ public class AddControler {
     }
 
 
-    private void creatingNewQuestion() {
+    private void creatingNewQuestion(){
         AbstractStatement<?> s = null;
         ListQuestions lq = new ListQuestions(ThemesController.getThemeSelected());
-        switch ((String) typeQuestion.getValue()) {
+        switch ((String) typeQuestion.getValue()){
 
             case "TrueFalse": {
 
@@ -195,8 +185,7 @@ public class AddControler {
     }
 
     @FXML
-    private void missingParameters()
-    {
+    private void missingParameters(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Error in creation of a Question");
         alert.setHeaderText("There are some points you have to modify !");
