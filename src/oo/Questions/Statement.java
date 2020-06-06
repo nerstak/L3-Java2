@@ -6,4 +6,6 @@ public interface Statement<T> {
     boolean checkAnswer(T u);
 
     String getText();
+
+    String getCorrectAnswer();
 }

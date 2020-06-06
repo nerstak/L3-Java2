@@ -11,6 +11,26 @@
     {
       "name": "ThemeSelection",
       "path": "src/Scenes/ThemeSelection/ThemeSelection.fxml"
+    },
+    {
+      "name": "SA",
+      "path": "src/Scenes/SA/SA.fxml"
+    },
+    {
+      "name": "TF",
+      "path": "src/Scenes/TF/TF.fxml"
+    },
+    {
+      "name": "Transition",
+      "path": "src/Scenes/Transition/Transition.fxml"
+    },
+    {
+      "name": "TablePlayer",
+      "path": "src/Scenes/Subscenes/TablePlayer/TablePlayer.fxml"
+    },
+    {
+      "name": "TopBar",
+      "path": "src/Scenes/Subscenes/TopBar/TopBar.fxml"
     }
   ]
 }
