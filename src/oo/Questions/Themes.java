@@ -15,6 +15,10 @@ public class Themes {
         readThemes();
     }
 
+    public int getSize() {
+        return listThemes.size();
+    }
+
     /**
      * Read list of every themes
      */

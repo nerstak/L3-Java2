@@ -9,6 +9,10 @@
       "path": "src/Scenes/MCQ/MCQ.fxml"
     },
     {
+      "name": "ThemeSelection",
+      "path": "src/Scenes/ThemeSelection/ThemeSelection.fxml"
+    },
+    {
       "name": "SA",
       "path": "src/Scenes/SA/SA.fxml"
     },
