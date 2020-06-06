@@ -5,6 +5,7 @@ import oo.Game.Difficulty;
 import oo.Game.PhaseEnum;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,10 @@ public class ListQuestions {
         if (json != null) {
             readQuestionJSON(json, theme);
         }
+    }
+
+    public ListQuestions() {
+        listQuestions = new LinkedList<>();
     }
 
     /**
@@ -90,6 +95,25 @@ public class ListQuestions {
     }
 
     /**
+     * Get the size of the list of questions
+     *
+     * @return the size of the list of the questions
+     */
+    public int size() {
+        return listQuestions.size();
+    }
+
+    /**
+     * Get the question at a desired index
+     *
+     * @param i the index of the question
+     * @return the question at the desired index
+     */
+    public Question get (int i) {
+        return listQuestions.get(i);
+    }
+
+    /**
      * Remove a question at specified index
      *
      * @param n Index
@@ -116,7 +140,8 @@ public class ListQuestions {
     }
 
     public Question<?> selectQuestion(PhaseEnum phaseEnum) {
-        LinkedList<Question<?>> filteredQuestions = (LinkedList<Question<?>>) switch (phaseEnum) {
+        ArrayList<Question<?>> filteredQuestions = (ArrayList<Question<?>>) switch (phaseEnum) {
+            // TODO : utiliser la méthode round robin pour la première phase
             case Phase1 ->
                     listQuestions
                     .stream()
