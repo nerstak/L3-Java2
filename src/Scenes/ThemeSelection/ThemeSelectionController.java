@@ -1,26 +1,35 @@
 package Scenes.ThemeSelection;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
+import oo.Questions.Themes;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class ThemeSelectionController {
 	@FXML
 	public VBox choicesContainer;
 	public ToggleGroup toggleGroup;
 
+	private Themes themes;
+
 	@FXML
 	private void initialize() {
 		toggleGroup = new ToggleGroup();
-		
-		ArrayList<String> filesNames = getFilesNameInFolder(new File("resources/json"));
+
+		ArrayList<String> filesNames = new ArrayList<>();
+		themes = new Themes();
+
+		for (int i = 0; i < themes.getSize(); i++) {
+			filesNames.add(themes.getAtIndex(i));
+		}
+
 		for (String fileName : filesNames) {
-			ToggleButton tb = new ToggleButton(fileName.substring(0, 1).toUpperCase() + fileName.substring(1, fileName.length() - 5));
+			ToggleButton tb = new ToggleButton(fileName.substring(0, 1).toUpperCase() + fileName.substring(1));
 			tb.setPrefWidth(10000);
 			tb.setToggleGroup(toggleGroup);
 			choicesContainer.getChildren().add(tb);
