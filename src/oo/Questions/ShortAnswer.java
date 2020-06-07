@@ -29,5 +29,5 @@ public class ShortAnswer<T extends String> extends AbstractStatement<T> {
     }
 
     @Override
-    public String getType() {return "ShortAnswer";}
+    public int getType() {return 2;}
 }

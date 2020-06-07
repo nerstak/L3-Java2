@@ -50,5 +50,5 @@ public class MCQ<T extends String> extends AbstractStatement<T> {
     }
 
     @Override
-    public String getType() {return "MCQ";}
+    public int getType() {return 1;}
 }

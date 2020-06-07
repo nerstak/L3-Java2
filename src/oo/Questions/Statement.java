@@ -9,5 +9,5 @@ public interface Statement<T> {
 
     String getCorrectAnswer();
 
-    String getType();
+    int getType();
 }

@@ -4,14 +4,10 @@ import ProjectUtilities.JSONParser;
 import oo.Game.Difficulty;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONWriter;
 
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.file.Paths;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class ListQuestions {
     private final LinkedList<Question<?>> listQuestions;
@@ -127,7 +123,7 @@ public class ListQuestions {
     }
 
     public void writeJson(String theme) {
-
+/*
         String writing = "{\n   \"questions\": [\n      {\n";
 
         for(int i = 0; i < listQuestions.size(); i++)
@@ -165,7 +161,6 @@ public class ListQuestions {
                     writing += "            \"correctAnswer\": \"" + question.getStatement().getCorrectAnswer() + "\"\n        }";
                     break;
                 }
-/*
                 case "TrueFalse": {
                     writing += "            \"correctAnswer\": ";
 
@@ -184,7 +179,6 @@ public class ListQuestions {
                     break;
 
                 }
-*/
 
                 default: {
                     break;
@@ -197,19 +191,40 @@ public class ListQuestions {
             writing += "\n";
         }
         writing += "    ]\n}";
+*/
 
-/*
+        JSONObject object = new JSONObject();
         JSONArray questions = new JSONArray();
-        questions.put("questions :");
-        for(Question question : this.listQuestions)
+        for(Question<?> question : this.listQuestions)
         {
             JSONObject obj = new JSONObject();
-            obj.put("type", question.getStatement().getType());
-            obj.put("difficulty", question.getDifficulty());
+
+            if(question.getStatement() instanceof MCQ)
+                obj.put("type", "MCQ");
+            else if(question.getStatement() instanceof TrueFalse)
+                obj.put("type", "TrueFalse");
+            else
+                obj.put("type", "ShortAnswer");
+
+
+            switch (question.getDifficulty()) {
+                case easy: {
+                    obj.put("difficulty", 1); break;
+                }
+                case medium: {
+                    obj.put("difficulty", 2); break;
+                }
+                default: {
+                    obj.put("difficulty", 3); break;
+                }
+            }
+
             obj.put("text", question.getStatement().getText());
+
             switch (question.getStatement().getType())
             {
-                case "MCQ": {
+                // MCQ
+                case 1: {
                     JSONArray answers = new JSONArray();
                     answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(0));
                     answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(1));
@@ -218,23 +233,37 @@ public class ListQuestions {
                     break;
                 }
 
-                default: {
+                // ShortAnswer
+                case 2: {
                     obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
+                    break;
+                }
+
+                // TrueFalse
+                default: {
+                    if(question.getStatement().getCorrectAnswer().equalsIgnoreCase("true"))
+                        obj.put("correctAnswer", "True");
+                    else
+                        obj.put("correctAnswer", "False");
                     break;
                 }
 
             }
             questions.put(obj);
         }
-*/
+        object.put("questions", questions);
+
         try {
-            //FileWriter file = new FileWriter("../resources/json/" + theme + ".json");
-            PrintWriter file = new PrintWriter("../resources/json/test.json");
-            file.print(writing);
-                    /*
-            FileWriter file = new FileWriter("../resources/json/" + "test" + ".json");
-            file.write(writing);
-            file.close();*/
+            String absolutePath = (new File("README.md")).getAbsolutePath();
+            String pathTheme = absolutePath.replace("README.md", "resources/json/themes.json");
+
+            String path = pathTheme.replace("themes", theme);
+            path = path.replace("\\", "/");
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
+            object.write(bw);
+            bw.close();
+
 
         } catch (IOException e) {
             e.printStackTrace();
