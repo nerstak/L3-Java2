@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ListQuestions {
@@ -154,7 +155,8 @@ public class ListQuestions {
             default -> listQuestions;
         };
 
-        int index = (int) (Math.random() * filteredQuestions.size());
+        Random random = new Random();
+        int index = random.nextInt(filteredQuestions.size());
         return filteredQuestions.get(index);
     }
 }
