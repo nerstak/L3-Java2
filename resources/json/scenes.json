@@ -31,6 +31,10 @@
     {
       "name": "TopBar",
       "path": "src/Scenes/Subscenes/TopBar/TopBar.fxml"
+    },
+    {
+      "name": "FinalScreen",
+      "path": "src/Scenes/FinalScreen/FinalScreen.fxml"
     }
   ]
 }
