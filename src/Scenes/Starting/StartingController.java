@@ -32,6 +32,6 @@ public class StartingController {
         alert.setContentText("Or do we?");
 
         alert.showAndWait();
-        Main.sceneManager.activate("Transition");
+        Main.game.nextQuestion();
     }
 }

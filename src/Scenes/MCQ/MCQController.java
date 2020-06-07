@@ -9,7 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import oo.Questions.ListQuestions;
 import oo.Questions.MCQ;
 import oo.Questions.Question;
 
@@ -24,21 +23,14 @@ public class MCQController {
     public AnchorPane topAnchor;
 
     private Question<?> questionT;
-    private final MCQ<String> mcq;
+    private MCQ<String> mcq;
 
-
-    public MCQController() {
-        // TMP, just proof of concept
-        String t = Main.themes.getAtIndex(((int) (Math.random() * 10)));
-        ListQuestions lq = new ListQuestions(t);
-        do {
-            questionT = lq.selectQuestion();
-        } while (!(questionT.getStatement() instanceof MCQ));
-        mcq = (MCQ<String>) questionT.getStatement();
-    }
 
     @FXML
     private void initialize() {
+        questionT = Main.game.getSelectedQuestion();
+        mcq = (MCQ<String>) questionT.getStatement();
+
         // Loading sub nodes
         try {
             tableAnchor.getChildren().setAll(
@@ -88,6 +80,7 @@ public class MCQController {
             alert.setContentText("The real answer was " + mcq.getCorrectAnswer());
         }
         alert.showAndWait();
-        Main.sceneManager.activate("Transition");
+
+        Main.game.handleResult(result);
     }
 }

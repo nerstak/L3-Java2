@@ -26,8 +26,9 @@ public class TablePlayer {
         ));
 
 
-        ObservableList<Player> observableList = FXCollections.observableArrayList(Main.listPlayers.selectPlayers(PlayerStatus.waiting));
-        observableList.addAll(Main.listPlayers.selectPlayers(PlayerStatus.selected));
+        ObservableList<Player> observableList = FXCollections.observableArrayList(Main.game.getListPlayers().selectPlayers(PlayerStatus.waiting));
+        observableList.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.hasPlayed));
+        observableList.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.selected));
         personTable.setItems(observableList);
     }
 }

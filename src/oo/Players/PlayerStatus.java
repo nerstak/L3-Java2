@@ -6,6 +6,7 @@ public enum PlayerStatus {
     superWinner("Super Winner"),
     eliminated("Eliminated"),
     waiting("Waiting"),
+    hasPlayed("Has played"),
     inactive("Inactive");
 
     private final String meaning;

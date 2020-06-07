@@ -30,8 +30,17 @@ public class SetPlayers {
         return listPlayers.get(n);
     }
 
+    /**
+     * Select randomly one player with a certain status in the list
+     *
+     * @param ps the status we want the list to be filter by
+     * @return a pointer to the Player selected. Null if no player with this status exist in the list
+     */
     public Player selectPlayer(PlayerStatus ps) {
         Vector<Player> list = selectPlayers(ps);
+        if (list.size() == 0)
+            return null;
+
         int index = (int) (Math.random() * list.size());
         return list.get(index);
     }
