@@ -2,10 +2,12 @@ package oo.Players;
 
 import oo.Game.PhaseEnum;
 
+import java.util.Comparator;
+
 /**
  * Class player
  */
-public class Player implements Runnable {
+public class Player implements Runnable, Comparable<Player> {
     private final int number;
     private String name;
     private int score;
@@ -113,6 +115,22 @@ public class Player implements Runnable {
                 score += 5;
                 break;
             }
+        }
+    }
+
+    public static Comparator<Player> PlayerRanking = new Comparator<Player>() {
+        @Override
+        public int compare(Player o1, Player o2) {
+            return o1.compareTo(o2);
+        }
+    };
+
+    @Override
+    public int compareTo(Player o) {
+        if (this.score != o.score) {
+            return Integer.compare(this.score, o.score);
+        } else {
+            return Long.compare(this.durationTimer, o.durationTimer);
         }
     }
 }

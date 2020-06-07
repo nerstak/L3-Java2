@@ -32,11 +32,7 @@ public class TopBar {
                             public void handle(ActionEvent actionEvent) {
                                 long timer = Main.game.getCurrentPlayer().getTimer();
 
-                                String seconds = Utilities.lengthTime(String.valueOf(timer / 1000 % 60));
-                                String minutes = Utilities.lengthTime(String.valueOf(timer / 1000000 % 60));
-                                String hours = Utilities.lengthTime(String.valueOf(timer / 1000000000));
-
-                                timerLabel.setText(hours + "h " + minutes + "m " + seconds + "s");
+                                timerLabel.setText(Utilities.convertTimestampToString(timer));
                             }
                         }
                 ),
