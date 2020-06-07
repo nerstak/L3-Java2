@@ -5,12 +5,13 @@ import oo.Game.Difficulty;
 import oo.Game.PhaseEnum;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class ListQuestions {
+public class ListQuestions implements Serializable {
     private final LinkedList<Question<?>> listQuestions;
     private final int selected = -1;
 

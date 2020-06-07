@@ -4,9 +4,10 @@ import ProjectUtilities.JSONParser;
 import oo.Game.PhaseEnum;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Themes {
+public class Themes implements Serializable {
     private final ArrayList<String> listThemes;
     private int indicator = -1;
 
@@ -118,7 +119,7 @@ public class Themes {
     /**
      * Select 5 random themes
      *
-     * @param  current phase, determine the rules to select themes
+     * @param phase current phase, determine the rules to select themes
      * @return 5 index of selected themes
      */
     public ArrayList<Integer> selectFiveRandomThemes(PhaseEnum phase) {

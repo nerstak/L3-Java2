@@ -2,12 +2,13 @@ package oo.Players;
 
 import oo.Game.PhaseEnum;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * Class player
  */
-public class Player implements Runnable, Comparable<Player> {
+public class Player implements Runnable,Serializable, Comparable<Player> {
     private final int number;
     private String name;
     private int score;

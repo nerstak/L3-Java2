@@ -1,9 +1,10 @@
 package oo.Players;
 
+import java.io.Serializable;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
-public class SetPlayers {
+public class SetPlayers implements Serializable {
     Vector<Player> listPlayers;
 
     private static final int sizeSet = 20;
