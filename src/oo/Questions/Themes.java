@@ -118,7 +118,7 @@ public class Themes {
     /**
      * Select 5 random themes
      *
-     * @param  current phase, determine the rules to select themes
+     * @param phase current phase, determine the rules to select themes
      * @return 5 index of selected themes
      */
     public ArrayList<Integer> selectFiveRandomThemes(PhaseEnum phase) {
