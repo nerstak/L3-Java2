@@ -2,10 +2,12 @@ package oo.Players;
 
 import oo.Game.PhaseEnum;
 
+import java.io.Serializable;
+
 /**
  * Class player
  */
-public class Player implements Runnable {
+public class Player implements Runnable, Serializable {
     private final int number;
     private String name;
     private int score;

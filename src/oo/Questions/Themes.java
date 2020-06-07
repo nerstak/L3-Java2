@@ -4,9 +4,10 @@ import ProjectUtilities.JSONParser;
 import oo.Game.PhaseEnum;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Themes {
+public class Themes implements Serializable {
     private final ArrayList<String> listThemes;
     private int indicator = -1;
 
