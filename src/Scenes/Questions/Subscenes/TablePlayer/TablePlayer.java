@@ -1,4 +1,4 @@
-package Scenes.Subscenes.TablePlayer;
+package Scenes.Questions.Subscenes.TablePlayer;
 
 import Project.Main;
 import javafx.beans.property.SimpleStringProperty;

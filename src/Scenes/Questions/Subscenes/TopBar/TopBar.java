@@ -1,4 +1,4 @@
-package Scenes.Subscenes.TopBar;
+package Scenes.Questions.Subscenes.TopBar;
 
 import Project.Main;
 import ProjectUtilities.Utilities;
@@ -18,6 +18,7 @@ public class TopBar {
     @FXML
     private void initialize() {
         displayTimer();
+        phaseInformation.setText(Main.game.getCurrentPhase().toString());
     }
 
     /**
