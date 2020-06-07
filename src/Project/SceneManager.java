@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -72,7 +73,13 @@ public class SceneManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
+    }
+
+    public Serializable getSceneUrl(String name) {
+        if (screenList.get(name) != null) {
+            return screenList.get(name);
+        }
+        return "";
     }
 }

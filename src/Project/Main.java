@@ -1,9 +1,11 @@
 package Project;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import oo.Game.Game;
+
 
 public class Main extends Application {
     public static Game game;
