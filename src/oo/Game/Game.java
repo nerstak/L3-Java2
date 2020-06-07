@@ -1,21 +1,23 @@
 package oo.Game;
 
 import Project.Main;
-import Project.SceneManager;
 import oo.Players.Player;
 import oo.Players.PlayerStatus;
 import oo.Players.SetPlayers;
 import oo.Questions.*;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class Game {
-	private static Themes allThemes;
+public class Game implements  Serializable {
+	private final static Themes allThemes = initializeAllThemes();
 
 	private ListQuestions nextQuestions;
 	private Question selectedQuestion;
-	private final SetPlayers listPlayers;
-	private final Themes themes;
+	private SetPlayers listPlayers;
+	private Themes themes;
 	private PhaseEnum currentPhase;
 
 	public SetPlayers getListPlayers () {
@@ -39,21 +41,30 @@ public class Game {
 	}
 
 	/**
-	 * Create a new Themes instance and call the method readThemes on it
+	 * Create a new Themes instance then call the method readThemes on it
+	 *
+	 * @return the new Themes instance
 	 */
-	public static void initializeAllThemes () {
-		allThemes = new Themes();
+	public static Themes initializeAllThemes () {
+		Themes allThemes = new Themes();
 		allThemes.readThemes();
+		return allThemes;
 	}
 
 	public Game () {
-		if (allThemes == null)
-			initializeAllThemes();
-
         listPlayers = new SetPlayers();
         themes = new Themes();
 		nextQuestions = new ListQuestions();
 		currentPhase = null;
+
+		// Exemple of save
+		/**
+		themes.readThemes();
+		System.out.println(themes.getAtIndex(0));
+		saveGame("hellow");
+		loadGame("hellow");
+		System.out.println(themes.getAtIndex(0));
+		 **/
 	}
 
 	/**
@@ -76,9 +87,6 @@ public class Game {
 			nextPhase();
 
 		chooseNextPlayer();
-
-		System.out.println(nextQuestions.size());
-		System.out.println(themes.getAtIndex(0));
 
 		selectedQuestion = nextQuestions.get(0);
 		nextQuestions.deleteQuestion(0);
@@ -145,6 +153,40 @@ public class Game {
 			currentPhase = PhaseEnum.Phase3;
 		} else if (currentPhase == PhaseEnum.Phase3) {
 			System.exit(0);
+		}
+	}
+
+	private void saveGame (String name) {
+		try {
+			Files.createDirectories(Paths.get("resources/saves/"));
+			FileOutputStream file = new FileOutputStream("resources/saves/" + name);
+			ObjectOutputStream out = new ObjectOutputStream(file);
+
+			out.writeObject(this);
+
+			out.close();
+			file.close();
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void loadGame (String name) {
+		try {
+			FileInputStream file = new FileInputStream("resources/saves/" + name);
+			ObjectInputStream in = new ObjectInputStream(file);
+
+			Game loadedGame = (Game)in.readObject();
+			this.nextQuestions = loadedGame.nextQuestions;
+			this.selectedQuestion = loadedGame.selectedQuestion;
+			this.listPlayers = loadedGame.listPlayers;
+			this.themes = loadedGame.themes;
+			this.currentPhase = loadedGame.currentPhase;
+
+			in.close();
+			file.close();
+		} catch(Exception e) {
+			System.out.println(e);
 		}
 	}
 
