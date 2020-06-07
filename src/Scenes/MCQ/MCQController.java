@@ -22,27 +22,18 @@ public class MCQController {
     public Button thirdAnswer;
 
     private Question<?> questionT;
-    private final MCQ<String> mcq;
+    private MCQ<String> mcq;
 
     @FXML
     private TableView<Player> personTable;
     @FXML
     private TableColumn<Player, String> playerActive;
 
-    // TODO : delete once the constructor with question as parameter is ready
-    public MCQController() {
-        // TMP, just proof of concept
-        String t = Main.game.getThemes().getAtIndex(((int) (Math.random() * 10)));
-        ListQuestions lq = new ListQuestions(t);
-        do {
-            questionT = lq.selectQuestion(Main.game.getCurrentPhase());
-        } while (!(questionT.getStatement() instanceof MCQ));
-        mcq = (MCQ<String>) questionT.getStatement();
-
-    }
-
     @FXML
     private void initialize() {
+        questionT = Main.game.getSelectedQuestion();
+        mcq = (MCQ<String>) questionT.getStatement();
+
         playerActive.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
         personTable.setItems(FXCollections.observableArrayList(Main.game.getListPlayers().selectPlayers(PlayerStatus.waiting)));
 
