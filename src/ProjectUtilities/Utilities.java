@@ -15,4 +15,12 @@ public class Utilities {
 
         return s;
     }
+
+    public static String convertTimestampToString(long timestamp) {
+        String seconds = Utilities.lengthTime(String.valueOf(timestamp / 1000 % 60));
+        String minutes = Utilities.lengthTime(String.valueOf(timestamp / 1000000 % 60));
+        String hours = Utilities.lengthTime(String.valueOf(timestamp / 1000000000));
+
+        return hours + "h " + minutes + "m " + seconds + "s";
+    }
 }
