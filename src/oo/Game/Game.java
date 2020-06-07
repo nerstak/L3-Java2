@@ -156,19 +156,15 @@ public class Game implements  Serializable {
 		}
 	}
 
-	private void saveGame (String name) {
-		try {
-			Files.createDirectories(Paths.get("resources/saves/"));
-			FileOutputStream file = new FileOutputStream("resources/saves/" + name);
-			ObjectOutputStream out = new ObjectOutputStream(file);
+	private void saveGame (String name) throws IOException {
+		Files.createDirectories(Paths.get("resources/saves/"));
+		FileOutputStream file = new FileOutputStream("resources/saves/" + name);
+		ObjectOutputStream out = new ObjectOutputStream(file);
 
-			out.writeObject(this);
+		out.writeObject(this);
 
-			out.close();
-			file.close();
-		} catch(Exception e) {
-			System.out.println(e);
-		}
+		out.close();
+		file.close();
 	}
 
 	private void loadGame (String name) {
