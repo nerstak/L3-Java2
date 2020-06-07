@@ -9,6 +9,12 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 
 public abstract class Question {
+    /**
+     * Load the side bars
+     *
+     * @param tableAnchor Table containing players information
+     * @param topAnchor   Zone containing phase and timer
+     */
     protected void loadContentBar(AnchorPane tableAnchor, AnchorPane topAnchor) {
         try {
             tableAnchor.getChildren().setAll(
@@ -23,6 +29,12 @@ public abstract class Question {
         }
     }
 
+    /**
+     * Load answer alert
+     *
+     * @param result        Result of the user
+     * @param correctAnswer Correct answer
+     */
     protected void answerAlert(boolean result, String correctAnswer) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
