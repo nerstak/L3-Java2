@@ -32,4 +32,7 @@ public class TrueFalse<T extends Boolean> extends AbstractStatement<T> {
             return false;
         }
     }
+
+    @Override
+    public String getType() {return "TrueFalse";}
 }

@@ -66,7 +66,6 @@ public class AddControler {
         if(checkAll())
         {
             creatingNewQuestion();
-            // TODO: 06/06/2020 add the question on the json file
             difficulty.getSelectionModel().select(0);
             typeQuestion.getSelectionModel().select(0);
             Text.setText("");
@@ -182,6 +181,8 @@ public class AddControler {
 
         lq.addQuestion(new Question(s, ThemesController.getThemeSelected(), Difficulty.fromInteger((Integer) difficulty.getValue()) ));
         lq.display();
+        lq.writeJson(ThemesController.getThemeSelected());
+        // TODO: 06/06/2020 add the question on the json file
     }
 
     @FXML

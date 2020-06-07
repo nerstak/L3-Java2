@@ -21,7 +21,7 @@
       "type": "TrueFalse",
       "difficulty": "2",
       "text": "There is 4 quadripoints in the world (geographical point that touches the border of four distinct nations).",
-      "correctAnswer": "Falses"
+      "correctAnswer": "False"
     },
     {
       "type": "MCQ",

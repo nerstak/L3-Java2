@@ -48,4 +48,7 @@ public class MCQ<T extends String> extends AbstractStatement<T> {
     public boolean checkAnswer(T t) {
         return correctAnswer.equals(t);
     }
+
+    @Override
+    public String getType() {return "MCQ";}
 }

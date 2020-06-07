@@ -6,6 +6,7 @@ package oo.Questions;
 public abstract class AbstractStatement<T> implements Statement<T> {
     protected String text;
     protected T correctAnswer;
+    protected String type;
 
     public AbstractStatement(String text, T correctAnswer) {
         this.text = text;
@@ -18,7 +19,8 @@ public abstract class AbstractStatement<T> implements Statement<T> {
     }
 
     @Override
-    public String getCorrectAnswer() {
-        return (String) correctAnswer;
-    }
+    public String getCorrectAnswer() {return (String) correctAnswer;}
+
+    @Override
+    public String getType() {return type;}
 }
