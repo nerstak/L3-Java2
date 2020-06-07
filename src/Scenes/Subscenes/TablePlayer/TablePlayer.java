@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import oo.Game.Game;
 import oo.Players.Player;
 import oo.Players.PlayerStatus;
 
@@ -26,8 +27,13 @@ public class TablePlayer {
         ));
 
 
-        ObservableList<Player> observableList = FXCollections.observableArrayList(Main.listPlayers.selectPlayers(PlayerStatus.waiting));
-        observableList.addAll(Main.listPlayers.selectPlayers(PlayerStatus.selected));
+        ObservableList<Player> observableList = FXCollections.observableArrayList(Main.game.getListPlayers().selectPlayers(PlayerStatus.waiting));
+        observableList.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.hasPlayed));
+        observableList.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.selected));
         personTable.setItems(observableList);
+
+        if (Main.game.getListPlayers().countPlayers(PlayerStatus.waiting) < 2) {
+            Game g = Main.game;
+        }
     }
 }

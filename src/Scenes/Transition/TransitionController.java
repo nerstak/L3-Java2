@@ -1,9 +1,7 @@
 package Scenes.Transition;
 
-import Project.Main;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import oo.Players.PlayerStatus;
 
 /**
  * Transition between scene. This controller should be responsible of
@@ -22,7 +20,7 @@ public class TransitionController {
         // Getting rid of the setOnMouseMoved would be cool, but I'm not sure how to call
         // a function when scene is showed
 
-        anchor.setOnMouseMoved(e -> {
+        /*anchor.setOnMouseMoved(e -> {
             if (Main.game.getCurrentPlayer() != null) {
                 Main.game.getCurrentPlayer().setStatus(PlayerStatus.waiting);
             }
@@ -30,7 +28,7 @@ public class TransitionController {
             Main.game.getCurrentPlayer().setStatus(PlayerStatus.selected);
 
             Main.sceneManager.activate("MCQ");
-        });
+        });*/
     }
 
 
