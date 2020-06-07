@@ -86,7 +86,6 @@ public class Player implements Runnable, Comparable<Player> {
         }
 
         durationTimer = durationTimer + currentTimer;
-        System.out.println(name + " " + durationTimer);
         currentTimer = 0;
         thread = null;
     }

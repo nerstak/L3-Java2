@@ -25,6 +25,6 @@ public class ShortAnswer<T extends String> extends AbstractStatement<T> {
 
     @Override
     public boolean checkAnswer(T t) {
-        return correctAnswer.equals(t);
+        return correctAnswer.toLowerCase().equals(t.toLowerCase());
     }
 }

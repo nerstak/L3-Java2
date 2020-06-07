@@ -27,7 +27,7 @@ public class FinalScreen {
 
 
     public FinalScreen() {
-        ranking = Main.listPlayers.selectPlayers(PlayerStatus.waiting);
+        ranking = Main.game.getListPlayers().selectPlayers(PlayerStatus.waiting);
         ranking.sort(Player.PlayerRanking);
         Collections.sort(ranking, Collections.reverseOrder());
     }

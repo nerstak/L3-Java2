@@ -5,7 +5,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="362.0" prefWidth="553.0"
-            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Scenes.TF.TF">
+            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Scenes.Questions.TF.TFController">
     <children>
         <SplitPane dividerPositions="0.22" layoutX="-7.0" layoutY="-7.0" prefHeight="400.0" prefWidth="600.0">
             <items>
