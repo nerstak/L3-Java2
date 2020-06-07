@@ -1,20 +1,15 @@
-package Scenes.MCQ;
+package Scenes.Questions.MCQ;
 
 
 import Project.Main;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import oo.Questions.MCQ;
 import oo.Questions.Question;
 
-import java.net.URL;
-
-public class MCQController {
+public class MCQController extends Scenes.Questions.Question {
     public Label question;
     public Button firstAnswer;
     public Button secondAnswer;
@@ -32,17 +27,7 @@ public class MCQController {
         mcq = (MCQ<String>) questionT.getStatement();
 
         // Loading sub nodes
-        try {
-            tableAnchor.getChildren().setAll(
-                    (Node) FXMLLoader.load(
-                            (URL) Main.sceneManager.getSceneUrl("TablePlayer")));
-
-            topAnchor.getChildren().setAll(
-                    (Node) FXMLLoader.load(
-                            (URL) Main.sceneManager.getSceneUrl("TopBar")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        loadContentBar(tableAnchor, topAnchor);
 
         question.setText(questionT.getStatement().getText());
         firstAnswer.setText(((MCQ<?>) questionT.getStatement()).getAnswers().get(0));
@@ -69,17 +54,7 @@ public class MCQController {
         String selectAnswer = mcq.getAnswers().get(index);
         boolean result = mcq.checkAnswer(selectAnswer);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Dialog");
-
-        if (result) {
-            alert.setHeaderText("Wow ur good");
-            alert.setContentText("The answer was indeed " + selectAnswer);
-        } else {
-            alert.setHeaderText("boooh");
-            alert.setContentText("The real answer was " + mcq.getCorrectAnswer());
-        }
-        alert.showAndWait();
+        answerAlert(result, mcq.getCorrectAnswer());
 
         Main.game.handleResult(result);
     }

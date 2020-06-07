@@ -51,14 +51,6 @@ public class SceneManager {
             }
         }
     }
-/*
-    public void addScreen(String name, Scene scene) {
-        screenList.put(name, scene);
-    }
-
-    public void deleteScreen(String name) {
-        screenList.remove(name);
-    }*/
 
     /**
      * Active a screen and put it on top
@@ -73,13 +65,17 @@ public class SceneManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            System.out.println("\"" + name + "\" not found");
         }
     }
 
     public Serializable getSceneUrl(String name) {
         if (screenList.get(name) != null) {
             return screenList.get(name);
+        } else {
+            System.out.println("\"" + name + "\" not found");
+            return "";
         }
-        return "";
     }
 }
