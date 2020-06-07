@@ -19,6 +19,6 @@ public abstract class AbstractStatement<T> implements Statement<T> {
 
     @Override
     public String getCorrectAnswer() {
-        return (String) correctAnswer;
+        return correctAnswer.toString();
     }
 }

@@ -8,7 +8,7 @@
            AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="-7.0"
            AnchorPane.topAnchor="6.0"
            xmlns="http://javafx.com/javafx"
-           fx:controller="Scenes.Subscenes.TablePlayer.TablePlayer">
+           fx:controller="Scenes.Questions.Subscenes.TablePlayer.TablePlayer">
     <columns>
         <TableColumn fx:id="playerName" prefWidth="75.0" text="Players"/>
         <TableColumn fx:id="playerStatus" prefWidth="75.0" text="Status"/>

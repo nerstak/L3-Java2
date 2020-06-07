@@ -6,19 +6,19 @@
     },
     {
       "name": "MCQ",
-      "path": "src/Scenes/MCQ/MCQ.fxml"
+      "path": "src/Scenes/Questions/MCQ/MCQ.fxml"
     },
     {
       "name": "ThemeSelection",
       "path": "src/Scenes/ThemeSelection/ThemeSelection.fxml"
     },
     {
-      "name": "SA",
-      "path": "src/Scenes/SA/SA.fxml"
+      "name": "ShortAnswer",
+      "path": "src/Scenes/Questions/SA/SA.fxml"
     },
     {
-      "name": "TF",
-      "path": "src/Scenes/TF/TF.fxml"
+      "name": "TrueFalse",
+      "path": "src/Scenes/Questions/TF/TF.fxml"
     },
     {
       "name": "Transition",
@@ -26,11 +26,15 @@
     },
     {
       "name": "TablePlayer",
-      "path": "src/Scenes/Subscenes/TablePlayer/TablePlayer.fxml"
+      "path": "src/Scenes/Questions/Subscenes/TablePlayer/TablePlayer.fxml"
     },
     {
       "name": "TopBar",
-      "path": "src/Scenes/Subscenes/TopBar/TopBar.fxml"
+      "path": "src/Scenes/Questions/Subscenes/TopBar/TopBar.fxml"
+    },
+    {
+      "name": "FinalScreen",
+      "path": "src/Scenes/FinalScreen/FinalScreen.fxml"
     }
   ]
 }

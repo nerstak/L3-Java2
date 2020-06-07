@@ -94,11 +94,9 @@ public class Game implements  Serializable {
 		if (selectedQuestion.getStatement() instanceof MCQ) {
 			Main.sceneManager.activate("MCQ");
 		} else if (selectedQuestion.getStatement() instanceof TrueFalse) {
-			nextQuestion(); // TEMP: remove once TrueFalseController is created
-//			Main.sceneManager.activate("TrueFalse");
+			Main.sceneManager.activate("TrueFalse");
 		} else if (selectedQuestion.getStatement() instanceof ShortAnswer) {
-			nextQuestion(); // TEMP: remove once ShortAnswerController is created
-//			Main.sceneManager.activate("ShortAnswer");
+			Main.sceneManager.activate("ShortAnswer");
 		}
 	}
 

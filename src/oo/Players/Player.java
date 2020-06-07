@@ -3,11 +3,12 @@ package oo.Players;
 import oo.Game.PhaseEnum;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * Class player
  */
-public class Player implements Runnable, Serializable {
+public class Player implements Runnable,Serializable, Comparable<Player> {
     private final int number;
     private String name;
     private int score;
@@ -86,7 +87,6 @@ public class Player implements Runnable, Serializable {
         }
 
         durationTimer = durationTimer + currentTimer;
-        System.out.println(name + " " + durationTimer);
         currentTimer = 0;
         thread = null;
     }
@@ -116,6 +116,22 @@ public class Player implements Runnable, Serializable {
                 score += 5;
                 break;
             }
+        }
+    }
+
+    public static Comparator<Player> PlayerRanking = new Comparator<Player>() {
+        @Override
+        public int compare(Player o1, Player o2) {
+            return o1.compareTo(o2);
+        }
+    };
+
+    @Override
+    public int compareTo(Player o) {
+        if (this.score != o.score) {
+            return Integer.compare(this.score, o.score);
+        } else {
+            return Long.compare(this.durationTimer, o.durationTimer);
         }
     }
 }
