@@ -72,7 +72,7 @@ public class Game {
 	 * Execute the logic between a question and the next one
 	 */
 	public void nextQuestion () {
-		if (nextQuestions.size() <= 0)
+		while (nextQuestions.size() <= 0)
 			nextPhase();
 
 		chooseNextPlayer();
@@ -143,6 +143,8 @@ public class Game {
 			currentPhase = PhaseEnum.Phase2;
 		} else if (currentPhase == PhaseEnum.Phase2) {
 			currentPhase = PhaseEnum.Phase3;
+		} else if (currentPhase == PhaseEnum.Phase3) {
+			System.exit(0);
 		}
 	}
 
