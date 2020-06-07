@@ -13,10 +13,10 @@ public class Game {
 	private static Themes allThemes;
 
 	private ListQuestions nextQuestions;
+	private Question selectedQuestion;
 	private final SetPlayers listPlayers;
 	private final Themes themes;
 	private PhaseEnum currentPhase;
-	private SceneManager sceneManager;
 
 	public SetPlayers getListPlayers () {
 		return listPlayers;
@@ -32,6 +32,10 @@ public class Game {
 
 	public PhaseEnum getCurrentPhase () {
 		return currentPhase;
+	}
+
+	public Question getSelectedQuestion () {
+		return selectedQuestion;
 	}
 
 	/**
@@ -50,9 +54,6 @@ public class Game {
         themes = new Themes();
 		nextQuestions = new ListQuestions();
 		currentPhase = null;
-
-		nextPhase();
-		selectFourPlayersRandomly();
 	}
 
 	/**
@@ -61,28 +62,36 @@ public class Game {
 	 * @param isCorrect was the answer correct
 	 */
 	public void handleResult (boolean isCorrect) {
-		Main.sceneManager.activate("MCQ");
-		getCurrentPlayer().updateScore(currentPhase);
+		if (isCorrect)
+			getCurrentPlayer().updateScore(currentPhase);
+
 		nextQuestion();
 	}
 
 	/**
 	 * Execute the logic between a question and the next one
 	 */
-	private void nextQuestion () {
+	public void nextQuestion () {
 		if (nextQuestions.size() <= 0)
 			nextPhase();
+
 		chooseNextPlayer();
 
-		Question nextQuestion = nextQuestions.get(0);
-		// TODO: display depending on type of question (MCQ, TrueFalse, ShortAnswer)
-//		if (nextQuestion.getStatement() instanceof MCQ) {
-//			sceneManager.activate("MCQ", Question);
-//		} else if (nextQuestion.getStatement() instanceof TrueFalse) {
-//			sceneManager.activate("TrueFalse", Question);
-//		} else if (nextQuestion.getStatement() instanceof ShortAnswer) {
-//			sceneManager.activate("MCQ", ShortAnswer);
-//		}
+		System.out.println(nextQuestions.size());
+		System.out.println(themes.getAtIndex(0));
+
+		selectedQuestion = nextQuestions.get(0);
+		nextQuestions.deleteQuestion(0);
+
+		if (selectedQuestion.getStatement() instanceof MCQ) {
+			Main.sceneManager.activate("MCQ");
+		} else if (selectedQuestion.getStatement() instanceof TrueFalse) {
+			nextQuestion(); // TEMP: remove once TrueFalseController is created
+//			Main.sceneManager.activate("TrueFalse");
+		} else if (selectedQuestion.getStatement() instanceof ShortAnswer) {
+			nextQuestion(); // TEMP: remove once ShortAnswerController is created
+//			Main.sceneManager.activate("ShortAnswer");
+		}
 	}
 
 	/**
@@ -91,8 +100,8 @@ public class Game {
 	 * Finally, choose a new selected player among waiting players
 	 */
 	private void chooseNextPlayer() {
-		if (Main.game.getCurrentPlayer() != null) {
-			Main.game.getCurrentPlayer().setStatus(PlayerStatus.hasPlayed);
+		if (getCurrentPlayer() != null) {
+			getCurrentPlayer().setStatus(PlayerStatus.hasPlayed);
 		}
 
 		if (listPlayers.countPlayers(PlayerStatus.waiting) == 0) {
@@ -121,6 +130,7 @@ public class Game {
 		nextQuestions = new ListQuestions();
 
 		if (currentPhase == null) {
+			selectFourPlayersRandomly();
 			currentPhase = PhaseEnum.Phase1;
 			currentThemesIndex.add(allThemes.selectTheme(PhaseEnum.Phase1));
 			ListQuestions possibleQuestions = new ListQuestions(allThemes.getAtIndex(currentThemesIndex.get(0)));
