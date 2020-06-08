@@ -207,7 +207,7 @@ public class ListQuestions implements Serializable {
             } else if (question.getStatement() instanceof ShortAnswer) {
                 obj.put("type", "ShortAnswer");
             } else if (question.getStatement() instanceof TrueFalse) {
-                obj.put("type", "ShortAnswer");
+                obj.put("type", "TrueFalse");
             }
             obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
 
