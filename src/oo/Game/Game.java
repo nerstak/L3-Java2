@@ -76,16 +76,18 @@ public class Game implements Serializable {
 	 * Execute the logic between a question and the next one
 	 */
 	public void nextQuestion() {
-		while (nextThemes.size() <= 0) {
+		while (nextThemes.size() <= 0 && this.currentPhase != PhaseEnum.End) {
 			nextPhase();
 		}
 
-		chooseNextPlayer();
+		if (this.currentPhase != PhaseEnum.End) {
+			chooseNextPlayer();
 
-		if (currentPhase == PhaseEnum.Phase1 || currentPhase == PhaseEnum.Phase3) {
-			loadQuestion(0);
-		} else {
-			Main.sceneManager.activate("ThemeSelection");
+			if (currentPhase == PhaseEnum.Phase1 || currentPhase == PhaseEnum.Phase3) {
+				loadQuestion(0);
+			} else {
+				Main.sceneManager.activate("ThemeSelection");
+			}
 		}
 	}
 
@@ -150,8 +152,11 @@ public class Game implements Serializable {
 			currentPhase = PhaseEnum.Phase1;
 			selectFourPlayersRandomly();
 
+			// TODO: increase number of question to 8 or something like that
 			for (int i = 0; i < 4; i++) {
-				nextThemes.add(allThemes.getAtIndex(allThemes.selectTheme(PhaseEnum.Phase1)));
+				nextThemes.add(
+						allThemes.getAtIndex(
+								allThemes.selectTheme(PhaseEnum.Phase1)));
 			}
 		} else if (currentPhase == PhaseEnum.Phase1) {
 			// Going to phase2
@@ -175,7 +180,9 @@ public class Game implements Serializable {
 				nextThemes.add("technology");
 			}
 		} else if (currentPhase == PhaseEnum.Phase3) {
-			System.exit(0);
+			this.getCurrentPlayer().setStatus(PlayerStatus.waiting); // We stop the timer
+			this.currentPhase = PhaseEnum.End;
+			Main.sceneManager.activate("FinalScreen");
 		}
 	}
 

@@ -38,7 +38,7 @@
                     </columnResizePolicy>
                 </TableView>
                 <Label text="Congratulations!" GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                       GridPane.valignment="CENTER"/>
+                       GridPane.valignment="CENTER" styleClass="title"/>
                 <Button fx:id="restartButton" mnemonicParsing="false" onAction="#restartGame" prefHeight="45.0"
                         prefWidth="89.0" text="Restart" GridPane.columnIndex="2" GridPane.rowIndex="2">
                     <GridPane.margin>
