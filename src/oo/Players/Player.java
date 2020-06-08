@@ -15,7 +15,7 @@ public class Player implements Runnable,Serializable, Comparable<Player> {
     private PlayerStatus status;
     private long durationTimer;
     private long currentTimer;
-    private Thread thread;
+    private transient Thread thread;
 
     private volatile boolean stop;
 
@@ -26,7 +26,7 @@ public class Player implements Runnable,Serializable, Comparable<Player> {
         this.score = 0;
         this.number = globalPlayerNumber;
         globalPlayerNumber += 10;
-        this.status = PlayerStatus.inactive;
+        this.status = PlayerStatus.doNotPlay;
     }
     
     public Player(String name) {
@@ -34,7 +34,7 @@ public class Player implements Runnable,Serializable, Comparable<Player> {
         this.score = 0;
         this.number = globalPlayerNumber;
         globalPlayerNumber += 10;
-        this.status = PlayerStatus.inactive;
+        this.status = PlayerStatus.doNotPlay;
     }
 
     public Player(Player copy) {
