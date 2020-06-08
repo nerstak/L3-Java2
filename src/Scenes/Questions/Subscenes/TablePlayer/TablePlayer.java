@@ -10,6 +10,8 @@ import javafx.scene.control.TableView;
 import oo.Players.Player;
 import oo.Players.PlayerStatus;
 
+import static oo.Players.Player.PlayerStatusComparator;
+
 public class TablePlayer {
     @FXML
     private TableView<Player> personTable;
@@ -30,6 +32,7 @@ public class TablePlayer {
         observableList.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.eliminated));
         observableList.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.hasPlayed));
         observableList.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.selected));
+        observableList.sort(PlayerStatusComparator);
 
         personTable.setItems(observableList);
     }

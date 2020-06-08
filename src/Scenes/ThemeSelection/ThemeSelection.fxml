@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="366.0" prefWidth="591.0"
@@ -13,13 +12,9 @@
                     <children>
                         <Pane layoutY="3.0" prefHeight="393.0" prefWidth="468.0">
                             <children>
-                                <AnchorPane fx:id="topAnchor" layoutX="3.0" prefHeight="73.0" prefWidth="463.0">
-                                    <children>
-                                        <Label layoutX="184.0" layoutY="28.0" text="Select your theme"/>
-                                    </children>
-                                </AnchorPane>
-                                <VBox fx:id="choicesContainer" layoutX="3.0" layoutY="73.0" prefHeight="320.0"
-                                      prefWidth="463.0" alignment="CENTER" spacing="5"/>
+                                <AnchorPane fx:id="topAnchor" layoutX="3.0" prefHeight="73.0" prefWidth="463.0"/>
+                                <VBox fx:id="choicesContainer" alignment="CENTER" layoutX="3.0" layoutY="73.0"
+                                      prefHeight="320.0" prefWidth="463.0" spacing="5"/>
                             </children>
                         </Pane>
                     </children>

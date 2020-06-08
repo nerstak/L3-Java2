@@ -126,6 +126,13 @@ public class Player implements Runnable,Serializable, Comparable<Player> {
         }
     };
 
+    public static Comparator<Player> PlayerStatusComparator = new Comparator<Player>() {
+        @Override
+        public int compare(Player o1, Player o2) {
+            return o1.status.compareTo(o2.status);
+        }
+    };
+
     @Override
     public int compareTo(Player o) {
         if (this.score != o.score) {

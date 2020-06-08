@@ -1,16 +1,14 @@
 package Scenes.ThemeSelection;
 
 import Project.Main;
+import Scenes.Questions.Question;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import oo.Questions.Themes;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,6 +17,7 @@ public class ThemeSelectionController {
 	public VBox choicesContainer;
 	private final ArrayList<String> themesName;
 	public AnchorPane tableAnchor;
+	public AnchorPane topAnchor;
 
 	public ThemeSelectionController() {
 		themesName = new ArrayList<>();
@@ -31,14 +30,8 @@ public class ThemeSelectionController {
 
 	@FXML
 	private void initialize() {
-		// Table of player
-		try {
-			tableAnchor.getChildren().setAll(
-					(Node) FXMLLoader.load(
-							(URL) Main.sceneManager.getSceneUrl("TablePlayer")));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		// Subscenes
+		Question.loadContentBar(tableAnchor, topAnchor);
 
 		// Placing buttons
 		AtomicInteger i = new AtomicInteger();
