@@ -1,9 +1,10 @@
 package oo.Players;
 
-import Project.Main;
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Vector;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -69,7 +70,7 @@ public class SetPlayers implements Serializable {
     public List<Player> getWorstPlayers () {
         Supplier<Stream<Player>> inGamePlayers = () -> listPlayers
                 .stream()
-                .filter(player -> player.getStatus() != PlayerStatus.inactive);
+                .filter(player -> player.getStatus() == PlayerStatus.hasPlayed || player.getStatus() == PlayerStatus.waiting || player.getStatus() == PlayerStatus.selected);
 
         int minScore = inGamePlayers.get()
                 .min(Comparator.comparing(Player::getScore))
