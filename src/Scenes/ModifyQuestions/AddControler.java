@@ -28,25 +28,18 @@ public class AddControler {
         TextAnswer3.setEditable(false);
 
         typeQuestion.getItems().addAll("", "TrueFalse", "ShortAnswer", "MCQ");
-        typeQuestion.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                // if we want to add a MCQ, we have to be able to write different answers
-                if(typeQuestion.getItems().get((Integer) number2).equals("MCQ")){
-                    TextAnswer1.setEditable(true);
-                    TextAnswer2.setEditable(true);
-                    TextAnswer3.setEditable(true);
-                }
-                // if not, we should not be able to write in the TextFields (I reset them to prevent errors)
-                else
-                {
-                    TextAnswer1.setEditable(false);
-                    TextAnswer2.setEditable(false);
-                    TextAnswer3.setEditable(false);
-                    TextAnswer1.setText("");
-                    TextAnswer2.setText("");
-                    TextAnswer3.setText("");
-                }
+        typeQuestion.getSelectionModel().selectedIndexProperty().addListener((observableValue, number, number2) -> {
+            boolean itemEqualsMCQ = typeQuestion.getItems().get((Integer) number2).equals("MCQ");
+
+            // if we want to add a MCQ, we have to be able to write different answers
+            TextAnswer1.setEditable(itemEqualsMCQ);
+            TextAnswer2.setEditable(itemEqualsMCQ);
+            TextAnswer3.setEditable(itemEqualsMCQ);
+            // if not, we should not be able to write in the TextFields (I reset them to prevent errors)
+            if (!itemEqualsMCQ) {
+                TextAnswer1.setText("");
+                TextAnswer2.setText("");
+                TextAnswer3.setText("");
             }
         });
 
