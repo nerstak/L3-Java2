@@ -44,6 +44,10 @@ public class Game implements  Serializable {
 		return selectedQuestion;
 	}
 
+	public Themes getNextThemes () {
+		return nextThemes;
+	}
+
 	/**
 	 * Create a new Themes instance then call the method readThemes on it
 	 *
