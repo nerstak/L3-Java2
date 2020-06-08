@@ -72,16 +72,20 @@ public class ThemesController {
             ListQuestions listQuestions = new ListQuestions(themeSelected);
 
 // TODO: 08/06/2020 check the String can be converted into an int
-            
-            if(Integer.parseInt(deleting.getText()) > 0 && Integer.parseInt(deleting.getText()) <= listQuestions.getList().size()) {
-                listQuestions.deleteQuestion(Integer.parseInt(deleting.getText()) - 1);
-                deleting.setText("");
-                listQuestions.writeJson(themeSelected);
 
-                tab.setContent(instantiateTab(listQuestions));
+            try {
+                if(Integer.parseInt(deleting.getText()) > 0 && Integer.parseInt(deleting.getText()) <= listQuestions.getList().size()) {
+                    listQuestions.deleteQuestion(Integer.parseInt(deleting.getText()) - 1);
+                    deleting.setText("");
+                    listQuestions.writeJson(themeSelected);
+
+                    tab.setContent(instantiateTab(listQuestions));
+                }
+                else
+                    missingParameters("This Question does not exist, check again its index (from 1 to " + listQuestions.getList().size() + ")");
+            } catch (NumberFormatException e) {
+                missingParameters("You must request the NUMBER of the Question");
             }
-            else
-                missingParameters("This Question does not exist, check again its index (from 1 to " + listQuestions.getList().size() + ")");
 
         }
         else

@@ -188,8 +188,7 @@ public class ListQuestions {
             String absolutePath = (new File("README.md")).getAbsolutePath();
             String pathTheme = absolutePath.replace("README.md", "resources/json/themes.json");
 
-            //String path = pathTheme.replace("themes", theme);
-            String path = pathTheme.replace("themes", "test");
+            String path = pathTheme.replace("themes", theme);
             path = path.replace("\\", "/");
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
