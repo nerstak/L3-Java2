@@ -7,6 +7,7 @@ public enum PlayerStatus {
     eliminated("Eliminated"),
     waiting("Waiting"),
     hasPlayed("Has played"),
+    doNotPlay("Do not play"),
     inactive("Inactive");
 
     private final String meaning;
@@ -14,7 +15,6 @@ public enum PlayerStatus {
     PlayerStatus(String meaning) {
         this.meaning = meaning;
     }
-
 
     @Override
     public String toString() {
