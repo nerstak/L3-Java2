@@ -37,6 +37,14 @@ public class Player implements Runnable,Serializable, Comparable<Player> {
         this.status = PlayerStatus.inactive;
     }
 
+    public Player(Player copy) {
+        this.name = copy.name;
+        this.score = copy.score;
+        this.number = copy.number;
+        globalPlayerNumber += 10;
+        this.status = copy.status;
+    }
+
     public void setName(String s) {
         this.name = s;
     }
