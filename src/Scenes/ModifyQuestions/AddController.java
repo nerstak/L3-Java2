@@ -1,7 +1,6 @@
 package Scenes.ModifyQuestions;
 
 import Project.Main;
-import javafx.beans.value.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import oo.Game.Difficulty;
@@ -137,12 +136,7 @@ public class AddController {
         switch ((String) typeQuestion.getValue()){
             case "TrueFalse":
                 // just to be sure the answer corresponds to the json file
-                Boolean answer;
-                if (CorrectAnswer.getText().equalsIgnoreCase("true")) {
-                    answer = true;
-                } else {
-                    answer = false;
-                }
+                Boolean answer = CorrectAnswer.getText().equalsIgnoreCase("true");
                 s = new TrueFalse(Text.getText(), answer);
                 break;
 
