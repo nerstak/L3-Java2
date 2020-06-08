@@ -14,18 +14,13 @@ import java.util.ArrayList;
 public class Game implements  Serializable {
 	private final static Themes allThemes = initializeAllThemes();
 
-	private ListQuestions nextQuestions;
+	private Themes nextThemes;
 	private Question selectedQuestion;
 	private SetPlayers listPlayers;
-	private Themes themes;
 	private PhaseEnum currentPhase;
 
 	public SetPlayers getListPlayers () {
 		return listPlayers;
-	}
-
-	public Themes getThemes() {
-		return themes;
 	}
 
 	public Player getCurrentPlayer () {
@@ -53,18 +48,9 @@ public class Game implements  Serializable {
 
 	public Game () {
         listPlayers = new SetPlayers();
-        themes = new Themes();
-		nextQuestions = new ListQuestions();
+		nextThemes = new Themes();
+		selectedQuestion = null;
 		currentPhase = null;
-
-		// Exemple of save
-		/**
-		themes.readThemes();
-		System.out.println(themes.getAtIndex(0));
-		saveGame("hellow");
-		loadGame("hellow");
-		System.out.println(themes.getAtIndex(0));
-		 **/
 	}
 
 	/**
@@ -83,13 +69,18 @@ public class Game implements  Serializable {
 	 * Execute the logic between a question and the next one
 	 */
 	public void nextQuestion () {
-		while (nextQuestions.size() <= 0)
+		while (nextThemes.size() <= 0)
 			nextPhase();
 
 		chooseNextPlayer();
 
-		selectedQuestion = nextQuestions.get(0);
-		nextQuestions.deleteQuestion(0);
+		// TODO if in phase 2 : ask players to choose the themes he want in nextThemes
+		ListQuestions possibleQuestions = new ListQuestions(nextThemes.remove(0));
+		try {
+			selectedQuestion = possibleQuestions.selectQuestion(currentPhase);
+		} catch (ListQuestions.NoQuestionForDesiredPhaseException e) {
+			e.printStackTrace();
+		}
 
 		if (selectedQuestion.getStatement() instanceof MCQ) {
 			Main.sceneManager.activate("MCQ");
@@ -132,23 +123,33 @@ public class Game implements  Serializable {
 	 * Change the current phase and set variables linked to the new phase
 	 */
 	private void nextPhase () {
-		ArrayList<Integer> currentThemesIndex = new ArrayList<>();
-		nextQuestions = new ListQuestions();
+		nextThemes = new Themes();
 
 		if (currentPhase == null) {
-			selectFourPlayersRandomly();
 			currentPhase = PhaseEnum.Phase1;
-			currentThemesIndex.add(allThemes.selectTheme(PhaseEnum.Phase1));
-			ListQuestions possibleQuestions = new ListQuestions(allThemes.getAtIndex(currentThemesIndex.get(0)));
+			selectFourPlayersRandomly();
+
 			for (int i = 0; i < 4; i++) {
-				nextQuestions.addQuestion(possibleQuestions.selectQuestion(PhaseEnum.Phase1));
+				nextThemes.add(allThemes.getAtIndex(allThemes.selectTheme(PhaseEnum.Phase1)));
 			}
 		} else if (currentPhase == PhaseEnum.Phase1) {
-			// TODO: attendre la réponse du prof par rapport au fait qu'on a une méthode pour séléctionner 5 thèmes mais qu'il faut en séléctionner 6 pour la phase 2
-			// TODO: sélectionner 6 thèmes
 			currentPhase = PhaseEnum.Phase2;
+			listPlayers.eliminateWorstPlayer();
+
+			ArrayList<Integer> currentThemesIndex = allThemes.selectSixRandomThemes();
+			for (int currentThemeIndex : currentThemesIndex) {
+				nextThemes.add(allThemes.getAtIndex(currentThemeIndex));
+			}
 		} else if (currentPhase == PhaseEnum.Phase2) {
 			currentPhase = PhaseEnum.Phase3;
+			listPlayers.eliminateWorstPlayer();
+
+			// designer (that means us, developers :p) manually selected themes
+			for (int i = 0; i < 2; i++) {
+				nextThemes.add("gaming");
+				nextThemes.add("sciences");
+				nextThemes.add("technology");
+			}
 		} else if (currentPhase == PhaseEnum.Phase3) {
 			System.exit(0);
 		}
@@ -171,10 +172,9 @@ public class Game implements  Serializable {
 			ObjectInputStream in = new ObjectInputStream(file);
 
 			Game loadedGame = (Game)in.readObject();
-			this.nextQuestions = loadedGame.nextQuestions;
+			this.nextThemes = loadedGame.nextThemes;
 			this.selectedQuestion = loadedGame.selectedQuestion;
 			this.listPlayers = loadedGame.listPlayers;
-			this.themes = loadedGame.themes;
 			this.currentPhase = loadedGame.currentPhase;
 
 			in.close();
@@ -192,10 +192,5 @@ public class Game implements  Serializable {
 //	supprimé des choix aussitôt sélectionnés.
 //	Une question de niveau moyen (dans le thème choisi) est sélectionnée selon la politique Round-Robin
 //	et présentée au joueur.
-//	Le score du joueur qui donne la bonne réponse est incrémenté de 3.
-//	Phase III :
-//	Dans cette phase, le jeu se déroule entre les deux joueurs gagnants de la phase II. Les questions
-//	porteront sur trois thèmes choisis par le concepteur du jeu. Le score du joueur donnant la bonne
-//	réponse est incrémenté de 5.
 }
 
