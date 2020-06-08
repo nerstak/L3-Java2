@@ -240,8 +240,7 @@ public class Game implements Serializable {
         out.close();
         file.close();
     }
-
-    // TODO: 09/06/2020 use this method with "save" as name 
+    
     public void loadGame(String name) {
         try {
             FileInputStream file = new FileInputStream("resources/saves/" + name);
