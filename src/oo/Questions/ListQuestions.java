@@ -45,33 +45,25 @@ public class ListQuestions implements Serializable {
             AbstractStatement<?> s = null;
 
             // Creating the Statement
-            switch (tmp.getString("type")) {
-                case "MCQ": {
-                    try {
+            try {
+                switch (tmp.getString("type")) {
+                    case "MCQ":
                         s = new MCQ(tmp);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-                case "ShortAnswer": {
-                    try {
+                        break;
+
+                    case "ShortAnswer":
                         s = new ShortAnswer(tmp);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-                case "TrueFalse": {
-                    try {
+                        break;
+
+                    case "TrueFalse":
                         s = new TrueFalse(tmp);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
+                        break;
+
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + tmp.getString("type"));
                 }
-                default:
-                    throw new IllegalStateException("Unexpected value: " + tmp.getString("type"));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             if (s != null) {
