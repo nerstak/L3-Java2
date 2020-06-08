@@ -35,6 +35,14 @@
     {
       "name": "FinalScreen",
       "path": "src/Scenes/FinalScreen/FinalScreen.fxml"
+    },
+    {
+      "name": "Themes",
+      "path": "src/Scenes/AjouterSupprimer/Themes.fxml"
+    },
+    {
+      "name": "AddQuestion",
+      "path": "src/Scenes/AjouterSupprimer/AddQuestion.fxml"
     }
   ]
 }

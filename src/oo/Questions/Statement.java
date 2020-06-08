@@ -8,4 +8,6 @@ public interface Statement<T> {
     String getText();
 
     String getCorrectAnswer();
+
+    String getInstance();
 }

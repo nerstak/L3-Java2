@@ -2,6 +2,9 @@ package ProjectUtilities;
 
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -36,5 +39,17 @@ public class JSONParser {
         }
 
         return null;
+    }
+
+    public static boolean writeFile(JSONObject json, String name) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(resourcesPath + jsonPath + name + ".json")));
+            json.write(bw);
+            bw.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

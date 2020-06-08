@@ -76,7 +76,7 @@ public class Game implements Serializable {
 	 * Execute the logic between a question and the next one
 	 */
 	public void nextQuestion() {
-		while (nextThemes.size() <= 0 && this.currentPhase != PhaseEnum.End) {
+		while (nextThemes.getSize() <= 0 && this.currentPhase != PhaseEnum.End) {
 			nextPhase();
 		}
 
