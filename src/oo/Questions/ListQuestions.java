@@ -123,21 +123,13 @@ public class ListQuestions {
     }
 
     public void writeJson(String theme) {
-
         JSONObject object = new JSONObject();
         JSONArray questions = new JSONArray();
         for(Question<?> question : this.listQuestions)
         {
             JSONObject obj = new JSONObject();
 
-            if(question.getStatement() instanceof MCQ)
-                obj.put("type", "MCQ");
-            else if(question.getStatement() instanceof TrueFalse)
-                obj.put("type", "TrueFalse");
-            else
-                obj.put("type", "ShortAnswer");
-
-
+            // Difficulty
             switch (question.getDifficulty()) {
                 case easy: {
                     obj.put("difficulty", 1); break;
@@ -150,56 +142,29 @@ public class ListQuestions {
                 }
             }
 
+            // Text
             obj.put("text", question.getStatement().getText());
 
-            switch (question.getStatement().getType())
+            if(question.getStatement() instanceof MCQ)
             {
-                // MCQ
-                case 1: {
-                    JSONArray answers = new JSONArray();
-                    answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(0));
-                    answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(1));
-                    answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(2));
-                    obj.put("answers", answers);
-                    obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
-                    break;
-                }
-
-                // ShortAnswer
-                case 2: {
-                    obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
-                    break;
-                }
-
-                // TrueFalse
-                default: {
-                    if(question.getStatement().getCorrectAnswer().equalsIgnoreCase("true"))
-                        obj.put("correctAnswer", "True");
-                    else
-                        obj.put("correctAnswer", "False");
-                    break;
-                }
-
+                obj.put("type", "MCQ");
+                JSONArray answers = new JSONArray();
+                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(0));
+                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(1));
+                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(2));
+                obj.put("answers", answers);
+            } else if (question.getStatement() instanceof ShortAnswer) {
+                obj.put("type", "ShortAnswer");
+            } else if (question.getStatement() instanceof TrueFalse) {
+                obj.put("type", "ShortAnswer");
             }
+            obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
+
             questions.put(obj);
         }
         object.put("questions", questions);
 
-        try {
-            String absolutePath = (new File("README.md")).getAbsolutePath();
-            String pathTheme = absolutePath.replace("README.md", "resources/json/themes.json");
-
-            String path = pathTheme.replace("themes", theme);
-            path = path.replace("\\", "/");
-
-            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
-            object.write(bw);
-            bw.close();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        JSONParser.writeFile(object,theme);
     }
 
     public LinkedList<Question<?>> getList() {return this.listQuestions;}

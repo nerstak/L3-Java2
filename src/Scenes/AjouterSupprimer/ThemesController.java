@@ -3,6 +3,7 @@ package Scenes.AjouterSupprimer;
 import Project.Main;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import oo.Questions.ListQuestions;
@@ -39,10 +40,7 @@ public class ThemesController {
 
     @FXML
     private void changeLevel() {
-        switch (level.getValue().toString()) {
-
-            // TODO: 08/06/2020 modify the list I send and use instantiateTab
-            
+        switch ((String) level.getValue()) {
             case "easy": {
                 for(int i = 0; i < themes.getSize(); i++) {
                     Tab tab = themesInterface.getTabs().get(i);
@@ -119,7 +117,6 @@ public class ThemesController {
     }
 
     private TableView instantiateTab(ListQuestions listQuestions) {
-
         TableView<Question<?>> questionTable = new TableView<Question<?>>();
         questionTable.setPrefHeight(320);
         questionTable.setEditable(false);
@@ -142,37 +139,6 @@ public class ThemesController {
         return questionTable;
     }
 
-    private TableView instantiateTabLevel(ListQuestions listQuestions, String level) {
-        TableView<Question<?>> questionTable = new TableView<Question<?>>();
-        questionTable.setPrefHeight(320);
-        questionTable.setEditable(false);
-
-        TableColumn<Question<?>, String> typeColumn = new TableColumn<Question<?>, String>("Type");
-        TableColumn<Question<?>, String> difficultyColumn = new TableColumn<Question<?>, String>("Difficulty");
-        TableColumn<Question<?>, String> questionColumn = new TableColumn<Question<?>, String>("Questions");
-
-        questionTable.setItems(FXCollections.observableArrayList(listQuestions.getList()));
-        typeColumn.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(
-                c.getValue().getDifficulty().toString().equals(level) ?
-                        c.getValue().getStatement().getInstance() : null)));
-
-        difficultyColumn.setCellValueFactory(c -> new SimpleStringProperty(
-                c.getValue().getDifficulty().toString().equals(level) ?
-                        c.getValue().getDifficulty().toString() : null));
-
-        questionColumn.setCellValueFactory(c -> new SimpleStringProperty(
-                c.getValue().getDifficulty().toString().equals(level) ?
-                    c.getValue().getStatement().getText() : null));
-
-        typeColumn.setResizable(false);
-        difficultyColumn.setResizable(false);
-        questionColumn.setResizable(false);
-        questionColumn.setPrefWidth(755);
-
-        questionTable.getColumns().addAll(typeColumn, difficultyColumn, questionColumn);
-        return questionTable;
-    }
-
     @FXML
     private void handleButtonAdd(){
         Tab tab = themesInterface.getSelectionModel().getSelectedItem();
@@ -182,7 +148,6 @@ public class ThemesController {
 
     @FXML
     private void handleButtonDelete() {
-
         if(!deleting.getText().equals("")) {
             Tab tab = themesInterface.getSelectionModel().getSelectedItem();
             themeSelected = tab.getText();
@@ -248,14 +213,15 @@ public class ThemesController {
                     tab.setContent(instantiateTab(listQuestions));
                 }
                 else
-                    missingParameters("This Question does not exist, check again its index (from 1 to " + listQuestions.getList().size() + ")");
+                    missingParameters("This Question does not exist, check again its index (from 1 to " + listToShow.getList().size() + ")");
             } catch (NumberFormatException e) {
                 missingParameters("You must request the NUMBER of the Question");
             }
 
         }
-        else
+        else {
             missingParameters("You have to choose the Question you want to delete");
+        }
     }
 
     @FXML

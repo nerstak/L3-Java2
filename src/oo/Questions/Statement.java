@@ -9,7 +9,5 @@ public interface Statement<T> {
 
     String getCorrectAnswer();
 
-    int getType();
-
     String getInstance();
 }
