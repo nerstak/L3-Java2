@@ -1,5 +1,6 @@
 package oo.Questions;
 
+import Project.Main;
 import ProjectUtilities.JSONParser;
 import oo.Game.Difficulty;
 import oo.Game.PhaseEnum;
@@ -141,7 +142,13 @@ public class ListQuestions implements Serializable {
         System.out.println(this.toString());
     }
 
-    public Question<?> selectQuestion(PhaseEnum phaseEnum) {
+    public class NoQuestionForDesiredPhaseException extends Exception {
+        public NoQuestionForDesiredPhaseException (PhaseEnum desiredPhase) {
+            super("Couldn't find a question for the phase '" + desiredPhase + "' and according difficulty in question list");
+        }
+    }
+
+    public Question<?> selectQuestion(PhaseEnum phaseEnum) throws NoQuestionForDesiredPhaseException {
         ArrayList<Question<?>> filteredQuestions = (ArrayList<Question<?>>) switch (phaseEnum) {
             // TODO : utiliser la méthode round robin pour la première phase
             case Phase1 ->
@@ -155,6 +162,9 @@ public class ListQuestions implements Serializable {
                     .collect(Collectors.toList());
             default -> listQuestions;
         };
+
+        if (filteredQuestions.size() == 0)
+            throw new NoQuestionForDesiredPhaseException(Main.game.getCurrentPhase());
 
         Random random = new Random();
         int index = random.nextInt(filteredQuestions.size());
