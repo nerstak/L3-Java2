@@ -69,6 +69,11 @@ public class Game implements  Serializable {
 	 * Execute the logic between a question and the next one
 	 */
 	public void nextQuestion () {
+		try {
+			saveGame("save");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		while (nextThemes.size() <= 0)
 			nextPhase();
 
