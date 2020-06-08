@@ -7,6 +7,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 public class StartingController {
@@ -15,6 +17,7 @@ public class StartingController {
     public GridPane gridPane;
     public Button startButton;
     public Label descriptionLabel;
+    public Label setting;
 
     @FXML
     private void initialize() {
@@ -22,6 +25,7 @@ public class StartingController {
         welcomeLabel.setText("Welcome to the weakest link!");
         descriptionLabel.setAlignment(Pos.CENTER);
         descriptionLabel.setText("You and 3 of your friends have been selected to this game. You will have to play until there is only one of you left...");
+        //setting.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("file:resources/img/setting-icon.png"))));
     }
 
     @FXML
@@ -32,6 +36,11 @@ public class StartingController {
         alert.setContentText("Or do we?");
 
         alert.showAndWait();
+        Main.sceneManager.activate("Transition");
+    }
+
+    @FXML
+    private void settings() {
         Main.sceneManager.activate("Themes");
     }
 }

@@ -47,6 +47,6 @@ public class Main extends Application {
 
         // Scene manager
         sceneManager = new SceneManager(primaryStage);
-        sceneManager.activate("Themes");
+        sceneManager.activate("Starting");
     }
 }
