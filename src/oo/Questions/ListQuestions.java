@@ -4,9 +4,12 @@ import Project.Main;
 import ProjectUtilities.JSONParser;
 import oo.Game.Difficulty;
 import oo.Game.PhaseEnum;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.io.*;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -138,7 +141,7 @@ public class ListQuestions implements Serializable {
      * Display list of questions
      */
     public void display() {
-        System.out.println(this.toString());
+        System.out.println(this.toString());   //When in display, "ShortAnswer" is printed as "TrueFalse", but it doesn't not seems to impact the list
     }
 
     public class NoQuestionForDesiredPhaseException extends Exception {
@@ -169,4 +172,51 @@ public class ListQuestions implements Serializable {
         int index = (int) (Math.random() * filteredQuestions.size());
         return filteredQuestions.get(index);
     }
+
+    public void writeJson(String theme) {
+        JSONObject object = new JSONObject();
+        JSONArray questions = new JSONArray();
+        for(Question<?> question : this.listQuestions)
+        {
+            JSONObject obj = new JSONObject();
+
+            // Difficulty
+            switch (question.getDifficulty()) {
+                case easy: {
+                    obj.put("difficulty", 1); break;
+                }
+                case medium: {
+                    obj.put("difficulty", 2); break;
+                }
+                default: {
+                    obj.put("difficulty", 3); break;
+                }
+            }
+
+            // Text
+            obj.put("text", question.getStatement().getText());
+
+            if(question.getStatement() instanceof MCQ)
+            {
+                obj.put("type", "MCQ");
+                JSONArray answers = new JSONArray();
+                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(0));
+                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(1));
+                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(2));
+                obj.put("answers", answers);
+            } else if (question.getStatement() instanceof ShortAnswer) {
+                obj.put("type", "ShortAnswer");
+            } else if (question.getStatement() instanceof TrueFalse) {
+                obj.put("type", "ShortAnswer");
+            }
+            obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
+
+            questions.put(obj);
+        }
+        object.put("questions", questions);
+
+        JSONParser.writeFile(object,theme);
+    }
+
+    public LinkedList<Question<?>> getList() {return this.listQuestions;}
 }

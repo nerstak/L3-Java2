@@ -36,10 +36,6 @@ public class Themes implements Serializable {
         return indicator;
     }
 
-    public int size () {
-        return listThemes.size();
-    }
-
     public void add (String t) {
         listThemes.add(t);
     }

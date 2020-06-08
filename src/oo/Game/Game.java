@@ -99,7 +99,7 @@ public class Game implements Serializable {
 			e.printStackTrace();
 		}
 
-		if (nextThemes.size() <= 0) {
+		if (nextThemes.getSize() <= 0) {
 			if (currentPhase == PhaseEnum.DecideWorstPlayer) {
 				decideWorstPlayer();
 			}
