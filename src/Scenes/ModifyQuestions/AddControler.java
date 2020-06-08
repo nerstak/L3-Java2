@@ -8,7 +8,6 @@ import oo.Game.Difficulty;
 import oo.Questions.*;
 
 public class AddControler {
-
     @FXML
     public TextField TextAnswer1;
     public TextField TextAnswer2;
@@ -21,7 +20,7 @@ public class AddControler {
     private String errorMsg = "";
 
     @FXML
-    private void initialize() {
+    private void initialize () {
 
         TextAnswer1.setEditable(false);
         TextAnswer2.setEditable(false);
@@ -43,18 +42,17 @@ public class AddControler {
             }
         });
 
-
         difficulty.getItems().addAll("", 1, 2, 3);
-
     }
 
     @FXML
-    private void handleButtonBack() {Main.sceneManager.activate("Themes");}
+    private void handleButtonBack () {
+        Main.sceneManager.activate("Themes");
+    }
 
     @FXML
-    private void handleButtonAdd(){
-        if(checkAll())
-        {
+    private void handleButtonAdd () {
+        if (checkAll()) {
             creatingNewQuestion();
             difficulty.getSelectionModel().select(0);
             typeQuestion.getSelectionModel().select(0);
@@ -66,19 +64,18 @@ public class AddControler {
         }
     }
 
-    private boolean checkAll(){
-
+    private boolean checkAll () {
         errorMsg = "";
 
         // all of this is just to have a message with all the errors to print
-        if(difficulty.getValue() == null)
+        if (difficulty.getValue() == null)
             errorMsg += "difficulty is NULL\n";
-        if(Text.getText().equals(""))
+        if (Text.getText().equals(""))
             errorMsg += "There is no Text\n";
         boolean check = checkType();
 
         // if we have a difficulty, a text and the question correct
-        if(difficulty.getValue() != null && !Text.getText().equals("") && check)
+        if (difficulty.getValue() != null && !Text.getText().equals("") && check)
             return true;
 
         missingParameters();
@@ -86,19 +83,16 @@ public class AddControler {
     }
 
 
-    private boolean checkType(){
-        if(CorrectAnswer.getText().equals("") || typeQuestion.getValue() == null)
-        {
-            if(typeQuestion.getValue() == null)
+    private boolean checkType () {
+        if (CorrectAnswer.getText().equals("") || typeQuestion.getValue() == null) {
+            if (typeQuestion.getValue() == null)
                 errorMsg += "Which type of Question do you want?\n";
 
-            if(CorrectAnswer.getText().equals(""))
+            if (CorrectAnswer.getText().equals(""))
                 errorMsg += "There is no Correct Answer\n";
 
             return false;
-        }
-        else
-        {
+        } else {
             switch ((String) typeQuestion.getValue()) {
 
                 // case TrueFalse : it must true or false
@@ -111,8 +105,7 @@ public class AddControler {
                 }
 
                 // case MCQ : the answer has to be in the list of the different proposed answers
-                case "MCQ" : {
-
+                case "MCQ" :
                     // each answer is different from the others
                     if(TextAnswer1.getText().equals(TextAnswer2.getText())
                             || TextAnswer1.getText().equals(TextAnswer3.getText())
@@ -129,52 +122,43 @@ public class AddControler {
 
                     errorMsg += "There must be a Correct Answer !\n";
                     return false;
-                }
 
                 // case ShortAnswer : if there is an answer it is good
-                default : {
+                default :
                     return true;
-                }
             }
         }
     }
 
-
-    private void creatingNewQuestion(){
-        AbstractStatement<?> s = null;
+    private void creatingNewQuestion () {
+        AbstractStatement<?> s;
         ListQuestions lq = new ListQuestions(ThemesController.getThemeSelected());
         switch ((String) typeQuestion.getValue()){
-
-            case "TrueFalse": {
-
+            case "TrueFalse":
                 // just to be sure the answer corresponds to the json file
                 Boolean answer;
-                if(CorrectAnswer.getText().equalsIgnoreCase("true"))
+                if (CorrectAnswer.getText().equalsIgnoreCase("true")) {
                     answer = true;
-                else
+                } else {
                     answer = false;
-
+                }
                 s = new TrueFalse(Text.getText(), answer);
                 break;
-            }
 
-            case "MCQ": {
+            case "MCQ":
                 s = new MCQ(Text.getText(), TextAnswer1.getText(), TextAnswer2.getText(), TextAnswer3.getText(), CorrectAnswer.getText());
                 break;
-            }
 
-            default: {
+            default:
                 s = new ShortAnswer(Text.getText(), CorrectAnswer.getText());
                 break;
-            }
         }
-
         lq.addQuestion(new Question(s, ThemesController.getThemeSelected(), Difficulty.fromInteger((Integer) difficulty.getValue()) ));
         lq.writeJson(ThemesController.getThemeSelected());
     }
 
     @FXML
-    private void missingParameters(){
+    private void missingParameters () {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Error in creation of a Question");
         alert.setHeaderText("There are some points you have to modify !");
