@@ -20,7 +20,7 @@ public class Game implements  Serializable {
 	private transient Question selectedQuestion;
 	private SetPlayers listPlayers;
 	private PhaseEnum currentPhase;
-	boolean playerHasBeenEliminated;
+	boolean eliminationDone;
 
 	private PhaseEnum phaseBeforeDeciding;
 	private Integer turnLeftBeforeDeciding;
@@ -64,7 +64,7 @@ public class Game implements  Serializable {
 		nextThemes = new Themes();
 		selectedQuestion = null;
 		currentPhase = null;
-		playerHasBeenEliminated = false;
+		eliminationDone = false;
 
 		phaseBeforeDeciding = null;
 		turnLeftBeforeDeciding = null;
@@ -167,7 +167,7 @@ public class Game implements  Serializable {
 			}
 			nextQuestion();
 			return;
-		} else if (!playerHasBeenEliminated) {
+		} else if (!eliminationDone) {
 			/**
 			// Test to see what happens if two players are at equality
 			Vector<Player> r1 = listPlayers.selectPlayers(PlayerStatus.hasPlayed);
