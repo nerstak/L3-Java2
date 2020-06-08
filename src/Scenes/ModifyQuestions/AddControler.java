@@ -1,4 +1,4 @@
-package Scenes.AjouterSupprimer;
+package Scenes.ModifyQuestions;
 
 import Project.Main;
 import javafx.beans.value.*;
