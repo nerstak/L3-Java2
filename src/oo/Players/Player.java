@@ -49,6 +49,14 @@ public class Player implements Runnable,Serializable, Comparable<Player> {
         this.name = s;
     }
 
+    public void setDurationTimer (long dt) {
+        this.durationTimer = dt;
+    }
+
+    public void setScore (int s) {
+        this.score = s;
+    }
+
     public void setStatus(PlayerStatus p) {
         status = p;
         if (status == PlayerStatus.selected) {
