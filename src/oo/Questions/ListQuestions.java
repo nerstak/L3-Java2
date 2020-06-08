@@ -161,6 +161,7 @@ public class ListQuestions {
                     answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(1));
                     answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(2));
                     obj.put("answers", answers);
+                    obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
                     break;
                 }
 

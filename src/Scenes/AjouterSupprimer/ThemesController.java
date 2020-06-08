@@ -27,7 +27,7 @@ public class ThemesController {
     @FXML
     private void initialize() {
         deleting.setText("");
-        level.getItems().addAll("", "easy", "medium", "hard");
+        level.getItems().addAll(" ", "easy", "medium", "hard");
 
         for(int i = 0; i < themes.getSize(); i++) {
             Tab tab = new Tab(themes.getAtIndex(i));
@@ -39,7 +39,7 @@ public class ThemesController {
 
     @FXML
     private void changeLevel() {
-        switch ((String) level.getValue()) {
+        switch (level.getValue().toString()) {
 
             // TODO: 08/06/2020 modify the list I send and use instantiateTab
             
@@ -187,11 +187,62 @@ public class ThemesController {
             Tab tab = themesInterface.getSelectionModel().getSelectedItem();
             themeSelected = tab.getText();
             ListQuestions listQuestions = new ListQuestions(themeSelected);
+            ListQuestions listToShow = new ListQuestions(themeSelected);
+
+            // have a list corresponding of the table
+            switch (level.getSelectionModel().getSelectedIndex()) {
+                case 1: {
+                    for(int i = 0; i < listToShow.getList().size(); i++)
+                    {
+                        if(listToShow.getList().get(i).getDifficulty() != Difficulty.easy)
+                        {
+                            listToShow.deleteQuestion(i);
+                            i = -1;
+                        }
+                    }
+                    break;
+                }
+
+                case 2: {
+                    for(int i = 0; i < listToShow.getList().size(); i++)
+                    {
+                        if(listToShow.getList().get(i).getDifficulty() != Difficulty.medium)
+                        {
+                            listToShow.deleteQuestion(i);
+                            i = -1;
+                        }
+                    }
+                    break;
+                }
+
+                case 3: {
+                    for(int i = 0; i < listToShow.getList().size(); i++)
+                    {
+                        if(listToShow.getList().get(i).getDifficulty() != Difficulty.hard)
+                        {
+                            listToShow.deleteQuestion(i);
+                            i = -1;
+                        }
+                    }
+                    break;
+                }
+
+                default: {
+                    break;
+                }
+            }
 
             try {
-                if(Integer.parseInt(deleting.getText()) > 0 && Integer.parseInt(deleting.getText()) <= listQuestions.getList().size()) {
-                    listQuestions.deleteQuestion(Integer.parseInt(deleting.getText()) - 1);
+                if(Integer.parseInt(deleting.getText()) > 0 && Integer.parseInt(deleting.getText()) <= listToShow.getList().size()) {
+
+                    int i = 0;
+                    while(!listToShow.getList().get(Integer.parseInt(deleting.getText()) - 1).getStatement().getText().equals(listQuestions.getList().get(i).getStatement().getText()))
+                        i++;
+
+                    listQuestions.deleteQuestion(i);
+                    //listQuestions.deleteQuestion(Integer.parseInt(deleting.getText()) - 1);
                     deleting.setText("");
+                    level.getSelectionModel().select(0);
                     listQuestions.writeJson(themeSelected);
 
                     tab.setContent(instantiateTab(listQuestions));
