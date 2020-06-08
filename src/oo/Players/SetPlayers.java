@@ -69,16 +69,16 @@ public class SetPlayers implements Serializable {
     public List<Player> getWorstPlayers () {
         Supplier<Stream<Player>> inGamePlayers = () -> listPlayers
                 .stream()
-                .filter(player -> player.getStatus() == PlayerStatus.hasPlayed || player.getStatus() == PlayerStatus.waiting);
+                .filter(player -> player.getStatus() == PlayerStatus.hasPlayed || player.getStatus() == PlayerStatus.waiting || player.getStatus() == PlayerStatus.selected);
 
         int minScore = inGamePlayers.get()
-                .min((p1, p2) -> p2.getScore() - p1.getScore())
+                .min(Comparator.comparing(Player::getScore))
                 .orElseThrow(NoSuchElementException::new)
                 .getScore();
 
         long maxTimerWithMinScore = inGamePlayers.get()
                 .filter(player -> player.getScore() == minScore)
-                .max((p1, p2) -> Long.compare(p2.getTimer(), p1.getTimer()))
+                .max(Comparator.comparingLong(Player::getTimer))
                 .orElseThrow(NoSuchElementException::new)
                 .getTimer();
 
