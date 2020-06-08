@@ -156,7 +156,6 @@ public class Game implements  Serializable {
 	 * Change the current phase and set variables linked to the new phase
 	 */
 	private void nextPhase () {
-		nextThemes = new Themes();
 		if (currentPhase == null) {
 			currentPhase = PhaseEnum.Phase1;
 			selectFourPlayersRandomly();
@@ -177,11 +176,13 @@ public class Game implements  Serializable {
 			r1.get(1).setScore(0);
 			r1.get(1).setDurationTimer(100000);
 			 **/
+			eliminationDone = true;
 			eliminateWorstPlayer();
-			playerHasBeenEliminated = true;
 			return;
 		}
-		playerHasBeenEliminated = false;
+
+		eliminationDone = false;
+		nextThemes = new Themes();
 
 		switch (currentPhase) {
 			case Phase1:
@@ -194,7 +195,6 @@ public class Game implements  Serializable {
 
 			case Phase2:
 				currentPhase = PhaseEnum.Phase3;
-				eliminateWorstPlayer();
 				// designer (that means us, developers :p) manually selected themes
 				for (int i = 0; i < 2; i++) {
 					nextThemes.add("gaming");
@@ -204,7 +204,6 @@ public class Game implements  Serializable {
 				break;
 
 			case Phase3:
-				eliminateWorstPlayer();
 				System.exit(0);
 				break;
 		}
