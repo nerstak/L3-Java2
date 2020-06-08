@@ -64,6 +64,13 @@ public class Game implements  Serializable {
 		nextThemes = new Themes();
 		selectedQuestion = null;
 		currentPhase = null;
+		playerHasBeenEliminated = false;
+
+		phaseBeforeDeciding = null;
+		turnLeftBeforeDeciding = null;
+		Integer scoreBeforeDeciding = null;
+		Long timerBeforeDeciding = null;
+		worstPlayers = null;
 	}
 
 	/**
