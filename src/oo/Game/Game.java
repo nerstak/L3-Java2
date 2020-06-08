@@ -190,17 +190,10 @@ public class Game implements Serializable {
 			nextQuestion();
 			return;
 		} else if (!eliminationDone) {
-			/**
-			// Test to see what happens if two players are at equality
-			Vector<Player> r1 = listPlayers.selectPlayers(PlayerStatus.hasPlayed);
-			System.out.println(r1.get(0).getName());
-			System.out.println(r1.get(1).getName());
-			r1.get(0).setScore(0);
-			r1.get(0).setDurationTimer(100000);
-			r1.get(1).setScore(0);
-			r1.get(1).setDurationTimer(100000);
-			 **/
 			eliminationDone = true;
+			if (getCurrentPlayer() != null) {
+				getCurrentPlayer().setStatus(PlayerStatus.hasPlayed);
+			}
 			eliminateWorstPlayer();
 			return;
 		}
