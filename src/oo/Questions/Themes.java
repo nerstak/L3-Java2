@@ -13,7 +13,6 @@ public class Themes implements Serializable {
 
     public Themes() {
         listThemes = new ArrayList<>();
-        readThemes();
     }
 
     public int getSize() {
@@ -34,6 +33,18 @@ public class Themes implements Serializable {
 
     public int getIndicator() {
         return indicator;
+    }
+
+    public int size () {
+        return listThemes.size();
+    }
+
+    public void add (String t) {
+        listThemes.add(t);
+    }
+
+    public String remove (int index) {
+        return listThemes.remove(index);
     }
 
     public String getAtIndex(int index) {
@@ -119,10 +130,9 @@ public class Themes implements Serializable {
     /**
      * Select 5 random themes
      *
-     * @param phase current phase, determine the rules to select themes
      * @return 5 index of selected themes
      */
-    public ArrayList<Integer> selectFiveRandomThemes(PhaseEnum phase) {
+    public ArrayList<Integer> selectFiveRandomThemes() {
     	ArrayList<Integer> themesIndex = new ArrayList<Integer>();
     	int newIndex;
     	for (int i = 0; i < 5; i++) {
@@ -132,5 +142,22 @@ public class Themes implements Serializable {
     		themesIndex.add(newIndex);
     	}
     	return themesIndex;
+    }
+
+    /**
+     * Select 6 random themes
+     *
+     * @return 6 index of selected themes
+     */
+    public ArrayList<Integer> selectSixRandomThemes() {
+        ArrayList<Integer> themesIndex = new ArrayList<Integer>();
+        int newIndex;
+        for (int i = 0; i < 6; i++) {
+            do {
+                newIndex = (int) (Math.random() * listThemes.size());
+            } while (themesIndex.contains(newIndex));
+            themesIndex.add(newIndex);
+        }
+        return themesIndex;
     }
 }
