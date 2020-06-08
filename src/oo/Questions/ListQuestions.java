@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -149,7 +150,7 @@ public class ListQuestions implements Serializable {
     }
 
     public Question<?> selectQuestion(PhaseEnum phaseEnum) throws NoQuestionForDesiredPhaseException {
-        ArrayList<Question<?>> filteredQuestions = (ArrayList<Question<?>>) switch (phaseEnum) {
+        List<Question<?>> filteredQuestions = switch (phaseEnum) {
             // TODO : utiliser la méthode round robin pour la première phase
             case Phase1 ->
                     listQuestions
