@@ -10,7 +10,6 @@ import javafx.scene.layout.VBox;
 import oo.Questions.Themes;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThemeSelectionController {
 	@FXML
@@ -34,17 +33,19 @@ public class ThemeSelectionController {
 		Question.loadContentBar(tableAnchor, topAnchor);
 
 		// Placing buttons
-		AtomicInteger i = new AtomicInteger();
+		int i = 0;
 		for (String fileName : themesName) {
 			Button tb = new Button(fileName.substring(0, 1).toUpperCase() + fileName.substring(1));
 			tb.setPrefWidth(150);
 			tb.setPrefHeight(40);
 			tb.setPadding(new Insets(5, 10, 5, 10));
 
+			int finalI = i;
 			tb.setOnMouseClicked(e -> {
-				Main.game.loadQuestion(i.getAndIncrement());
+				Main.game.loadQuestion(finalI);
 			});
 
+			i++;
 			choicesContainer.getChildren().add(tb);
 		}
 	}
