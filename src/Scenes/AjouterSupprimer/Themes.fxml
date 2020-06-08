@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="458.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.AjouterSupprimer.ThemesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Scenes.AjouterSupprimer.ThemesController">
    <children>
-      <TabPane fx:id="themesInterface" layoutX="5.0" layoutY="5.0" prefHeight="398.0" prefWidth="915.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="themesInterface" prefHeight="419.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
       </TabPane>
-       <Pane fx:id="panButton" layoutX="10.0" layoutY="400.0" prefHeight="42.0" prefWidth="890.0">
+       <Pane fx:id="panButton" layoutY="419.0" prefHeight="42.0" prefWidth="800.0">
            <children>
                <Button layoutX="148.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleButtonAdd" text="Add">
                <font>

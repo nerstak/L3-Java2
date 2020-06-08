@@ -20,7 +20,7 @@ Download and install the JDK 14. It may be an auto-download in your IDE paramete
 
 #### JavaFX
 
-Download (JavaFX 14)[https://gluonhq.com/products/javafx/]. It is the library used to handle the GUI.
+Download [JavaFX 14](https://gluonhq.com/products/javafx/). It is the library used to handle the GUI.
 
 #### org.json
 
@@ -40,7 +40,7 @@ If asked, select the JDK 14.
 #### Installing the libraries
 
 First, place libraries in a known folder (`lib` is a good one), and add them to your Java project (for JavaFX, you have to select the inner `lib` folder). This manipulation mays depends on your development environment.
-For JavaFX, you will need to go further and follow the (tutorial)[https://openjfx.io/openjfx-docs/], depending on your IDE (check the section *Non-modular from IDE* corresponding to yours, from step 2). Be careful when adding the path in the VM options, it needs to be absolute.
+For JavaFX, you will need to go further and follow the [tutorial](https://openjfx.io/openjfx-docs/), depending on your IDE (check the section *Non-modular from IDE* corresponding to yours, from step 2). Be careful when adding the path in the VM options, it needs to be absolute.
 
 ## Usage <a name = "usage"></a>
 

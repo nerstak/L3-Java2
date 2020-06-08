@@ -1,15 +1,20 @@
 package oo.Questions;
 
+import Project.Main;
 import ProjectUtilities.JSONParser;
 import oo.Game.Difficulty;
+import oo.Game.PhaseEnum;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class ListQuestions {
+public class ListQuestions implements Serializable {
     private final LinkedList<Question<?>> listQuestions;
     private final int selected = -1;
 
@@ -20,6 +25,10 @@ public class ListQuestions {
         if (json != null) {
             readQuestionJSON(json, theme);
         }
+    }
+
+    public ListQuestions() {
+        listQuestions = new LinkedList<>();
     }
 
     /**
@@ -91,6 +100,25 @@ public class ListQuestions {
     }
 
     /**
+     * Get the size of the list of questions
+     *
+     * @return the size of the list of the questions
+     */
+    public int size() {
+        return listQuestions.size();
+    }
+
+    /**
+     * Get the question at a desired index
+     *
+     * @param i the index of the question
+     * @return the question at the desired index
+     */
+    public Question get (int i) {
+        return listQuestions.get(i);
+    }
+
+    /**
      * Remove a question at specified index
      *
      * @param n Index
@@ -116,10 +144,33 @@ public class ListQuestions {
         System.out.println(this.toString());   //When in display, "ShortAnswer" is printed as "TrueFalse", but it doesn't not seems to impact the list
     }
 
-    // TODO: NOT compliant, should be changed to respect book of charges
-    public Question<?> selectQuestion() {
-        int index = (int) (Math.random() * listQuestions.size());
-        return listQuestions.get(index);
+    public class NoQuestionForDesiredPhaseException extends Exception {
+        public NoQuestionForDesiredPhaseException (PhaseEnum desiredPhase) {
+            super("Couldn't find a question for the phase '" + desiredPhase + "' and according difficulty in question list");
+        }
+    }
+
+    public Question<?> selectQuestion(PhaseEnum phaseEnum) throws NoQuestionForDesiredPhaseException {
+        List<Question<?>> filteredQuestions = switch (phaseEnum) {
+            // TODO : utiliser la méthode round robin pour la première phase
+            case Phase1 ->
+                    listQuestions
+                    .stream()
+                    .filter(q -> q.getDifficulty() == Difficulty.easy)
+                    .collect(Collectors.toList());
+            case Phase2 -> listQuestions
+                    .stream()
+                    .filter(q -> q.getDifficulty() == Difficulty.medium)
+                    .collect(Collectors.toList());
+            default -> listQuestions;
+        };
+
+        if (filteredQuestions.size() == 0)
+            throw new NoQuestionForDesiredPhaseException(Main.game.getCurrentPhase());
+
+        // We use Math.random as we need a different seed every time
+        int index = (int) (Math.random() * filteredQuestions.size());
+        return filteredQuestions.get(index);
     }
 
     public void writeJson(String theme) {

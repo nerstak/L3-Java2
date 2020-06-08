@@ -4,26 +4,31 @@ import ProjectUtilities.JSONParser;
 import oo.Game.PhaseEnum;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Themes {
+public class Themes implements Serializable {
     private final ArrayList<String> listThemes;
     private int indicator = -1;
 
     public Themes() {
         listThemes = new ArrayList<>();
-        readThemes();
+    }
+
+    public int getSize() {
+        return listThemes.size();
     }
 
     /**
      * Read list of every themes
      */
-    private void readThemes() {
+    public void readThemes() {
         JSONObject themes = JSONParser.parseFile("themes.json");
-        assert themes != null;
-        listThemes.clear();
-        for (Object j : themes.getJSONArray("themes")) {
-            listThemes.add(String.valueOf(j));
+        if (themes != null) {
+            listThemes.clear();
+            for (Object j : themes.getJSONArray("themes")) {
+                listThemes.add(String.valueOf(j));
+            }
         }
     }
 
@@ -31,7 +36,17 @@ public class Themes {
         return indicator;
     }
 
-    public int getSize() {return listThemes.size();}
+    public int size () {
+        return listThemes.size();
+    }
+
+    public void add (String t) {
+        listThemes.add(t);
+    }
+
+    public String remove (int index) {
+        return listThemes.remove(index);
+    }
 
     public String getAtIndex(int index) {
         if (index >= 0 && index < listThemes.size()) {
@@ -90,29 +105,56 @@ public class Themes {
     }
 
     /**
-     * Select a theme (for the moment, only in sequential order
+     * Select a theme
      *
      * @return Index of the theme selected
      */
     public int selectTheme(PhaseEnum phase) {
-        //TODO: Should depends on the phase: 1 -> sequential; 2 -> Random; 3 -> Preselected
-        if (phase == PhaseEnum.Phase1) {
+        if (phase == PhaseEnum.Phase1 || phase == PhaseEnum.Phase3) {
             if (indicator < 0) {
                 indicator = 0;
             } else {
-                indicator = indicator++ % listThemes.size();
+                indicator = ++indicator % listThemes.size();
             }
         } else if (phase == PhaseEnum.Phase2) {
-            int newI;
-            do {
-                newI = (int) (Math.random() * listThemes.size());
-            } while (indicator == newI);
-            indicator = newI;
+            indicator = -1;
         }
 
         return indicator;
     }
+    
+    /**
+     * Select 5 random themes
+     *
+     * @return 5 index of selected themes
+     */
+    public ArrayList<Integer> selectFiveRandomThemes() {
+    	ArrayList<Integer> themesIndex = new ArrayList<Integer>();
+    	int newIndex;
+    	for (int i = 0; i < 5; i++) {
+    		do {
+    			newIndex = (int) (Math.random() * listThemes.size()); 
+    		} while (themesIndex.contains(newIndex));
+    		themesIndex.add(newIndex);
+    	}
+    	return themesIndex;
+    }
 
-    //TODO: SelectFiveThemes()
+    /**
+     * Select 6 random themes
+     *
+     * @return 6 index of selected themes
+     */
+    public ArrayList<Integer> selectSixRandomThemes() {
+        ArrayList<Integer> themesIndex = new ArrayList<>();
 
+        for (int i = 0; i < 6; i++) {
+            int newIndex;
+            do {
+                newIndex = (int) (Math.random() * listThemes.size());
+            } while (themesIndex.contains(newIndex));
+            themesIndex.add(newIndex);
+        }
+        return themesIndex;
+    }
 }

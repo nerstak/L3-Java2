@@ -25,6 +25,10 @@ public class ThemesController {
     private ComboBox<String> level;
 
 
+    public ThemesController() {
+        themes.readThemes();
+    }
+
     @FXML
     private void initialize() {
         deleting.setText("");

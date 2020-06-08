@@ -22,6 +22,18 @@
         "1968"
       ],
       "correctAnswer": "1971"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "2",
+      "text": "In which decade was the American Institute of Electrical Engineers (AIEE) founded?",
+      "answers": [
+        "1850",
+        "1880",
+        "1930",
+		"1950"
+      ],
+      "correctAnswer": "1880"
     }
   ]
 }

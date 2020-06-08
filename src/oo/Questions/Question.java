@@ -2,7 +2,9 @@ package oo.Questions;
 
 import oo.Game.Difficulty;
 
-public class Question<T extends AbstractStatement<T>> {
+import java.io.Serializable;
+
+public class Question<T extends AbstractStatement<T>> implements Serializable {
     private final int number;
     private final String theme;
     private final Difficulty difficulty;
@@ -46,5 +48,5 @@ public class Question<T extends AbstractStatement<T>> {
         System.out.println(this.toString());
     }
 
-    // TODO: input() ??? No idea what it means
+    // Input() does not exists as the application is GUI-based and not CLI-based
 }
