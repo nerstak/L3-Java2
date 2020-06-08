@@ -229,7 +229,14 @@ public class Game implements Serializable {
 
 			case Phase3:
 				this.currentPhase = PhaseEnum.End;
-				this.getCurrentPlayer().setStatus(PlayerStatus.waiting); // We stop the timer
+
+				// Select winner
+				if (this.getCurrentPlayer() != null) {
+					this.getCurrentPlayer().setStatus(PlayerStatus.winner);
+				} else if (listPlayers.selectPlayer(PlayerStatus.hasPlayed) != null) {
+					listPlayers.selectPlayer(PlayerStatus.hasPlayed).setStatus(PlayerStatus.winner);
+				}
+				this.getCurrentPlayer().setStatus(PlayerStatus.waiting);
 				Main.sceneManager.activate("FinalScreen");
 				break;
 		}
