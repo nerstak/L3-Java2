@@ -9,6 +9,8 @@ import oo.Questions.ListQuestions;
 import oo.Questions.Question;
 import oo.Questions.Themes;
 
+import oo.Game.Difficulty;
+
 
 public class ThemesController {
     private Themes themes = new Themes();
@@ -18,17 +20,101 @@ public class ThemesController {
     private TabPane themesInterface;
     @FXML
     private TextField deleting;
+    @FXML
+    private ComboBox<String> level;
 
 
     @FXML
     private void initialize() {
         deleting.setText("");
+        level.getItems().addAll("", "easy", "medium", "hard");
 
         for(int i = 0; i < themes.getSize(); i++) {
             Tab tab = new Tab(themes.getAtIndex(i));
             ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
             tab.setContent(instantiateTab(listQuestions));
             themesInterface.getTabs().add(tab);
+        }
+    }
+
+    @FXML
+    private void changeLevel() {
+        switch ((String) level.getValue()) {
+
+            // TODO: 08/06/2020 modify the list I send and use instantiateTab
+            
+            case "easy": {
+                for(int i = 0; i < themes.getSize(); i++) {
+                    Tab tab = themesInterface.getTabs().get(i);
+                    ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
+                    ListQuestions listToSend = listQuestions;
+
+                    for(int j = 0; j < listQuestions.getList().size(); j++)
+                    {
+                        if(listQuestions.getList().get(j).getDifficulty() != Difficulty.easy)
+                        {
+                            listToSend.getList().remove(j);
+                            j = -1;
+                        }
+                    }
+
+                    tab.setContent(instantiateTab(listToSend));
+                }
+
+                break;
+            }
+
+            case "medium": {
+                for(int i = 0; i < themes.getSize(); i++) {
+                    Tab tab = themesInterface.getTabs().get(i);
+                    ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
+                    ListQuestions listToSend = listQuestions;
+
+                    for(int j = 0; j < listQuestions.getList().size(); j++)
+                    {
+                        if(listQuestions.getList().get(j).getDifficulty() != Difficulty.medium)
+                        {
+                            listToSend.getList().remove(j);
+                            j = -1;
+                        }
+                    }
+
+                    tab.setContent(instantiateTab(listToSend));
+                }
+
+                break;
+            }
+
+            case "hard": {
+                for(int i = 0; i < themes.getSize(); i++) {
+                    Tab tab = themesInterface.getTabs().get(i);
+                    ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
+                    ListQuestions listToSend = listQuestions;
+
+                    for(int j = 0; j < listQuestions.getList().size(); j++)
+                    {
+                        if(listQuestions.getList().get(j).getDifficulty() != Difficulty.hard)
+                        {
+                            listToSend.getList().remove(j);
+                            j = -1;
+                        }
+                    }
+
+                    tab.setContent(instantiateTab(listToSend));
+                }
+
+                break;
+            }
+
+            default: {
+                for(int i = 0; i < themes.getSize(); i++) {
+                    Tab tab = themesInterface.getTabs().get(i);
+                    ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
+                    tab.setContent(instantiateTab(listQuestions));
+                }
+
+                break;
+            }
         }
     }
 
@@ -56,6 +142,37 @@ public class ThemesController {
         return questionTable;
     }
 
+    private TableView instantiateTabLevel(ListQuestions listQuestions, String level) {
+        TableView<Question<?>> questionTable = new TableView<Question<?>>();
+        questionTable.setPrefHeight(320);
+        questionTable.setEditable(false);
+
+        TableColumn<Question<?>, String> typeColumn = new TableColumn<Question<?>, String>("Type");
+        TableColumn<Question<?>, String> difficultyColumn = new TableColumn<Question<?>, String>("Difficulty");
+        TableColumn<Question<?>, String> questionColumn = new TableColumn<Question<?>, String>("Questions");
+
+        questionTable.setItems(FXCollections.observableArrayList(listQuestions.getList()));
+        typeColumn.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(
+                c.getValue().getDifficulty().toString().equals(level) ?
+                        c.getValue().getStatement().getInstance() : null)));
+
+        difficultyColumn.setCellValueFactory(c -> new SimpleStringProperty(
+                c.getValue().getDifficulty().toString().equals(level) ?
+                        c.getValue().getDifficulty().toString() : null));
+
+        questionColumn.setCellValueFactory(c -> new SimpleStringProperty(
+                c.getValue().getDifficulty().toString().equals(level) ?
+                    c.getValue().getStatement().getText() : null));
+
+        typeColumn.setResizable(false);
+        difficultyColumn.setResizable(false);
+        questionColumn.setResizable(false);
+        questionColumn.setPrefWidth(755);
+
+        questionTable.getColumns().addAll(typeColumn, difficultyColumn, questionColumn);
+        return questionTable;
+    }
+
     @FXML
     private void handleButtonAdd(){
         Tab tab = themesInterface.getSelectionModel().getSelectedItem();
@@ -70,8 +187,6 @@ public class ThemesController {
             Tab tab = themesInterface.getSelectionModel().getSelectedItem();
             themeSelected = tab.getText();
             ListQuestions listQuestions = new ListQuestions(themeSelected);
-
-// TODO: 08/06/2020 check the String can be converted into an int
 
             try {
                 if(Integer.parseInt(deleting.getText()) > 0 && Integer.parseInt(deleting.getText()) <= listQuestions.getList().size()) {
