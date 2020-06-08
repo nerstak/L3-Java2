@@ -10,14 +10,23 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Game implements  Serializable {
 	private final static Themes allThemes = initializeAllThemes();
 
 	private Themes nextThemes;
-	private Question selectedQuestion;
+	private transient Question selectedQuestion;
 	private SetPlayers listPlayers;
 	private PhaseEnum currentPhase;
+	boolean playerHasBeenEliminated;
+
+	private PhaseEnum phaseBeforeDeciding;
+	private Integer turnLeftBeforeDeciding;
+	private Integer scoreBeforeDeciding;
+	private Long timerBeforeDeciding;
+	private List<Player> worstPlayers;
 
 	public SetPlayers getListPlayers () {
 		return listPlayers;
@@ -129,7 +138,6 @@ public class Game implements  Serializable {
 	 */
 	private void nextPhase () {
 		nextThemes = new Themes();
-
 		if (currentPhase == null) {
 			currentPhase = PhaseEnum.Phase1;
 			selectFourPlayersRandomly();
@@ -178,9 +186,12 @@ public class Game implements  Serializable {
 
 			Game loadedGame = (Game)in.readObject();
 			this.nextThemes = loadedGame.nextThemes;
-			this.selectedQuestion = loadedGame.selectedQuestion;
 			this.listPlayers = loadedGame.listPlayers;
 			this.currentPhase = loadedGame.currentPhase;
+			this.phaseBeforeDeciding = loadedGame.phaseBeforeDeciding;
+			this.scoreBeforeDeciding = loadedGame.scoreBeforeDeciding;
+			this.timerBeforeDeciding = loadedGame.timerBeforeDeciding;
+			this.worstPlayers = loadedGame.worstPlayers;
 
 			in.close();
 			file.close();
