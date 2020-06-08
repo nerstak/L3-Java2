@@ -48,5 +48,5 @@ public class Question<T extends AbstractStatement<T>> implements Serializable {
         System.out.println(this.toString());
     }
 
-    // TODO: input() ??? No idea what it means
+    // Input() does not exists as the application is GUI-based and not CLI-based
 }

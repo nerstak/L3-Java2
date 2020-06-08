@@ -1,12 +1,12 @@
 package oo.Players;
 
 public enum PlayerStatus {
-    selected("Selected"),
-    winner("Winner"),
     superWinner("Super Winner"),
-    eliminated("Eliminated"),
+    winner("Winner"),
+    selected("Selected"),
     waiting("Waiting"),
     hasPlayed("Has played"),
+    eliminated("Eliminated"),
     inactive("Inactive");
 
     private final String meaning;

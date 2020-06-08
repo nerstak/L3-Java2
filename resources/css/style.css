@@ -2,14 +2,15 @@ GridPane {
     -fx-background-color: whitesmoke;
 }
 
-.label {
-    -fx-font-size: 13pt;
+Label, Button, TableColumn {
+    -fx-font-size: 11pt;
     -fx-font-family: "Roboto";
     -fx-text-fill: black;
     -fx-opacity: 0.6;
 }
 
-#welcomeLabel {
+
+.title {
     -fx-font-family: Impact;
     -fx-font-size: 25pt;
     -fx-font-weight: bold;

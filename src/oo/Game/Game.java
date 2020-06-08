@@ -11,27 +11,33 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class Game implements  Serializable {
+public class Game implements Serializable {
 	private final static Themes allThemes = initializeAllThemes();
 
+	private Question<?> selectedQuestion;
+
 	private Themes nextThemes;
-	private Question selectedQuestion;
+
+	public Themes getNextThemes() {
+		return nextThemes;
+	}
+
 	private SetPlayers listPlayers;
 	private PhaseEnum currentPhase;
 
-	public SetPlayers getListPlayers () {
+	public SetPlayers getListPlayers() {
 		return listPlayers;
 	}
 
-	public Player getCurrentPlayer () {
+	public Player getCurrentPlayer() {
 		return listPlayers.selectPlayer(PlayerStatus.selected);
 	}
 
-	public PhaseEnum getCurrentPhase () {
+	public PhaseEnum getCurrentPhase() {
 		return currentPhase;
 	}
 
-	public Question getSelectedQuestion () {
+	public Question<?> getSelectedQuestion() {
 		return selectedQuestion;
 	}
 
@@ -40,7 +46,7 @@ public class Game implements  Serializable {
 	 *
 	 * @return the new Themes instance
 	 */
-	public static Themes initializeAllThemes () {
+	public static Themes initializeAllThemes() {
 		Themes allThemes = new Themes();
 		allThemes.readThemes();
 		return allThemes;
@@ -59,8 +65,9 @@ public class Game implements  Serializable {
 	 * @param isCorrect was the answer correct
 	 */
 	public void handleResult (boolean isCorrect) {
-		if (isCorrect)
+		if (isCorrect) {
 			getCurrentPlayer().updateScore(currentPhase);
+		}
 
 		nextQuestion();
 	}
@@ -68,14 +75,29 @@ public class Game implements  Serializable {
 	/**
 	 * Execute the logic between a question and the next one
 	 */
-	public void nextQuestion () {
-		while (nextThemes.size() <= 0)
+	public void nextQuestion() {
+		while (nextThemes.size() <= 0 && this.currentPhase != PhaseEnum.End) {
 			nextPhase();
+		}
 
-		chooseNextPlayer();
+		if (this.currentPhase != PhaseEnum.End) {
+			chooseNextPlayer();
 
-		// TODO if in phase 2 : ask players to choose the themes he want in nextThemes
-		ListQuestions possibleQuestions = new ListQuestions(nextThemes.remove(0));
+			if (currentPhase == PhaseEnum.Phase1 || currentPhase == PhaseEnum.Phase3) {
+				loadQuestion(0);
+			} else {
+				Main.sceneManager.activate("ThemeSelection");
+			}
+		}
+	}
+
+	/**
+	 * Load the correct question and theme
+	 *
+	 * @param indexTheme Theme chosen
+	 */
+	public void loadQuestion(int indexTheme) {
+		ListQuestions possibleQuestions = new ListQuestions(nextThemes.remove(indexTheme));
 		try {
 			selectedQuestion = possibleQuestions.selectQuestion(currentPhase);
 		} catch (ListQuestions.NoQuestionForDesiredPhaseException e) {
@@ -126,21 +148,28 @@ public class Game implements  Serializable {
 		nextThemes = new Themes();
 
 		if (currentPhase == null) {
+			// Going to phase1
 			currentPhase = PhaseEnum.Phase1;
 			selectFourPlayersRandomly();
 
+			// TODO: increase number of question to 8 or something like that
 			for (int i = 0; i < 4; i++) {
-				nextThemes.add(allThemes.getAtIndex(allThemes.selectTheme(PhaseEnum.Phase1)));
+				nextThemes.add(
+						allThemes.getAtIndex(
+								allThemes.selectTheme(PhaseEnum.Phase1)));
 			}
 		} else if (currentPhase == PhaseEnum.Phase1) {
+			// Going to phase2
 			currentPhase = PhaseEnum.Phase2;
 			listPlayers.eliminateWorstPlayer();
 
+			// We select the list of themes that will be available
 			ArrayList<Integer> currentThemesIndex = allThemes.selectSixRandomThemes();
 			for (int currentThemeIndex : currentThemesIndex) {
 				nextThemes.add(allThemes.getAtIndex(currentThemeIndex));
 			}
 		} else if (currentPhase == PhaseEnum.Phase2) {
+			// Going to phase3
 			currentPhase = PhaseEnum.Phase3;
 			listPlayers.eliminateWorstPlayer();
 
@@ -151,7 +180,9 @@ public class Game implements  Serializable {
 				nextThemes.add("technology");
 			}
 		} else if (currentPhase == PhaseEnum.Phase3) {
-			System.exit(0);
+			this.getCurrentPlayer().setStatus(PlayerStatus.waiting); // We stop the timer
+			this.currentPhase = PhaseEnum.End;
+			Main.sceneManager.activate("FinalScreen");
 		}
 	}
 

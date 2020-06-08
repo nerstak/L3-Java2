@@ -15,6 +15,8 @@ public class TopBar {
     public Label timerLabel;
     public Label phaseInformation;
 
+    private Timeline timeline;
+
     @FXML
     private void initialize() {
         displayTimer();
@@ -25,14 +27,16 @@ public class TopBar {
      * Display the timer
      */
     private void displayTimer() {
-        Timeline timeline = new Timeline(
+        timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0),
                         new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent actionEvent) {
-                                long timer = Main.game.getCurrentPlayer().getTimer();
+                                if (Main.game.getCurrentPlayer() != null) {
+                                    long timer = Main.game.getCurrentPlayer().getTimer();
 
-                                timerLabel.setText(Utilities.convertTimestampToString(timer));
+                                    timerLabel.setText(Utilities.convertTimestampToString(timer));
+                                }
                             }
                         }
                 ),
