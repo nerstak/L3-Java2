@@ -21,7 +21,6 @@ public class AddController {
 
     @FXML
     private void initialize () {
-
         TextAnswer1.setEditable(false);
         TextAnswer2.setEditable(false);
         TextAnswer3.setEditable(false);
@@ -52,16 +51,17 @@ public class AddController {
 
     @FXML
     private void handleButtonAdd () {
-        if (checkAll()) {
-            creatingNewQuestion();
-            difficulty.getSelectionModel().select(0);
-            typeQuestion.getSelectionModel().select(0);
-            Text.setText("");
-            CorrectAnswer.setText("");
-            TextAnswer1.setText("");
-            TextAnswer2.setText("");
-            TextAnswer3.setText("");
-        }
+        if (!checkAll())
+            return;
+
+        creatingNewQuestion();
+        difficulty.getSelectionModel().select(0);
+        typeQuestion.getSelectionModel().select(0);
+        Text.setText("");
+        CorrectAnswer.setText("");
+        TextAnswer1.setText("");
+        TextAnswer2.setText("");
+        TextAnswer3.setText("");
     }
 
     private boolean checkAll () {
@@ -70,8 +70,10 @@ public class AddController {
         // all of this is just to have a message with all the errors to print
         if (difficulty.getValue() == null)
             errorMsg += "difficulty is NULL\n";
+
         if (Text.getText().equals(""))
             errorMsg += "There is no Text\n";
+
         boolean check = checkType();
 
         // if we have a difficulty, a text and the question correct
@@ -81,7 +83,6 @@ public class AddController {
         missingParameters();
         return false;
     }
-
 
     private boolean checkType () {
         if (CorrectAnswer.getText().equals("") || typeQuestion.getValue() == null) {
