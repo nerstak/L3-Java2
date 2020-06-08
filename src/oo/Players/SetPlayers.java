@@ -19,6 +19,13 @@ public class SetPlayers implements Serializable {
         }
     }
 
+    public SetPlayers (List<Player> players) {
+        listPlayers = new Vector<>();
+        for (Player p: players) {
+            listPlayers.add(p);
+        }
+    }
+
     /**
      * Display every player in the set
      */
