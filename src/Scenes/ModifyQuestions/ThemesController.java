@@ -23,17 +23,16 @@ public class ThemesController {
     @FXML
     private ComboBox<String> level;
 
-
-    public ThemesController() {
+    public ThemesController () {
         themes.readThemes();
     }
 
     @FXML
-    private void initialize() {
+    private void initialize () {
         deleting.setText("");
         level.getItems().addAll(" ", "easy", "medium", "hard");
 
-        for(int i = 0; i < themes.getSize(); i++) {
+        for (int i = 0; i < themes.getSize(); i++) {
             Tab tab = new Tab(themes.getAtIndex(i));
             ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
             tab.setContent(instantiateTab(listQuestions));
@@ -42,7 +41,7 @@ public class ThemesController {
     }
 
     @FXML
-    private void changeLevel() {
+    private void changeLevel () {
         Difficulty levelDifficulty = Difficulty.fromString(level.getValue());
         if (levelDifficulty == null) {
             for (int i = 0; i < themes.getSize(); i++) {
@@ -91,15 +90,15 @@ public class ThemesController {
     }
 
     @FXML
-    private void handleButtonAdd(){
+    private void handleButtonAdd () {
         Tab tab = themesInterface.getSelectionModel().getSelectedItem();
         themeSelected = tab.getText();
         Main.sceneManager.activate("AddQuestion");
     }
 
     @FXML
-    private void handleButtonDelete() {
-        if(!deleting.getText().equals("")) {
+    private void handleButtonDelete () {
+        if (!deleting.getText().equals("")) {
             Tab tab = themesInterface.getSelectionModel().getSelectedItem();
             themeSelected = tab.getText();
             ListQuestions listQuestions = new ListQuestions(themeSelected);
@@ -118,8 +117,7 @@ public class ThemesController {
             }
 
             try {
-                if(Integer.parseInt(deleting.getText()) > 0 && Integer.parseInt(deleting.getText()) <= listToShow.getList().size()) {
-
+                if (Integer.parseInt(deleting.getText()) > 0 && Integer.parseInt(deleting.getText()) <= listToShow.getList().size()) {
                     int i = 0;
                     while(!listToShow.getList().get(Integer.parseInt(deleting.getText()) - 1).getStatement().getText().equals(listQuestions.getList().get(i).getStatement().getText()))
                         i++;
@@ -137,20 +135,22 @@ public class ThemesController {
             } catch (NumberFormatException e) {
                 missingParameters("You must request the NUMBER of the Question");
             }
-
-        }
-        else {
+        } else {
             missingParameters("You have to choose the Question you want to delete");
         }
     }
 
     @FXML
-    private void handleButtonBack() {Main.sceneManager.activate("Starting");}
+    private void handleButtonBack () {
+        Main.sceneManager.activate("Starting");
+    }
     
-    public static String getThemeSelected(){return themeSelected;}
+    public static String getThemeSelected () {
+        return themeSelected;
+    }
 
     @FXML
-    private void missingParameters(String errorMsg){
+    private void missingParameters (String errorMsg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Error while deleting a Question");
         alert.setHeaderText("There are some points you have to modify !");
