@@ -74,14 +74,14 @@ public class ThemesController {
 
         Tab tab = themesInterface.getSelectionModel().getSelectedItem();
         themeSelected = tab.getText();
-        System.out.println(tab.getContent().getId());
+        table = (TableView<Question<?>>) tab.getContent().lookup(themeSelected + "Table");
+        ListQuestions listQuestions = new ListQuestions(themeSelected);
 
-        if(table.getSelectionModel().getSelectedIndex() != -1)
+        //if(table.getSelectionModel().getSelectedIndex() != -1)
         {
             //Node content = tab.getContent();
             //table = content.lookup("#" + themeSelected + "Table");
 
-            ListQuestions listQuestions = new ListQuestions(themeSelected);
             //listQuestions.deleteQuestion(table.getSelectionModel().getSelectedIndex());
         }
 
