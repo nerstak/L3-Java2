@@ -94,8 +94,17 @@ public class Game implements  Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		while (nextThemes.size() <= 0)
-			nextPhase();
+
+		System.out.println(nextThemes.size());
+		if (nextThemes.size() <= 0) {
+			if (currentPhase == PhaseEnum.DecideWorstPlayer) {
+				decideWorstPlayer();
+			}
+			else {
+			 	nextPhase();
+			}
+			return;
+		}
 
 		chooseNextPlayer();
 
@@ -156,27 +165,51 @@ public class Game implements  Serializable {
 			for (int i = 0; i < 4; i++) {
 				nextThemes.add(allThemes.getAtIndex(allThemes.selectTheme(PhaseEnum.Phase1)));
 			}
-		} else if (currentPhase == PhaseEnum.Phase1) {
-			currentPhase = PhaseEnum.Phase2;
-			listPlayers.eliminateWorstPlayer();
-
-			ArrayList<Integer> currentThemesIndex = allThemes.selectSixRandomThemes();
-			for (int currentThemeIndex : currentThemesIndex) {
-				nextThemes.add(allThemes.getAtIndex(currentThemeIndex));
-			}
-		} else if (currentPhase == PhaseEnum.Phase2) {
-			currentPhase = PhaseEnum.Phase3;
-			listPlayers.eliminateWorstPlayer();
-
-			// designer (that means us, developers :p) manually selected themes
-			for (int i = 0; i < 2; i++) {
-				nextThemes.add("gaming");
-				nextThemes.add("sciences");
-				nextThemes.add("technology");
-			}
-		} else if (currentPhase == PhaseEnum.Phase3) {
-			System.exit(0);
+			nextQuestion();
+			return;
+		} else if (!playerHasBeenEliminated) {
+			/**
+			// Test to see what happens if two players are at equality
+			Vector<Player> r1 = listPlayers.selectPlayers(PlayerStatus.hasPlayed);
+			System.out.println(r1.get(0).getName());
+			System.out.println(r1.get(1).getName());
+			r1.get(0).setScore(0);
+			r1.get(0).setDurationTimer(100000);
+			r1.get(1).setScore(0);
+			r1.get(1).setDurationTimer(100000);
+			 **/
+			eliminateWorstPlayer();
+			playerHasBeenEliminated = true;
+			return;
 		}
+		playerHasBeenEliminated = false;
+
+		switch (currentPhase) {
+			case Phase1:
+				currentPhase = PhaseEnum.Phase2;
+				ArrayList<Integer> currentThemesIndex = allThemes.selectSixRandomThemes();
+				for (int currentThemeIndex : currentThemesIndex) {
+					nextThemes.add(allThemes.getAtIndex(currentThemeIndex));
+				}
+				break;
+
+			case Phase2:
+				currentPhase = PhaseEnum.Phase3;
+				eliminateWorstPlayer();
+				// designer (that means us, developers :p) manually selected themes
+				for (int i = 0; i < 2; i++) {
+					nextThemes.add("gaming");
+					nextThemes.add("sciences");
+					nextThemes.add("technology");
+				}
+				break;
+
+			case Phase3:
+				eliminateWorstPlayer();
+				System.exit(0);
+				break;
+		}
+		nextQuestion();
 	}
 
 	private void saveGame (String name) throws IOException {
