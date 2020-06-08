@@ -105,24 +105,19 @@ public class Themes implements Serializable {
     }
 
     /**
-     * Select a theme (for the moment, only in sequential order
+     * Select a theme
      *
      * @return Index of the theme selected
      */
     public int selectTheme(PhaseEnum phase) {
-        //TODO: Should depends on the phase: 1 -> sequential; 2 -> Random; 3 -> Preselected
-        if (phase == PhaseEnum.Phase1) {
+        if (phase == PhaseEnum.Phase1 || phase == PhaseEnum.Phase3) {
             if (indicator < 0) {
                 indicator = 0;
             } else {
-                indicator = indicator++ % listThemes.size();
+                indicator = ++indicator % listThemes.size();
             }
         } else if (phase == PhaseEnum.Phase2) {
-            int newI;
-            do {
-                newI = (int) (Math.random() * listThemes.size());
-            } while (indicator == newI);
-            indicator = newI;
+            indicator = -1;
         }
 
         return indicator;
