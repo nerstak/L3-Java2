@@ -24,10 +24,11 @@ public class Themes implements Serializable {
      */
     public void readThemes() {
         JSONObject themes = JSONParser.parseFile("themes.json");
-        assert themes != null;
-        listThemes.clear();
-        for (Object j : themes.getJSONArray("themes")) {
-            listThemes.add(String.valueOf(j));
+        if (themes != null) {
+            listThemes.clear();
+            for (Object j : themes.getJSONArray("themes")) {
+                listThemes.add(String.valueOf(j));
+            }
         }
     }
 
@@ -150,9 +151,10 @@ public class Themes implements Serializable {
      * @return 6 index of selected themes
      */
     public ArrayList<Integer> selectSixRandomThemes() {
-        ArrayList<Integer> themesIndex = new ArrayList<Integer>();
-        int newIndex;
+        ArrayList<Integer> themesIndex = new ArrayList<>();
+
         for (int i = 0; i < 6; i++) {
+            int newIndex;
             do {
                 newIndex = (int) (Math.random() * listThemes.size());
             } while (themesIndex.contains(newIndex));
