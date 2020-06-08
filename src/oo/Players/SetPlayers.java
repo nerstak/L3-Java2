@@ -74,6 +74,7 @@ public class SetPlayers implements Serializable {
             .getScore();
 
         long maxTimerWithMinScore = inGamePlayers.get()
+            .filter(player -> player.getScore() == minScore)
             .max(new    Comparator<Player>() {
                 @Override
                 public int compare(Player p1, Player p2) {
