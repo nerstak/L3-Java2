@@ -105,46 +105,15 @@ public class ThemesController {
             ListQuestions listQuestions = new ListQuestions(themeSelected);
             ListQuestions listToShow = new ListQuestions(themeSelected);
 
+
             // have a list corresponding of the table
-            switch (level.getSelectionModel().getSelectedIndex()) {
-                case 1: {
-                    for(int i = 0; i < listToShow.getList().size(); i++)
-                    {
-                        if(listToShow.getList().get(i).getDifficulty() != Difficulty.easy)
-                        {
-                            listToShow.deleteQuestion(i);
-                            i = -1;
-                        }
+            Difficulty levelDifficulty = Difficulty.fromInteger(level.getSelectionModel().getSelectedIndex());
+            if (levelDifficulty != null) {
+                for (int i = 0; i < listToShow.getList().size(); i++) {
+                    if (listToShow.getList().get(i).getDifficulty() != levelDifficulty) {
+                        listToShow.deleteQuestion(i);
+                        i = -1;
                     }
-                    break;
-                }
-
-                case 2: {
-                    for(int i = 0; i < listToShow.getList().size(); i++)
-                    {
-                        if(listToShow.getList().get(i).getDifficulty() != Difficulty.medium)
-                        {
-                            listToShow.deleteQuestion(i);
-                            i = -1;
-                        }
-                    }
-                    break;
-                }
-
-                case 3: {
-                    for(int i = 0; i < listToShow.getList().size(); i++)
-                    {
-                        if(listToShow.getList().get(i).getDifficulty() != Difficulty.hard)
-                        {
-                            listToShow.deleteQuestion(i);
-                            i = -1;
-                        }
-                    }
-                    break;
-                }
-
-                default: {
-                    break;
                 }
             }
 
