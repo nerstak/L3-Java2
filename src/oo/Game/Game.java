@@ -189,6 +189,87 @@ public class Game implements  Serializable {
 		}
 	}
 
+	public void eliminateWorstPlayer () {
+		List<Player> possibleEliminatedPlayers = listPlayers.getWorstPlayers();
+		if (possibleEliminatedPlayers.size() == 1) {
+			possibleEliminatedPlayers.get(0).setStatus(PlayerStatus.eliminated);
+			nextPhase();
+		} else {
+			startWorstPlayerEqualityManagement(possibleEliminatedPlayers);
+		}
+	}
+
+	/**
+	 * Start the management of equality between worst players after a phase
+	 *
+	 * @param worstPlayers the list of worst player in which we need to decide who will be eliminated
+	 */
+	public void startWorstPlayerEqualityManagement (List<Player> worstPlayers) {
+		listPlayers.selectPlayer(PlayerStatus.selected).setStatus(PlayerStatus.inactive);
+		for (Player p : listPlayers.selectPlayers(PlayerStatus.hasPlayed))
+			p.setStatus(PlayerStatus.inactive);
+
+		for (Player p: worstPlayers)
+			p.setStatus(PlayerStatus.waiting);
+
+		this.worstPlayers = worstPlayers;
+		scoreBeforeDeciding = worstPlayers.get(0).getScore();
+		timerBeforeDeciding = worstPlayers.get(0).getTimer();
+		phaseBeforeDeciding = currentPhase;
+		currentPhase = PhaseEnum.DecideWorstPlayer;
+
+		turnLeftBeforeDeciding = 3;
+		decideWorstPlayer();
+	}
+
+	/**
+	 *
+	 */
+	public void decideWorstPlayer () {
+		turnLeftBeforeDeciding--;
+
+		// After three questions or if one of the worst players is worst than other
+		if (turnLeftBeforeDeciding == 0 || (new SetPlayers(worstPlayers)).getWorstPlayers().size() == 1) {
+			endWorstPlayerEqualityManagement();
+			return;
+		}
+
+		for (int i = 0; i < worstPlayers.size(); i++) {
+			nextThemes.add("gaming");
+		}
+		nextQuestion();
+	}
+
+	/**
+	 * Eliminate the new worst player or eliminate a random player in new worst players then reestablish the game as it was before
+	 */
+	private void endWorstPlayerEqualityManagement () {
+		List<Player> newWorstPlayers = (new SetPlayers(worstPlayers)).getWorstPlayers();
+		int indexEliminated = (new Random()).nextInt(newWorstPlayers.size());
+		newWorstPlayers.get(indexEliminated).setStatus(PlayerStatus.eliminated);
+
+		for (Player p : listPlayers.selectPlayers(PlayerStatus.inactive))
+			p.setStatus(PlayerStatus.waiting);
+
+		for (Player p : listPlayers.selectPlayers(PlayerStatus.hasPlayed))
+			p.setStatus(PlayerStatus.waiting);
+
+		for (Player p : worstPlayers) {
+			p.setDurationTimer(timerBeforeDeciding);
+			p.setScore(scoreBeforeDeciding);
+		}
+
+		currentPhase = phaseBeforeDeciding;
+
+		phaseBeforeDeciding = null;
+		this.worstPlayers = null;
+		scoreBeforeDeciding = null;
+		timerBeforeDeciding = null;
+		turnLeftBeforeDeciding = null;
+
+		nextPhase();
+	}
+
 //	Phase II :
 //	Le jeu se déroule entre les trois joueurs gagnants de la phase I. Cette phase propose deux questions
 //	de niveau moyen pour chaque joueur (une question par thème choisi).
