@@ -34,7 +34,9 @@ public class Game implements Serializable {
 	}
 
 	public Player getCurrentPlayer() {
-		return listPlayers.selectPlayer(PlayerStatus.selected);
+		synchronized (listPlayers) {
+			return listPlayers.selectPlayer(PlayerStatus.selected);
+		}
 	}
 
 	public PhaseEnum getCurrentPhase() {
@@ -146,17 +148,19 @@ public class Game implements Serializable {
 	 * Finally, choose a new selected player among waiting players
 	 */
 	private void chooseNextPlayer() {
-		if (getCurrentPlayer() != null) {
-			getCurrentPlayer().setStatus(PlayerStatus.hasPlayed);
-		}
-
-		if (listPlayers.countPlayers(PlayerStatus.waiting) == 0) {
-			while (listPlayers.countPlayers(PlayerStatus.hasPlayed) != 0) {
-				listPlayers.selectPlayer(PlayerStatus.hasPlayed).setStatus(PlayerStatus.waiting);
+		synchronized (listPlayers) {
+			if (getCurrentPlayer() != null) {
+				getCurrentPlayer().setStatus(PlayerStatus.hasPlayed);
 			}
-		}
 
-		listPlayers.selectPlayer(PlayerStatus.waiting).setStatus(PlayerStatus.selected);
+			if (listPlayers.countPlayers(PlayerStatus.waiting) == 0) {
+				while (listPlayers.countPlayers(PlayerStatus.hasPlayed) != 0) {
+					listPlayers.selectPlayer(PlayerStatus.hasPlayed).setStatus(PlayerStatus.waiting);
+				}
+			}
+			System.out.print(listPlayers.countPlayers(PlayerStatus.waiting));
+			listPlayers.selectPlayer(PlayerStatus.waiting).setStatus(PlayerStatus.selected);
+		}
 	}
 
 	/**
