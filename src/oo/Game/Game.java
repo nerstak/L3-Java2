@@ -280,7 +280,7 @@ public class Game implements Serializable {
 		if (possibleEliminatedPlayers.size() == 1) {
 			possibleEliminatedPlayers.get(0).setStatus(PlayerStatus.eliminated);
 			nextPhase();
-		} else {
+		} else if (possibleEliminatedPlayers.size() > 1) {
 			startWorstPlayerEqualityManagement(possibleEliminatedPlayers);
 		}
 	}
