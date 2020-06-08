@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import oo.Game.Game;
 import oo.Players.Player;
 import oo.Players.PlayerStatus;
 
@@ -27,7 +28,10 @@ public class FinalScreen {
 
 
     public FinalScreen() {
-        ranking = Main.game.getListPlayers().selectPlayers(PlayerStatus.waiting);
+        ranking = Main.game.getListPlayers().selectPlayers(PlayerStatus.eliminated);
+        ranking.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.hasPlayed));
+        ranking.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.waiting));
+        ranking.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.selected));
         ranking.sort(Player.PlayerRanking);
         Collections.sort(ranking, Collections.reverseOrder());
     }
@@ -49,6 +53,7 @@ public class FinalScreen {
 
     @FXML
     public void restartGame(ActionEvent actionEvent) {
-        // TODO: Add stuff to restart
+        Main.game = new Game();
+        Main.game.nextQuestion();
     }
 }

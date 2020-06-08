@@ -13,11 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Game implements  Serializable {
+public class Game implements Serializable {
 	private final static Themes allThemes = initializeAllThemes();
 
+	private transient Question<?> selectedQuestion;
+
 	private Themes nextThemes;
-	private transient Question selectedQuestion;
 	private SetPlayers listPlayers;
 	private PhaseEnum currentPhase;
 	boolean eliminationDone;
@@ -28,19 +29,19 @@ public class Game implements  Serializable {
 	private Long timerBeforeDeciding;
 	private List<Player> worstPlayers;
 
-	public SetPlayers getListPlayers () {
+	public SetPlayers getListPlayers() {
 		return listPlayers;
 	}
 
-	public Player getCurrentPlayer () {
+	public Player getCurrentPlayer() {
 		return listPlayers.selectPlayer(PlayerStatus.selected);
 	}
 
-	public PhaseEnum getCurrentPhase () {
+	public PhaseEnum getCurrentPhase() {
 		return currentPhase;
 	}
 
-	public Question getSelectedQuestion () {
+	public Question<?> getSelectedQuestion() {
 		return selectedQuestion;
 	}
 
@@ -53,7 +54,7 @@ public class Game implements  Serializable {
 	 *
 	 * @return the new Themes instance
 	 */
-	public static Themes initializeAllThemes () {
+	public static Themes initializeAllThemes() {
 		Themes allThemes = new Themes();
 		allThemes.readThemes();
 		return allThemes;
@@ -79,8 +80,9 @@ public class Game implements  Serializable {
 	 * @param isCorrect was the answer correct
 	 */
 	public void handleResult (boolean isCorrect) {
-		if (isCorrect)
+		if (isCorrect) {
 			getCurrentPlayer().updateScore(currentPhase);
+		}
 
 		nextQuestion();
 	}
@@ -105,10 +107,24 @@ public class Game implements  Serializable {
 			return;
 		}
 
-		chooseNextPlayer();
+		if (this.currentPhase != PhaseEnum.End) {
+			chooseNextPlayer();
 
-		// TODO if in phase 2 : ask players to choose the themes he want in nextThemes
-		ListQuestions possibleQuestions = new ListQuestions(nextThemes.remove(0));
+			if (currentPhase == PhaseEnum.Phase1 || currentPhase == PhaseEnum.Phase3) {
+				loadQuestion(0);
+			} else {
+				Main.sceneManager.activate("ThemeSelection");
+			}
+		}
+	}
+
+	/**
+	 * Load the correct question and theme
+	 *
+	 * @param indexTheme Theme chosen
+	 */
+	public void loadQuestion(int indexTheme) {
+		ListQuestions possibleQuestions = new ListQuestions(nextThemes.remove(indexTheme));
 		try {
 			selectedQuestion = possibleQuestions.selectQuestion(currentPhase);
 		} catch (ListQuestions.NoQuestionForDesiredPhaseException e) {
@@ -156,13 +172,20 @@ public class Game implements  Serializable {
 	 * Change the current phase and set variables linked to the new phase
 	 */
 	private void nextPhase () {
-		if (currentPhase == null) {
+		if (currentPhase == PhaseEnum.End) {
+			return;
+		} else if (currentPhase == null) {
+			// Going to phase1
 			currentPhase = PhaseEnum.Phase1;
 			selectFourPlayersRandomly();
 
+			// TODO: increase number of question to 8 or something like that
 			for (int i = 0; i < 4; i++) {
-				nextThemes.add(allThemes.getAtIndex(allThemes.selectTheme(PhaseEnum.Phase1)));
+				nextThemes.add(
+						allThemes.getAtIndex(
+								allThemes.selectTheme(PhaseEnum.Phase1)));
 			}
+
 			nextQuestion();
 			return;
 		} else if (!eliminationDone) {
@@ -204,7 +227,9 @@ public class Game implements  Serializable {
 				break;
 
 			case Phase3:
-				System.exit(0);
+				this.currentPhase = PhaseEnum.End;
+				this.getCurrentPlayer().setStatus(PlayerStatus.waiting); // We stop the timer
+				Main.sceneManager.activate("FinalScreen");
 				break;
 		}
 		nextQuestion();

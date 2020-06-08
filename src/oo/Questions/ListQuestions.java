@@ -7,10 +7,8 @@ import oo.Game.PhaseEnum;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ListQuestions implements Serializable {
@@ -167,8 +165,8 @@ public class ListQuestions implements Serializable {
         if (filteredQuestions.size() == 0)
             throw new NoQuestionForDesiredPhaseException(Main.game.getCurrentPhase());
 
-        Random random = new Random();
-        int index = random.nextInt(filteredQuestions.size());
+        // We use Math.random as we need a different seed every time
+        int index = (int) (Math.random() * filteredQuestions.size());
         return filteredQuestions.get(index);
     }
 }

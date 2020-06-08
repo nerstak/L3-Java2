@@ -15,7 +15,7 @@ public abstract class Question {
      * @param tableAnchor Table containing players information
      * @param topAnchor   Zone containing phase and timer
      */
-    protected void loadContentBar(AnchorPane tableAnchor, AnchorPane topAnchor) {
+    public static void loadContentBar(AnchorPane tableAnchor, AnchorPane topAnchor) {
         try {
             tableAnchor.getChildren().setAll(
                     (Node) FXMLLoader.load(
