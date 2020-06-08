@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import oo.Game.Difficulty;
 import oo.Questions.*;
 
-public class AddControler {
+public class AddController {
     @FXML
     public TextField TextAnswer1;
     public TextField TextAnswer2;
