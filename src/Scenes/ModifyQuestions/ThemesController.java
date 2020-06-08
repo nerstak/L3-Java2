@@ -43,78 +43,26 @@ public class ThemesController {
 
     @FXML
     private void changeLevel() {
-        switch ((String) level.getValue()) {
-            case "easy": {
-                for(int i = 0; i < themes.getSize(); i++) {
-                    Tab tab = themesInterface.getTabs().get(i);
-                    ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
-                    ListQuestions listToSend = listQuestions;
-
-                    for(int j = 0; j < listQuestions.getList().size(); j++)
-                    {
-                        if(listQuestions.getList().get(j).getDifficulty() != Difficulty.easy)
-                        {
-                            listToSend.getList().remove(j);
-                            j = -1;
-                        }
-                    }
-
-                    tab.setContent(instantiateTab(listToSend));
-                }
-
-                break;
+        Difficulty levelDifficulty = Difficulty.fromString(level.getValue());
+        if (levelDifficulty == null) {
+            for (int i = 0; i < themes.getSize(); i++) {
+                Tab tab = themesInterface.getTabs().get(i);
+                ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
+                tab.setContent(instantiateTab(listQuestions));
             }
+        } else {
+            for (int i = 0; i < themes.getSize(); i++) {
+                Tab tab = themesInterface.getTabs().get(i);
+                ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
+                ListQuestions listToSend = listQuestions;
 
-            case "medium": {
-                for(int i = 0; i < themes.getSize(); i++) {
-                    Tab tab = themesInterface.getTabs().get(i);
-                    ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
-                    ListQuestions listToSend = listQuestions;
-
-                    for(int j = 0; j < listQuestions.getList().size(); j++)
-                    {
-                        if(listQuestions.getList().get(j).getDifficulty() != Difficulty.medium)
-                        {
-                            listToSend.getList().remove(j);
-                            j = -1;
-                        }
+                for (int j = 0; j < listQuestions.getList().size(); j++) {
+                    if(listQuestions.get(j).getDifficulty() != levelDifficulty) {
+                        listToSend.deleteQuestion(j);
+                        j = -1;
                     }
-
-                    tab.setContent(instantiateTab(listToSend));
                 }
-
-                break;
-            }
-
-            case "hard": {
-                for(int i = 0; i < themes.getSize(); i++) {
-                    Tab tab = themesInterface.getTabs().get(i);
-                    ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
-                    ListQuestions listToSend = listQuestions;
-
-                    for(int j = 0; j < listQuestions.getList().size(); j++)
-                    {
-                        if(listQuestions.getList().get(j).getDifficulty() != Difficulty.hard)
-                        {
-                            listToSend.getList().remove(j);
-                            j = -1;
-                        }
-                    }
-
-                    tab.setContent(instantiateTab(listToSend));
-                }
-
-                break;
-            }
-
-            default: {
-                for(int i = 0; i < themes.getSize(); i++) {
-                    Tab tab = themesInterface.getTabs().get(i);
-                    ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
-                    tab.setContent(instantiateTab(listQuestions));
-                }
-
-                break;
+                tab.setContent(instantiateTab(listToSend));
             }
         }
     }
