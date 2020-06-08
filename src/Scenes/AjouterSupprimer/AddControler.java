@@ -1,12 +1,9 @@
 package Scenes.AjouterSupprimer;
 
 import Project.Main;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.value.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import oo.Game.Difficulty;
 import oo.Questions.*;
 

@@ -113,7 +113,7 @@ public class ListQuestions {
      * Display list of questions
      */
     public void display() {
-        System.out.println(this.toString());
+        System.out.println(this.toString());   //When in display, "ShortAnswer" is printed as "TrueFalse", but it doesn't not seems to impact the list
     }
 
     // TODO: NOT compliant, should be changed to respect book of charges
@@ -188,7 +188,8 @@ public class ListQuestions {
             String absolutePath = (new File("README.md")).getAbsolutePath();
             String pathTheme = absolutePath.replace("README.md", "resources/json/themes.json");
 
-            String path = pathTheme.replace("themes", theme);
+            //String path = pathTheme.replace("themes", theme);
+            String path = pathTheme.replace("themes", "test");
             path = path.replace("\\", "/");
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));

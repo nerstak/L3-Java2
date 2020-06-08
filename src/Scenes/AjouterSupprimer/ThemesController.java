@@ -4,16 +4,11 @@ import Project.Main;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import oo.Questions.ListQuestions;
 import oo.Questions.Question;
 import oo.Questions.Themes;
 
-import java.util.LinkedList;
 
 public class ThemesController {
     private Themes themes = new Themes();
@@ -21,39 +16,44 @@ public class ThemesController {
 
     @FXML
     private TabPane themesInterface;
-    private TableView<Question<?>> table;
+    @FXML
+    private TextField deleting;
 
 
     @FXML
     private void initialize() {
+        deleting.setText("");
 
         for(int i = 0; i < themes.getSize(); i++) {
             Tab tab = new Tab(themes.getAtIndex(i));
-
-            TableView<Question<?>> questionTable = new TableView<Question<?>>();
-            questionTable.setPrefHeight(320);
-            questionTable.setEditable(false);
-            questionTable.setId(tab.getText() + "Table");
-
-            TableColumn<Question<?>, String> typeColumn = new TableColumn<Question<?>, String>("Type");
-            TableColumn<Question<?>, String> difficultyColumn = new TableColumn<Question<?>, String>("Difficulty");
-            TableColumn<Question<?>, String> questionColumn = new TableColumn<Question<?>, String>("Questions");
-
             ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
-            questionTable.setItems(FXCollections.observableArrayList(listQuestions.getList()));
-            typeColumn.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getStatement().getInstance())));
-            difficultyColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDifficulty().toString()));
-            questionColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatement().getText()));
-
-            typeColumn.setResizable(false);
-            difficultyColumn.setResizable(false);
-            questionColumn.setResizable(false);
-            questionColumn.setPrefWidth(755);
-
-            questionTable.getColumns().addAll(typeColumn, difficultyColumn, questionColumn);
-            tab.setContent(questionTable);
+            tab.setContent(instantiateTab(listQuestions));
             themesInterface.getTabs().add(tab);
         }
+    }
+
+    private TableView instantiateTab(ListQuestions listQuestions) {
+
+        TableView<Question<?>> questionTable = new TableView<Question<?>>();
+        questionTable.setPrefHeight(320);
+        questionTable.setEditable(false);
+
+        TableColumn<Question<?>, String> typeColumn = new TableColumn<Question<?>, String>("Type");
+        TableColumn<Question<?>, String> difficultyColumn = new TableColumn<Question<?>, String>("Difficulty");
+        TableColumn<Question<?>, String> questionColumn = new TableColumn<Question<?>, String>("Questions");
+
+        questionTable.setItems(FXCollections.observableArrayList(listQuestions.getList()));
+        typeColumn.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getStatement().getInstance())));
+        difficultyColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDifficulty().toString()));
+        questionColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatement().getText()));
+
+        typeColumn.setResizable(false);
+        difficultyColumn.setResizable(false);
+        questionColumn.setResizable(false);
+        questionColumn.setPrefWidth(755);
+
+        questionTable.getColumns().addAll(typeColumn, difficultyColumn, questionColumn);
+        return questionTable;
     }
 
     @FXML
@@ -66,27 +66,40 @@ public class ThemesController {
     @FXML
     private void handleButtonDelete() {
 
-        // TODO: 08/06/2020 understand why "table.getSelectionModel().getSelectedIndex()" cause an exception with the thread of Scene
-        Tab tab = themesInterface.getSelectionModel().getSelectedItem();
-        themeSelected = tab.getText();
-        table = (TableView<Question<?>>) tab.getContent().lookup(themeSelected + "Table");
-        ListQuestions listQuestions = new ListQuestions(themeSelected);
+        if(!deleting.getText().equals("")) {
+            Tab tab = themesInterface.getSelectionModel().getSelectedItem();
+            themeSelected = tab.getText();
+            ListQuestions listQuestions = new ListQuestions(themeSelected);
 
-        //if(table.getSelectionModel().getSelectedIndex() != -1)
-        {
-            //Node content = tab.getContent();
-            //table = content.lookup("#" + themeSelected + "Table");
+// TODO: 08/06/2020 check the String can be converted into an int
+            
+            if(Integer.parseInt(deleting.getText()) > 0 && Integer.parseInt(deleting.getText()) <= listQuestions.getList().size()) {
+                listQuestions.deleteQuestion(Integer.parseInt(deleting.getText()) - 1);
+                deleting.setText("");
+                listQuestions.writeJson(themeSelected);
 
-            //listQuestions.deleteQuestion(table.getSelectionModel().getSelectedIndex());
+                tab.setContent(instantiateTab(listQuestions));
+            }
+            else
+                missingParameters("This Question does not exist, check again its index (from 1 to " + listQuestions.getList().size() + ")");
+
         }
-
-       // System.out.println(table.getSelectionModel().getSelectedIndex());
+        else
+            missingParameters("You have to choose the Question you want to delete");
     }
 
     @FXML
     private void handleButtonBack() {Main.sceneManager.activate("Starting");}
-
-    // TODO: 06/06/2020 faire la fonction delete 
     
     public static String getThemeSelected(){return themeSelected;}
+
+    @FXML
+    private void missingParameters(String errorMsg){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error while deleting a Question");
+        alert.setHeaderText("There are some points you have to modify !");
+        alert.setContentText(errorMsg);
+
+        alert.showAndWait();
+    }
 }
