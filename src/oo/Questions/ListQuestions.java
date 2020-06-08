@@ -176,47 +176,43 @@ public class ListQuestions implements Serializable {
     public void writeJson(String theme) {
         JSONObject object = new JSONObject();
         JSONArray questions = new JSONArray();
-        for(Question<?> question : this.listQuestions)
-        {
+        for (Question<?> question : this.listQuestions) {
             JSONObject obj = new JSONObject();
+            obj.put("text", question.getStatement().getText());
+            obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
 
-            // Difficulty
             switch (question.getDifficulty()) {
-                case easy: {
-                    obj.put("difficulty", 1); break;
-                }
-                case medium: {
-                    obj.put("difficulty", 2); break;
-                }
-                default: {
-                    obj.put("difficulty", 3); break;
-                }
+                case easy:
+                    obj.put("difficulty", 1);
+                    break;
+                case medium:
+                    obj.put("difficulty", 2);
+                    break;
+                default:
+                    obj.put("difficulty", 3);
+                    break;
             }
 
-            // Text
-            obj.put("text", question.getStatement().getText());
-
-            if(question.getStatement() instanceof MCQ)
-            {
-                obj.put("type", "MCQ");
+            if (question.getStatement() instanceof MCQ) {
                 JSONArray answers = new JSONArray();
-                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(0));
-                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(1));
-                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(2));
                 obj.put("answers", answers);
+                obj.put("type", "MCQ");
+                for (int i = 0; i < 3; i ++) {
+                    answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(i));
+                }
             } else if (question.getStatement() instanceof ShortAnswer) {
                 obj.put("type", "ShortAnswer");
             } else if (question.getStatement() instanceof TrueFalse) {
                 obj.put("type", "TrueFalse");
             }
-            obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
-
             questions.put(obj);
         }
-        object.put("questions", questions);
 
+        object.put("questions", questions);
         JSONParser.writeFile(object,theme);
     }
 
-    public LinkedList<Question<?>> getList() {return this.listQuestions;}
+    public LinkedList<Question<?>> getList() {
+        return this.listQuestions;
+    }
 }
