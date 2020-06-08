@@ -28,9 +28,7 @@ public class ThemesController {
     private void initialize() {
 
         for(int i = 0; i < themes.getSize(); i++) {
-            // TODO: 05/06/2020 : create the tabs in the code and not in the .fxlm (if we do not have 10 themes for some reasons) 
-            Tab tab = themesInterface.getTabs().get(i);
-            tab.setText(themes.getAtIndex(i));
+            Tab tab = new Tab(themes.getAtIndex(i));
 
             TableView<Question<?>> questionTable = new TableView<Question<?>>();
             questionTable.setPrefHeight(320);
@@ -44,21 +42,17 @@ public class ThemesController {
             ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
             questionTable.setItems(FXCollections.observableArrayList(listQuestions.getList()));
             typeColumn.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getStatement().getInstance())));
-
-
             difficultyColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDifficulty().toString()));
             questionColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatement().getText()));
 
             typeColumn.setResizable(false);
             difficultyColumn.setResizable(false);
             questionColumn.setResizable(false);
+            questionColumn.setPrefWidth(755);
 
             questionTable.getColumns().addAll(typeColumn, difficultyColumn, questionColumn);
-
-            questionColumn.setPrefWidth(800);
-
-
             tab.setContent(questionTable);
+            themesInterface.getTabs().add(tab);
         }
     }
 
@@ -72,6 +66,7 @@ public class ThemesController {
     @FXML
     private void handleButtonDelete() {
 
+        // TODO: 08/06/2020 understand why "table.getSelectionModel().getSelectedIndex()" cause an exception with the thread of Scene
         Tab tab = themesInterface.getSelectionModel().getSelectedItem();
         themeSelected = tab.getText();
         table = (TableView<Question<?>>) tab.getContent().lookup(themeSelected + "Table");
