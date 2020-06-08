@@ -183,11 +183,8 @@ public class Game implements Serializable {
 			currentPhase = PhaseEnum.Phase1;
 			selectFourPlayersRandomly();
 
-			// TODO: increase number of question to 8 or something like that
-			for (int i = 0; i < 4; i++) {
-				nextThemes.add(
-						allThemes.getAtIndex(
-								allThemes.selectTheme(PhaseEnum.Phase1)));
+			for (int i = 0; i < 8; i++) {
+				nextThemes.add(allThemes.getAtIndex(allThemes.selectTheme(PhaseEnum.Phase1)));
 			}
 
 			nextQuestion();
