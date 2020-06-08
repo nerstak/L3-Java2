@@ -23,6 +23,7 @@ public class ThemeSelectionController {
 
 		ArrayList<String> filesNames = new ArrayList<>();
 		themes = new Themes();
+		themes.readThemes();
 
 		for (int i = 0; i < themes.getSize(); i++) {
 			filesNames.add(themes.getAtIndex(i));
