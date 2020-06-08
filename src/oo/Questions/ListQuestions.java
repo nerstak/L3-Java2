@@ -70,9 +70,9 @@ public class ListQuestions implements Serializable {
                 // Creating the question
                 try {
                     listQuestions.add(new Question(
-                            s,
-                            theme,
-                            Difficulty.fromInteger(tmp.getInt("difficulty"))
+                        s,
+                        theme,
+                        Difficulty.fromInteger(tmp.getInt("difficulty"))
                     ));
                 } catch (Exception e) {
                     e.printStackTrace();
