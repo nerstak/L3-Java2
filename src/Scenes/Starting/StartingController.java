@@ -11,6 +11,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class StartingController {
     @FXML
     public Label welcomeLabel;
@@ -25,7 +31,17 @@ public class StartingController {
         welcomeLabel.setText("Welcome to the weakest link!");
         descriptionLabel.setAlignment(Pos.CENTER);
         descriptionLabel.setText("You and 3 of your friends have been selected to this game. You will have to play until there is only one of you left...");
-        //setting.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("file:resources/img/setting-icon.png"))));
+
+        try {
+            String path = (new File("README.md")).getAbsolutePath();
+            path = path.replace("README.md", "resources/img/setting-icon.png");
+            path = path.replace("\\", "/");
+            Image image = new Image(new FileInputStream(path));
+            setting.setGraphic(new ImageView(image));
+        } catch (NullPointerException | FileNotFoundException e) {
+            setting.setText("setting");
+            e.printStackTrace();
+        }
     }
 
     @FXML
