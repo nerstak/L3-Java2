@@ -1,7 +1,10 @@
 package oo.Players;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Vector;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,6 +19,13 @@ public class SetPlayers implements Serializable {
         for (int i = 0; i < sizeSet; i++) {
         	String playerName = Character.toString((char) (65 + i));
             listPlayers.add(new Player(playerName));
+        }
+    }
+
+    public SetPlayers (List<Player> players) {
+        listPlayers = new Vector<>();
+        for (Player p: players) {
+            listPlayers.add(p);
         }
     }
 
@@ -57,47 +67,26 @@ public class SetPlayers implements Serializable {
         return (int) listPlayers.stream().filter(c -> c.getStatus() == ps).count();
     }
 
-    public void eliminateWorstPlayer () {
+    public List<Player> getWorstPlayers () {
         Supplier<Stream<Player>> inGamePlayers = () -> listPlayers
                 .stream()
-                .filter(player -> player.getStatus() == PlayerStatus.hasPlayed || player.getStatus() == PlayerStatus.waiting);
-
+                .filter(player -> player.getStatus() == PlayerStatus.hasPlayed || player.getStatus() == PlayerStatus.waiting || player.getStatus() == PlayerStatus.selected);
 
         int minScore = inGamePlayers.get()
-            .min(new Comparator<Player>() {
-                @Override
-                public int compare(Player p1, Player p2) {
-                    return p2.getScore() - p1.getScore();
-                }
-            })
-            .orElseThrow(NoSuchElementException::new)
-            .getScore();
+                .min(Comparator.comparing(Player::getScore))
+                .orElseThrow(NoSuchElementException::new)
+                .getScore();
 
         long maxTimerWithMinScore = inGamePlayers.get()
-            .filter(player -> player.getScore() == minScore)
-            .max(new    Comparator<Player>() {
-                @Override
-                public int compare(Player p1, Player p2) {
-                    return Long.compare(p2.getTimer(), p1.getTimer());
-                }
-            })
-            .orElseThrow(NoSuchElementException::new)
-            .getTimer();
-        System.out.println(minScore);
-        System.out.println(maxTimerWithMinScore);
+                .filter(player -> player.getScore() == minScore)
+                .max(Comparator.comparingLong(Player::getTimer))
+                .orElseThrow(NoSuchElementException::new)
+                .getTimer();
 
-        ArrayList<Player> possibleEliminatedPlayers = (ArrayList<Player>) inGamePlayers.get()
-            .filter(p -> p.getScore() == minScore && p.getTimer() == maxTimerWithMinScore)
-            .collect(Collectors.toList());
+        List<Player> worstPlayers = inGamePlayers.get()
+                .filter(p -> p.getScore() == minScore && p.getTimer() == maxTimerWithMinScore)
+                .collect(Collectors.toList());
 
-        if (possibleEliminatedPlayers.size() == 1) {
-            possibleEliminatedPlayers.get(0).setStatus(PlayerStatus.eliminated);
-        } else {
-            // TODO : Dans le cas d’égalité, à la fois, des scores et timers, proposer jusqu’à trois questions supplémentaires
-            // pour les départager. Après cela, faire une sélection aléatoire pour passer à l’étape suivante.
-
-            // TEMP
-            possibleEliminatedPlayers.get(0).setStatus(PlayerStatus.eliminated);
-        }
+        return worstPlayers;
     }
 }

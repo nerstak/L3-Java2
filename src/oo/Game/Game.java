@@ -10,210 +10,338 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Game implements Serializable {
-	private final static Themes allThemes = initializeAllThemes();
+    private final static Themes allThemes = initializeAllThemes();
+    boolean eliminationDone;
+    private transient Question<?> selectedQuestion;
+    private Themes nextThemes;
+    private SetPlayers listPlayers;
+    private PhaseEnum currentPhase;
+    private PhaseEnum phaseBeforeDeciding;
+    private Integer turnLeftBeforeDeciding;
+    private Integer scoreBeforeDeciding;
+    private Long timerBeforeDeciding;
+    private List<Player> worstPlayers;
 
-	private Question<?> selectedQuestion;
-
-	private Themes nextThemes;
-
-	public Themes getNextThemes() {
-		return nextThemes;
-	}
-
-	private SetPlayers listPlayers;
-	private PhaseEnum currentPhase;
-
-	public SetPlayers getListPlayers() {
-		return listPlayers;
-	}
-
-	public Player getCurrentPlayer() {
-		return listPlayers.selectPlayer(PlayerStatus.selected);
-	}
-
-	public PhaseEnum getCurrentPhase() {
-		return currentPhase;
-	}
-
-	public Question<?> getSelectedQuestion() {
-		return selectedQuestion;
-	}
-
-	/**
-	 * Create a new Themes instance then call the method readThemes on it
-	 *
-	 * @return the new Themes instance
-	 */
-	public static Themes initializeAllThemes() {
-		Themes allThemes = new Themes();
-		allThemes.readThemes();
-		return allThemes;
-	}
-
-	public Game () {
+    public Game() {
         listPlayers = new SetPlayers();
-		nextThemes = new Themes();
-		selectedQuestion = null;
-		currentPhase = null;
-	}
+        nextThemes = new Themes();
+        selectedQuestion = null;
+        currentPhase = null;
+        eliminationDone = false;
 
-	/**
-	 * Handle the result of a question and execute the logic between this question and the next one
-	 *
-	 * @param isCorrect was the answer correct
-	 */
-	public void handleResult (boolean isCorrect) {
-		if (isCorrect) {
-			getCurrentPlayer().updateScore(currentPhase);
-		}
+        phaseBeforeDeciding = null;
+        turnLeftBeforeDeciding = null;
+        Integer scoreBeforeDeciding = null;
+        Long timerBeforeDeciding = null;
+        worstPlayers = null;
+    }
 
-		nextQuestion();
-	}
+    /**
+     * Create a new Themes instance then call the method readThemes on it
+     *
+     * @return the new Themes instance
+     */
+    public static Themes initializeAllThemes() {
+        Themes allThemes = new Themes();
+        allThemes.readThemes();
+        return allThemes;
+    }
 
-	/**
-	 * Execute the logic between a question and the next one
-	 */
-	public void nextQuestion() {
-		while (nextThemes.getSize() <= 0 && this.currentPhase != PhaseEnum.End) {
-			nextPhase();
-		}
+    public SetPlayers getListPlayers() {
+        return listPlayers;
+    }
 
-		if (this.currentPhase != PhaseEnum.End) {
-			chooseNextPlayer();
+    public Player getCurrentPlayer() {
+        return listPlayers.selectPlayer(PlayerStatus.selected);
+    }
 
-			if (currentPhase == PhaseEnum.Phase1 || currentPhase == PhaseEnum.Phase3) {
-				loadQuestion(0);
-			} else {
-				Main.sceneManager.activate("ThemeSelection");
-			}
-		}
-	}
+    public PhaseEnum getCurrentPhase() {
+        return currentPhase;
+    }
 
-	/**
-	 * Load the correct question and theme
-	 *
-	 * @param indexTheme Theme chosen
-	 */
-	public void loadQuestion(int indexTheme) {
-		ListQuestions possibleQuestions = new ListQuestions(nextThemes.remove(indexTheme));
-		try {
-			selectedQuestion = possibleQuestions.selectQuestion(currentPhase);
-		} catch (ListQuestions.NoQuestionForDesiredPhaseException e) {
-			e.printStackTrace();
-		}
+    public Question<?> getSelectedQuestion() {
+        return selectedQuestion;
+    }
 
-		if (selectedQuestion.getStatement() instanceof MCQ) {
-			Main.sceneManager.activate("MCQ");
-		} else if (selectedQuestion.getStatement() instanceof TrueFalse) {
-			Main.sceneManager.activate("TrueFalse");
-		} else if (selectedQuestion.getStatement() instanceof ShortAnswer) {
-			Main.sceneManager.activate("ShortAnswer");
-		}
-	}
+    public Themes getNextThemes() {
+        return nextThemes;
+    }
 
-	/**
-	 * Set the old selected player to hasPlayed
-	 * Then, if no waiting player left, set all players that have played to waiting
-	 * Finally, choose a new selected player among waiting players
-	 */
-	private void chooseNextPlayer() {
-		if (getCurrentPlayer() != null) {
-			getCurrentPlayer().setStatus(PlayerStatus.hasPlayed);
-		}
+    /**
+     * Handle the result of a question and execute the logic between this question and the next one
+     *
+     * @param isCorrect was the answer correct
+     */
+    public void handleResult(boolean isCorrect) {
+        if (isCorrect) {
+            getCurrentPlayer().updateScore(currentPhase);
+        }
 
-		if (listPlayers.countPlayers(PlayerStatus.waiting) == 0) {
-			while (listPlayers.countPlayers(PlayerStatus.hasPlayed) != 0) {
-				listPlayers.selectPlayer(PlayerStatus.hasPlayed).setStatus(PlayerStatus.waiting);
-			}
-		}
+        nextQuestion();
+    }
 
-		listPlayers.selectPlayer(PlayerStatus.waiting).setStatus(PlayerStatus.selected);
-	}
+    /**
+     * Execute the logic between a question and the next one
+     */
+    public void nextQuestion() {
+        try {
+            saveGame("save");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	/**
-	 * Set 4 players among a list to waiting
-	 */
-	private void selectFourPlayersRandomly () {
+        if (nextThemes.getSize() <= 0) {
+            if (currentPhase == PhaseEnum.DecideWorstPlayer) {
+                decideWorstPlayer();
+            } else {
+                nextPhase();
+            }
+            return;
+        }
+
+        if (this.currentPhase != PhaseEnum.End) {
+            chooseNextPlayer();
+
+            if (currentPhase == PhaseEnum.Phase1 || currentPhase == PhaseEnum.Phase3) {
+                loadQuestion(0);
+            } else {
+                Main.sceneManager.activate("ThemeSelection");
+            }
+        }
+    }
+
+    /**
+     * Load the correct question and theme
+     *
+     * @param indexTheme Theme chosen
+     */
+    public void loadQuestion(int indexTheme) {
+        ListQuestions possibleQuestions = new ListQuestions(nextThemes.remove(indexTheme));
+        try {
+            selectedQuestion = possibleQuestions.selectQuestion(currentPhase);
+        } catch (ListQuestions.NoQuestionForDesiredPhaseException e) {
+            e.printStackTrace();
+        }
+
+        if (selectedQuestion.getStatement() instanceof MCQ) {
+            Main.sceneManager.activate("MCQ");
+        } else if (selectedQuestion.getStatement() instanceof TrueFalse) {
+            Main.sceneManager.activate("TrueFalse");
+        } else if (selectedQuestion.getStatement() instanceof ShortAnswer) {
+            Main.sceneManager.activate("ShortAnswer");
+        }
+    }
+
+    /**
+     * Set the old selected player to hasPlayed
+     * Then, if no waiting player left, set all players that have played to waiting
+     * Finally, choose a new selected player among waiting players
+     */
+    private void chooseNextPlayer() {
+
+        if (getCurrentPlayer() != null) {
+            getCurrentPlayer().setStatus(PlayerStatus.hasPlayed);
+        }
+
+        if (listPlayers.countPlayers(PlayerStatus.waiting) == 0) {
+            while (listPlayers.countPlayers(PlayerStatus.hasPlayed) != 0) {
+                listPlayers.selectPlayer(PlayerStatus.hasPlayed).setStatus(PlayerStatus.waiting);
+            }
+        }
+        listPlayers.selectPlayer(PlayerStatus.waiting).setStatus(PlayerStatus.selected);
+    }
+
+    /**
+     * Set 4 players among a list to waiting
+     */
+    private void selectFourPlayersRandomly() {
         do {
             listPlayers.selectPlayer().setStatus(PlayerStatus.waiting);
         } while (listPlayers.countPlayers(PlayerStatus.waiting) < 4);
-	}
+    }
 
-	/**
-	 * Change the current phase and set variables linked to the new phase
-	 */
-	private void nextPhase () {
-		nextThemes = new Themes();
+    /**
+     * Change the current phase and set variables linked to the new phase
+     */
+    private void nextPhase() {
+        if (currentPhase == PhaseEnum.End) {
+            return;
+        } else if (currentPhase == null) {
+            // Going to phase1
+            currentPhase = PhaseEnum.Phase1;
+            selectFourPlayersRandomly();
 
-		if (currentPhase == null) {
-			// Going to phase1
-			currentPhase = PhaseEnum.Phase1;
-			selectFourPlayersRandomly();
+            for (int i = 0; i < 8; i++) {
+                nextThemes.add(allThemes.getAtIndex(allThemes.selectTheme(PhaseEnum.Phase1)));
+            }
 
-			// TODO: increase number of question to 8 or something like that
-			for (int i = 0; i < 4; i++) {
-				nextThemes.add(
-						allThemes.getAtIndex(
-								allThemes.selectTheme(PhaseEnum.Phase1)));
-			}
-		} else if (currentPhase == PhaseEnum.Phase1) {
-			// Going to phase2
-			currentPhase = PhaseEnum.Phase2;
-			listPlayers.eliminateWorstPlayer();
+            nextQuestion();
+            return;
+        } else if (!eliminationDone) {
+            eliminationDone = true;
+            if (getCurrentPlayer() != null) {
+                getCurrentPlayer().setStatus(PlayerStatus.hasPlayed);
+            }
+            eliminateWorstPlayer();
+            return;
+        }
 
-			// We select the list of themes that will be available
-			ArrayList<Integer> currentThemesIndex = allThemes.selectSixRandomThemes();
-			for (int currentThemeIndex : currentThemesIndex) {
-				nextThemes.add(allThemes.getAtIndex(currentThemeIndex));
-			}
-		} else if (currentPhase == PhaseEnum.Phase2) {
-			// Going to phase3
-			currentPhase = PhaseEnum.Phase3;
-			listPlayers.eliminateWorstPlayer();
+        eliminationDone = false;
+        nextThemes = new Themes();
 
-			// designer (that means us, developers :p) manually selected themes
-			for (int i = 0; i < 2; i++) {
-				nextThemes.add("gaming");
-				nextThemes.add("sciences");
-				nextThemes.add("technology");
-			}
-		} else if (currentPhase == PhaseEnum.Phase3) {
-			this.getCurrentPlayer().setStatus(PlayerStatus.waiting); // We stop the timer
-			this.currentPhase = PhaseEnum.End;
-			Main.sceneManager.activate("FinalScreen");
-		}
-	}
+        switch (currentPhase) {
+            case Phase1:
+                currentPhase = PhaseEnum.Phase2;
+                ArrayList<Integer> currentThemesIndex = allThemes.selectSixRandomThemes();
+                for (int currentThemeIndex : currentThemesIndex) {
+                    nextThemes.add(allThemes.getAtIndex(currentThemeIndex));
+                }
+                break;
 
-	private void saveGame (String name) throws IOException {
-		Files.createDirectories(Paths.get("resources/saves/"));
-		FileOutputStream file = new FileOutputStream("resources/saves/" + name);
-		ObjectOutputStream out = new ObjectOutputStream(file);
+            case Phase2:
+                currentPhase = PhaseEnum.Phase3;
+                // designer (that means us, developers :p) manually selected themes
+                for (int i = 0; i < 2; i++) {
+                    nextThemes.add("gaming");
+                    nextThemes.add("sciences");
+                    nextThemes.add("technology");
+                }
+                break;
 
-		out.writeObject(this);
+            case Phase3:
+                this.currentPhase = PhaseEnum.End;
 
-		out.close();
-		file.close();
-	}
+                // Select winner
+                if (this.getCurrentPlayer() != null) {
+                    this.getCurrentPlayer().setStatus(PlayerStatus.winner);
+                } else if (listPlayers.selectPlayer(PlayerStatus.hasPlayed) != null) {
+                    listPlayers.selectPlayer(PlayerStatus.hasPlayed).setStatus(PlayerStatus.winner);
+                }
+                if (this.getCurrentPlayer() != null) {
+                    this.getCurrentPlayer().setStatus(PlayerStatus.waiting);
+                }
+                Main.sceneManager.activate("FinalScreen");
+                break;
+        }
+        nextQuestion();
+    }
 
-	private void loadGame (String name) {
-		try {
-			FileInputStream file = new FileInputStream("resources/saves/" + name);
-			ObjectInputStream in = new ObjectInputStream(file);
+    private void saveGame(String name) throws IOException {
+        Files.createDirectories(Paths.get("resources/saves/"));
+        FileOutputStream file = new FileOutputStream("resources/saves/" + name);
+        ObjectOutputStream out = new ObjectOutputStream(file);
 
-			Game loadedGame = (Game)in.readObject();
-			this.nextThemes = loadedGame.nextThemes;
-			this.selectedQuestion = loadedGame.selectedQuestion;
-			this.listPlayers = loadedGame.listPlayers;
-			this.currentPhase = loadedGame.currentPhase;
+        out.writeObject(this);
 
-			in.close();
-			file.close();
-		} catch(Exception e) {
-			System.out.println(e);
-		}
-	}
+        out.close();
+        file.close();
+    }
+
+    private void loadGame(String name) {
+        try {
+            FileInputStream file = new FileInputStream("resources/saves/" + name);
+            ObjectInputStream in = new ObjectInputStream(file);
+
+            Game loadedGame = (Game) in.readObject();
+            this.nextThemes = loadedGame.nextThemes;
+            this.listPlayers = loadedGame.listPlayers;
+            this.currentPhase = loadedGame.currentPhase;
+            this.phaseBeforeDeciding = loadedGame.phaseBeforeDeciding;
+            this.scoreBeforeDeciding = loadedGame.scoreBeforeDeciding;
+            this.timerBeforeDeciding = loadedGame.timerBeforeDeciding;
+            this.worstPlayers = loadedGame.worstPlayers;
+
+            in.close();
+            file.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void eliminateWorstPlayer() {
+        List<Player> possibleEliminatedPlayers = listPlayers.getWorstPlayers();
+        if (possibleEliminatedPlayers.size() == 1) {
+            possibleEliminatedPlayers.get(0).setStatus(PlayerStatus.eliminated);
+            nextPhase();
+        } else if (possibleEliminatedPlayers.size() > 1) {
+            startWorstPlayerEqualityManagement(possibleEliminatedPlayers);
+        }
+    }
+
+    /**
+     * Start the management of equality between worst players after a phase
+     *
+     * @param worstPlayers the list of worst player in which we need to decide who will be eliminated
+     */
+    public void startWorstPlayerEqualityManagement(List<Player> worstPlayers) {
+        listPlayers.selectPlayer(PlayerStatus.selected).setStatus(PlayerStatus.inactive);
+        for (Player p : listPlayers.selectPlayers(PlayerStatus.hasPlayed))
+            p.setStatus(PlayerStatus.inactive);
+
+        for (Player p : worstPlayers)
+            p.setStatus(PlayerStatus.waiting);
+
+        this.worstPlayers = worstPlayers;
+        scoreBeforeDeciding = worstPlayers.get(0).getScore();
+        timerBeforeDeciding = worstPlayers.get(0).getTimer();
+        phaseBeforeDeciding = currentPhase;
+        currentPhase = PhaseEnum.DecideWorstPlayer;
+
+        turnLeftBeforeDeciding = 3;
+        decideWorstPlayer();
+    }
+
+    /**
+     *
+     */
+    public void decideWorstPlayer() {
+        turnLeftBeforeDeciding--;
+
+        // After three questions or if one of the worst players is worst than other
+        if (turnLeftBeforeDeciding == 0 || (new SetPlayers(worstPlayers)).getWorstPlayers().size() == 1) {
+            endWorstPlayerEqualityManagement();
+            return;
+        }
+
+        for (int i = 0; i < worstPlayers.size(); i++) {
+            nextThemes.add("gaming");
+        }
+        nextQuestion();
+    }
+
+    /**
+     * Eliminate the new worst player or eliminate a random player in new worst players then reestablish the game as it was before
+     */
+    private void endWorstPlayerEqualityManagement() {
+        List<Player> newWorstPlayers = (new SetPlayers(worstPlayers)).getWorstPlayers();
+        int indexEliminated = (new Random()).nextInt(newWorstPlayers.size());
+        newWorstPlayers.get(indexEliminated).setStatus(PlayerStatus.eliminated);
+
+        for (Player p : listPlayers.selectPlayers(PlayerStatus.inactive))
+            p.setStatus(PlayerStatus.waiting);
+
+        for (Player p : listPlayers.selectPlayers(PlayerStatus.hasPlayed))
+            p.setStatus(PlayerStatus.waiting);
+
+        for (Player p : worstPlayers) {
+            p.setDurationTimer(timerBeforeDeciding);
+            p.setScore(scoreBeforeDeciding);
+        }
+
+        currentPhase = phaseBeforeDeciding;
+
+        phaseBeforeDeciding = null;
+        this.worstPlayers = null;
+        scoreBeforeDeciding = null;
+        timerBeforeDeciding = null;
+        turnLeftBeforeDeciding = null;
+
+        nextPhase();
+    }
 
 //	Phase II :
 //	Le jeu se déroule entre les trois joueurs gagnants de la phase I. Cette phase propose deux questions
