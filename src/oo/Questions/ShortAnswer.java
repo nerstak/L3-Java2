@@ -30,4 +30,7 @@ public class ShortAnswer<T extends String> extends AbstractStatement<T> {
 
     @Override
     public int getType() {return 2;}
+
+    @Override
+    public String getInstance() {return "ShortAnswer";}
 }

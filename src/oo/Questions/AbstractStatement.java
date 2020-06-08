@@ -7,6 +7,7 @@ public abstract class AbstractStatement<T> implements Statement<T> {
     protected String text;
     protected T correctAnswer;
     protected int type;
+    protected String instance;
 
     public AbstractStatement(String text, T correctAnswer) {
         this.text = text;
@@ -23,4 +24,7 @@ public abstract class AbstractStatement<T> implements Statement<T> {
 
     @Override
     public int getType() {return type;}
+
+    @Override
+    public String getInstance() {return instance;}
 }

@@ -1,20 +1,19 @@
 package Scenes.AjouterSupprimer;
 
 import Project.Main;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import oo.Players.PlayerStatus;
 import oo.Questions.ListQuestions;
 import oo.Questions.Question;
 import oo.Questions.Themes;
 
-import java.awt.*;
+import java.util.LinkedList;
 
 public class ThemesController {
     private Themes themes = new Themes();
@@ -22,6 +21,8 @@ public class ThemesController {
 
     @FXML
     private TabPane themesInterface;
+    private TableView<Question<?>> table;
+
 
     @FXML
     private void initialize() {
@@ -31,18 +32,33 @@ public class ThemesController {
             Tab tab = themesInterface.getTabs().get(i);
             tab.setText(themes.getAtIndex(i));
 
+            TableView<Question<?>> questionTable = new TableView<Question<?>>();
+            questionTable.setPrefHeight(320);
+            questionTable.setEditable(false);
+            questionTable.setId(tab.getText() + "Table");
 
-// TODO: 04/06/2020 : The aim is to create automatically the table filled with all the questions
-/*
-                listQuestions = new ListQuestions(themes.getAtIndex(i++));
-                TableView questionTable = new TableView();
-                TableColumn<ListQuestions, String> questionColumn = new TableColumn("Questions");
-                questionColumn.setPrefWidth(790);
-                questionColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.toString()));
-                questionTable.setItems(FXCollections.observableArrayList(listQuestions));
-                questionTable.getColumns().add(questionColumn);tab.setContent(questionTable);
+            TableColumn<Question<?>, String> typeColumn = new TableColumn<Question<?>, String>("Type");
+            TableColumn<Question<?>, String> difficultyColumn = new TableColumn<Question<?>, String>("Difficulty");
+            TableColumn<Question<?>, String> questionColumn = new TableColumn<Question<?>, String>("Questions");
 
-*/
+            ListQuestions listQuestions = new ListQuestions(themes.getAtIndex(i));
+            questionTable.setItems(FXCollections.observableArrayList(listQuestions.getList()));
+            typeColumn.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getStatement().getInstance())));
+
+
+            difficultyColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDifficulty().toString()));
+            questionColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatement().getText()));
+
+            typeColumn.setResizable(false);
+            difficultyColumn.setResizable(false);
+            questionColumn.setResizable(false);
+
+            questionTable.getColumns().addAll(typeColumn, difficultyColumn, questionColumn);
+
+            questionColumn.setPrefWidth(800);
+
+
+            tab.setContent(questionTable);
         }
     }
 
@@ -51,6 +67,25 @@ public class ThemesController {
         Tab tab = themesInterface.getSelectionModel().getSelectedItem();
         themeSelected = tab.getText();
         Main.sceneManager.activate("AddQuestion");
+    }
+
+    @FXML
+    private void handleButtonDelete() {
+
+        Tab tab = themesInterface.getSelectionModel().getSelectedItem();
+        themeSelected = tab.getText();
+        System.out.println(tab.getContent().getId());
+
+        if(table.getSelectionModel().getSelectedIndex() != -1)
+        {
+            //Node content = tab.getContent();
+            //table = content.lookup("#" + themeSelected + "Table");
+
+            ListQuestions listQuestions = new ListQuestions(themeSelected);
+            //listQuestions.deleteQuestion(table.getSelectionModel().getSelectedIndex());
+        }
+
+       // System.out.println(table.getSelectionModel().getSelectedIndex());
     }
 
     @FXML

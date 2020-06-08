@@ -123,75 +123,6 @@ public class ListQuestions {
     }
 
     public void writeJson(String theme) {
-/*
-        String writing = "{\n   \"questions\": [\n      {\n";
-
-        for(int i = 0; i < listQuestions.size(); i++)
-        {
-            Question question = listQuestions.get(i);
-
-            writing += "            \"type\": \"" + question.getStatement().getType() + "\",\n";
-            writing += "            \"difficulty\": \"";
-            switch (question.getDifficulty())
-            {
-                case easy: {
-                    writing += "1\",\n";
-                    break;
-                }
-                case medium: {
-                    writing += "2\",\n";
-                    break;
-                }
-                default:{
-                    writing += "3\",\n";
-                    break;
-                }
-            }
-
-            writing += "            \"text\": " + question.getStatement().getText() + ",\n";
-
-
-            switch (question.getStatement().getType())
-            {
-                case "MCQ": {
-                    writing += "            \"answers\": [\n";
-                    writing += "                \"" + ((MCQ<?>) question.getStatement()).getAnswers().get(0) + "\",\n";
-                    writing += "                \"" + ((MCQ<?>) question.getStatement()).getAnswers().get(1) + "\",\n";
-                    writing += "                \"" + ((MCQ<?>) question.getStatement()).getAnswers().get(2) + "\"\n            ],\n";
-                    writing += "            \"correctAnswer\": \"" + question.getStatement().getCorrectAnswer() + "\"\n        }";
-                    break;
-                }
-                case "TrueFalse": {
-                    writing += "            \"correctAnswer\": ";
-
-                    if(((TrueFalse<?>) question.getStatement()).getCorrectAnswer().equalsIgnoreCase("true"))
-                        writing += "\"True\"";
-                    else
-                        writing += "\"False\"\n";
-
-                    writing += "        }";
-
-                    break;
-                }
-
-                case "ShortAnswer": {
-                    writing += "            \"correctAnswer\": \"" + question.getStatement().getCorrectAnswer() + "\"\n        }";
-                    break;
-
-                }
-
-                default: {
-                    break;
-                }
-            }
-
-            if(i != listQuestions.size() - 2)   // if there is at least one more question
-                writing += ",";
-
-            writing += "\n";
-        }
-        writing += "    ]\n}";
-*/
 
         JSONObject object = new JSONObject();
         JSONArray questions = new JSONArray();
@@ -269,4 +200,6 @@ public class ListQuestions {
             e.printStackTrace();
         }
     }
+
+    public LinkedList<Question<?>> getList() {return this.listQuestions;}
 }
