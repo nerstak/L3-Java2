@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import oo.Game.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,5 +52,13 @@ public class StartingController {
     @FXML
     private void settings() {
         Main.sceneManager.activate("Themes");
+    }
+
+    @FXML
+    private void loadGame() {
+        Game.initializeAllThemes();
+        Main.game = new Game();
+        Main.game.loadGame("save");
+        Main.game.nextQuestion();
     }
 }
