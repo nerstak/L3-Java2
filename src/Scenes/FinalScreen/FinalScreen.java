@@ -12,7 +12,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import oo.Game.Game;
 import oo.Players.Player;
-import oo.Players.PlayerStatus;
 
 import java.util.Collections;
 import java.util.Vector;
@@ -28,10 +27,7 @@ public class FinalScreen {
 
 
     public FinalScreen() {
-        ranking = Main.game.getListPlayers().selectPlayers(PlayerStatus.eliminated);
-        ranking.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.hasPlayed));
-        ranking.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.waiting));
-        ranking.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.selected));
+        ranking = Main.game.getListPlayers().getPlaying();
         ranking.sort(Player.PlayerRanking);
         Collections.sort(ranking, Collections.reverseOrder());
     }

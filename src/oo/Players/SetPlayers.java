@@ -67,7 +67,11 @@ public class SetPlayers implements Serializable {
         return (int) listPlayers.stream().filter(c -> c.getStatus() == ps).count();
     }
 
-    public List<Player> getWorstPlayers () {
+    public Vector<Player> getPlaying() {
+        return listPlayers.stream().filter(player -> player.getStatus() != PlayerStatus.inactive).collect(Collectors.toCollection(Vector::new));
+    }
+
+    public List<Player> getWorstPlayers() {
         Supplier<Stream<Player>> inGamePlayers = () -> listPlayers
                 .stream()
                 .filter(player -> player.getStatus() == PlayerStatus.hasPlayed || player.getStatus() == PlayerStatus.waiting || player.getStatus() == PlayerStatus.selected);
