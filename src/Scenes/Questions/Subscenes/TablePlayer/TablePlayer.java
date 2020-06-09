@@ -13,6 +13,7 @@ import oo.Players.PlayerStatus;
 import static oo.Players.Player.PlayerStatusComparator;
 
 public class TablePlayer {
+    public TableColumn<Player, String> playerScore;
     @FXML
     private TableView<Player> personTable;
     @FXML
@@ -25,6 +26,9 @@ public class TablePlayer {
         playerName.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
         playerStatus.setCellValueFactory(c -> new SimpleStringProperty(
                 c.getValue().getStatus().toString()
+        ));
+        playerScore.setCellValueFactory(c -> new SimpleStringProperty(
+                String.valueOf(c.getValue().getScore())
         ));
 
 

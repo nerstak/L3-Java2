@@ -26,7 +26,7 @@ public class Player implements Runnable,Serializable, Comparable<Player> {
         this.score = 0;
         this.number = globalPlayerNumber;
         globalPlayerNumber += 10;
-        this.status = PlayerStatus.doNotPlay;
+        this.status = PlayerStatus.inactive;
     }
     
     public Player(String name) {
@@ -34,7 +34,7 @@ public class Player implements Runnable,Serializable, Comparable<Player> {
         this.score = 0;
         this.number = globalPlayerNumber;
         globalPlayerNumber += 10;
-        this.status = PlayerStatus.doNotPlay;
+        this.status = PlayerStatus.inactive;
     }
 
     public Player(Player copy) {

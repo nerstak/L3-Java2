@@ -9,9 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import oo.Game.Game;
+import oo.Game.PhaseEnum;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,6 +24,7 @@ public class StartingController {
     public Button startButton;
     public Label descriptionLabel;
     public Label setting;
+    public Button quitButton;
 
     @FXML
     private void initialize() {
@@ -52,4 +54,24 @@ public class StartingController {
     private void settings() {
         Main.sceneManager.activate("Themes");
     }
-}
+
+    @FXML
+    private void loadGame() {
+        Game.initializeAllThemes();
+        Main.game = new Game();
+        Main.game.loadGame("save");
+        if (Main.game.getCurrentPhase() != PhaseEnum.End) {
+            Main.game.nextQuestion();
+        } else {
+            Main.sceneManager.activate("FinalScreen");
+        }
+    }
+
+    @FXML
+    private void quit() {
+        // get a handle to the stage
+        Stage stage = (Stage) quitButton.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+    }
+} 

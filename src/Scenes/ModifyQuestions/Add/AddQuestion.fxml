@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="500.0" prefWidth="800.0"
+            stylesheets="@../../../../resources/css/style.css" xmlns="http://javafx.com/javafx/11.0.1"
+            fx:controller="Scenes.ModifyQuestions.Add.AddController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="203.0" layoutY="14.0" prefHeight="70.0"
+             prefWidth="393.0" styleClass="title" text="NEW QUESTION" textAlignment="CENTER">
+         <font>
+            <Font size="51.0"/>
+         </font>
+      </Label>
+      <Button layoutX="643.0" layoutY="443.0" mnemonicParsing="false" onAction="#handleButtonAdd" prefHeight="42.0"
+              prefWidth="66.0" text="Add">
+         <font>
+            <Font size="19.0"/>
+         </font>
+      </Button>
+      <Button layoutX="719.0" layoutY="443.0" mnemonicParsing="false" onAction="#handleButtonBack" prefHeight="42.0"
+              prefWidth="66.0" text="Back">
+         <font>
+            <Font size="19.0"/>
+         </font>
+      </Button>
+      <Label layoutX="39.0" layoutY="115.0" prefHeight="38.0" prefWidth="65.0" text="Type">
+         <font>
+            <Font size="26.0"/>
+         </font>
+      </Label>
+      <ChoiceBox fx:id="typeQuestion" layoutX="99.0" layoutY="118.0" prefHeight="26.0" prefWidth="128.0"/>
+      <Label layoutX="597.0" layoutY="123.0" text="Difficulty">
+         <font>
+            <Font size="26.0"/>
+         </font>
+      </Label>
+      <ChoiceBox fx:id="difficulty" layoutX="686.0" layoutY="118.0" prefHeight="9.0" prefWidth="66.0"/>
+      <Label layoutX="39.0" layoutY="185.0" text="Text">
+         <font>
+            <Font size="26.0"/>
+         </font>
+      </Label>
+      <TextField fx:id="Text" layoutX="125.0" layoutY="183.0" prefHeight="26.0" prefWidth="449.0"/>
+      <Label layoutX="39.0" layoutY="258.0" text="CorrectAnswer">
+         <font>
+            <Font size="26.0"/>
+         </font>
+      </Label>
+      <TextField fx:id="CorrectAnswer" layoutX="165.0" layoutY="256.0" prefHeight="15.0" prefWidth="410.0"/>
+      <Label fx:id="LabelAnswer1" layoutX="39.0" layoutY="332.0" text="Answer 1">
+         <font>
+            <Font size="26.0"/>
+         </font>
+      </Label>
+      <TextField fx:id="TextAnswer1" layoutX="165.0" layoutY="330.0" prefHeight="11.0" prefWidth="410.0"/>
+      <Label fx:id="LabelAnswer2" layoutX="39.0" layoutY="384.0" text="Answer 2">
+         <font>
+            <Font size="26.0"/>
+         </font>
+      </Label>
+      <TextField fx:id="TextAnswer2" layoutX="165.0" layoutY="380.0" prefHeight="11.0" prefWidth="410.0"/>
+      <Label fx:id="LabelAnswer3" layoutX="39.0" layoutY="432.0" text="Answer 3">
+         <font>
+            <Font size="26.0"/>
+         </font>
+      </Label>
+      <TextField fx:id="TextAnswer3" layoutX="165.0" layoutY="430.0" prefHeight="11.0" prefWidth="410.0"/>
+   </children>
+</AnchorPane>

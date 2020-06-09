@@ -1,19 +1,18 @@
-package Scenes.ModifyQuestions;
+package Scenes.ModifyQuestions.Themes;
 
 import Project.Main;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import oo.Game.Difficulty;
 import oo.Questions.ListQuestions;
 import oo.Questions.Question;
 import oo.Questions.Themes;
 
-import oo.Game.Difficulty;
-
 
 public class ThemesController {
-    private Themes themes = new Themes();
+    private final Themes themes = new Themes();
     public static String themeSelected = "";
 
     @FXML

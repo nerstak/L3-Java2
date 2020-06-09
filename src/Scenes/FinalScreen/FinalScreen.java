@@ -10,9 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 import oo.Game.Game;
 import oo.Players.Player;
-import oo.Players.PlayerStatus;
 
 import java.util.Collections;
 import java.util.Vector;
@@ -23,15 +23,13 @@ public class FinalScreen {
     public TableColumn<Player, String> score;
     public TableColumn<Player, String> time;
     public Button restartButton;
+    public Button quitButton;
     @FXML
     private TableView<Player> personTable;
 
 
     public FinalScreen() {
-        ranking = Main.game.getListPlayers().selectPlayers(PlayerStatus.eliminated);
-        ranking.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.hasPlayed));
-        ranking.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.waiting));
-        ranking.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.selected));
+        ranking = Main.game.getListPlayers().getPlaying();
         ranking.sort(Player.PlayerRanking);
         Collections.sort(ranking, Collections.reverseOrder());
     }
@@ -55,5 +53,13 @@ public class FinalScreen {
     public void restartGame(ActionEvent actionEvent) {
         Main.game = new Game();
         Main.game.nextQuestion();
+    }
+
+    @FXML
+    private void quit() {
+        // get a handle to the stage
+        Stage stage = (Stage) quitButton.getScene().getWindow();
+        // do what you have to do
+        stage.close();
     }
 }
