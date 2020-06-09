@@ -21,14 +21,6 @@ public class Player implements Runnable,Serializable, Comparable<Player> {
 
     private static int globalPlayerNumber = 100;
 
-    public Player() {
-        this.name = "";
-        this.score = 0;
-        this.number = globalPlayerNumber;
-        globalPlayerNumber += 10;
-        this.status = PlayerStatus.inactive;
-    }
-    
     public Player(String name) {
         this.name = name;
         this.score = 0;
@@ -37,26 +29,23 @@ public class Player implements Runnable,Serializable, Comparable<Player> {
         this.status = PlayerStatus.inactive;
     }
 
-    public Player(Player copy) {
-        this.name = copy.name;
-        this.score = copy.score;
-        this.number = copy.number;
-        globalPlayerNumber += 10;
-        this.status = copy.status;
-    }
-
     public void setName(String s) {
         this.name = s;
     }
 
-    public void setDurationTimer (long dt) {
+    public void setDurationTimer(long dt) {
         this.durationTimer = dt;
     }
 
-    public void setScore (int s) {
+    public void setScore(int s) {
         this.score = s;
     }
 
+    /**
+     * Change status of a player
+     *
+     * @param p Status to update to
+     */
     public void setStatus(PlayerStatus p) {
         status = p;
         if (status == PlayerStatus.selected) {
@@ -118,20 +107,16 @@ public class Player implements Runnable,Serializable, Comparable<Player> {
         return durationTimer + currentTimer;
     }
 
+    /**
+     * Update the score
+     *
+     * @param phase Current phase
+     */
     public void updateScore(PhaseEnum phase) {
         switch (phase) {
-            case Phase1: {
-                score += 2;
-                break;
-            }
-            case Phase2: {
-                score += 3;
-                break;
-            }
-            case Phase3: {
-                score += 5;
-                break;
-            }
+            case Phase1 -> score += 2;
+            case Phase2 -> score += 3;
+            case Phase3 -> score += 5;
         }
     }
 
