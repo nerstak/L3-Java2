@@ -129,7 +129,7 @@ public class Themes implements Serializable {
      * @return 5 index of selected themes
      */
     public ArrayList<Integer> selectFiveRandomThemes() {
-        ArrayList<Integer> themesIndex = new ArrayList<Integer>();
+        ArrayList<Integer> themesIndex = new ArrayList<>();
         int newIndex;
         for (int i = 0; i < 5; i++) {
             do {

@@ -16,7 +16,7 @@ import java.util.HashMap;
 /**
  * Scene manager
  * It is used to move between different interfaces
- * May need to be redesigned as it needs to instantiate a new Scene everytime
+ * One of the major component in this project
  */
 public class SceneManager {
     private final HashMap<String, URL> screenList = new HashMap<>();
@@ -70,6 +70,12 @@ public class SceneManager {
         }
     }
 
+    /**
+     * Get url of a scene
+     *
+     * @param name Name
+     * @return URL
+     */
     public Serializable getSceneUrl(String name) {
         if (screenList.get(name) != null) {
             return screenList.get(name);
