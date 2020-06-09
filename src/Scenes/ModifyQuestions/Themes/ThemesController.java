@@ -10,7 +10,9 @@ import oo.Questions.ListQuestions;
 import oo.Questions.Question;
 import oo.Questions.Themes;
 
-
+/**
+ * Controller for questions and themes management
+ */
 public class ThemesController {
     private final Themes themes = new Themes();
     public static String themeSelected = "";
@@ -55,7 +57,7 @@ public class ThemesController {
                 ListQuestions listToSend = listQuestions;
 
                 for (int j = 0; j < listQuestions.getList().size(); j++) {
-                    if(listQuestions.get(j).getDifficulty() != levelDifficulty) {
+                    if (listQuestions.get(j).getDifficulty() != levelDifficulty) {
                         listToSend.deleteQuestion(j);
                         j = -1;
                     }
@@ -65,6 +67,12 @@ public class ThemesController {
         }
     }
 
+    /**
+     * Create a tab
+     *
+     * @param listQuestions List of question to add
+     * @return Table created
+     */
     private TableView instantiateTab(ListQuestions listQuestions) {
         TableView<Question<?>> questionTable = new TableView<Question<?>>();
         questionTable.setPrefHeight(320);

@@ -3,14 +3,60 @@
     {
       "type": "TrueFalse",
       "difficulty": "1",
-      "text": "Had jews been victimized all the time?",
+      "text": "Some faiths require believers to refuse medical treatment.",
+      "correctAnswer": "True"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "2",
+      "text": "The Catholic put a dead pope on trial.",
+      "correctAnswer": "True"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "3",
+      "text": "In Buddhism, Nirvana is reached through death.",
       "correctAnswer": "False"
     },
     {
       "type": "ShortAnswer",
+      "difficulty": "1",
+      "text": "What was the first book printed?",
+      "correctAnswer": "The Bible"
+    },
+    {
+      "type": "ShortAnswer",
       "difficulty": "2",
-      "text": "According to the Bible, who is the first man who could do miracles",
+      "text": "According to the Bible, who is the first man who could do miracles?",
       "correctAnswer": "Abraham"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "3",
+      "text": "Poseidon was a God worshipped by whom?",
+      "correctAnswer": "Greeks"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "1",
+      "text": "The world's largest religion is:",
+      "answers": [
+        "Hinduism",
+        "Islam",
+        "Christianity"
+      ],
+      "correctAnswer": "Christianity"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "2",
+      "text": "Wicca religion appeared during the...",
+      "answers": [
+        "16th century",
+        "20th century",
+        "13th century"
+      ],
+      "correctAnswer": "20th century"
     },
     {
       "type": "MCQ",

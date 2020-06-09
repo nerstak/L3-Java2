@@ -17,6 +17,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Controller for the starting scene
+ */
 public class StartingController {
     @FXML
     public Label welcomeLabel;
@@ -63,7 +66,7 @@ public class StartingController {
         if (Main.game.getCurrentPhase() != PhaseEnum.End) {
             Main.game.nextQuestion();
         } else {
-            Main.sceneManager.activate("FinalScreen");
+            Main.sceneManager.activate("Scoreboard");
         }
     }
 

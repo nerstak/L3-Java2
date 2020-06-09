@@ -10,7 +10,10 @@ import javafx.scene.control.TextField;
 import oo.Game.Difficulty;
 import oo.Questions.*;
 
-public class AddController {
+/**
+ * Controller to add a question
+ */
+public class AddQuestionController {
     @FXML
     public TextField TextAnswer1;
     public TextField TextAnswer2;
@@ -133,16 +136,19 @@ public class AddController {
                     return false;
 
                 // case ShortAnswer : if there is an answer it is good
-                default :
+                default:
                     return true;
             }
         }
     }
 
-    private void creatingNewQuestion () {
+    /**
+     * Create a new question
+     */
+    private void creatingNewQuestion() {
         AbstractStatement<?> s;
         ListQuestions lq = new ListQuestions(ThemesController.getThemeSelected());
-        switch ((String) typeQuestion.getValue()){
+        switch ((String) typeQuestion.getValue()) {
             case "TrueFalse":
                 // just to be sure the answer corresponds to the json file
                 Boolean answer = CorrectAnswer.getText().equalsIgnoreCase("true");

@@ -13,10 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Game implements Serializable {
+/**
+ * Game class
+ * It is basically the logic controller of the whole game (not program)
+ */
+public class Game implements Serializable, Phase {
     private final static Themes allThemes = initializeAllThemes();
     boolean eliminationDone;
     private transient Question<?> selectedQuestion;
+
+    /**
+     * nextThemes is the list of themes that will be used for the current phase
+     * Is changed at the beginning of each phase
+     */
     private Themes nextThemes;
     private SetPlayers listPlayers;
     private PhaseEnum currentPhase;
@@ -24,6 +33,7 @@ public class Game implements Serializable {
     private Integer turnLeftBeforeDeciding;
     private Integer scoreBeforeDeciding;
     private Long timerBeforeDeciding;
+
     private List<Player> worstPlayers;
 
     public Game() {
@@ -35,8 +45,8 @@ public class Game implements Serializable {
 
         phaseBeforeDeciding = null;
         turnLeftBeforeDeciding = null;
-        Integer scoreBeforeDeciding = null;
-        Long timerBeforeDeciding = null;
+        scoreBeforeDeciding = null;
+        timerBeforeDeciding = null;
         worstPlayers = null;
     }
 
@@ -51,14 +61,25 @@ public class Game implements Serializable {
         return allThemes;
     }
 
+    /**
+     * Get the list of players
+     *
+     * @return SetPlayers
+     */
     public SetPlayers getListPlayers() {
         return listPlayers;
     }
 
+    /**
+     * Get the current player
+     *
+     * @return Current player or null
+     */
     public Player getCurrentPlayer() {
         return listPlayers.selectPlayer(PlayerStatus.selected);
     }
 
+    @Override
     public PhaseEnum getCurrentPhase() {
         return currentPhase;
     }
@@ -94,6 +115,7 @@ public class Game implements Serializable {
             e.printStackTrace();
         }
 
+        // If we don't have any theme left, we move on to the nextPhase OR choosing the worst player
         if (nextThemes.getSize() <= 0) {
             if (currentPhase == PhaseEnum.DecideWorstPlayer) {
                 decideWorstPlayer();
@@ -103,6 +125,7 @@ public class Game implements Serializable {
             return;
         }
 
+        // For every phase except the ending one (scoreboard), we have questions
         if (this.currentPhase != PhaseEnum.End) {
             chooseNextPlayer();
 
@@ -155,10 +178,9 @@ public class Game implements Serializable {
         listPlayers.selectPlayer(PlayerStatus.waiting).setStatus(PlayerStatus.selected);
     }
 
-    /**
-     * Set 4 players among a list to waiting
-     */
-    private void selectFourPlayersRandomly() {
+
+    @Override
+    public void selectPlayers() {
         do {
             listPlayers.selectPlayer().setStatus(PlayerStatus.waiting);
         } while (listPlayers.countPlayers(PlayerStatus.waiting) < 4);
@@ -169,19 +191,13 @@ public class Game implements Serializable {
      */
     private void nextPhase() {
         if (currentPhase == PhaseEnum.End) {
+            // If we are at the scoreboard, nothing to do
             return;
         } else if (currentPhase == null) {
-            // Going to phase1
-            currentPhase = PhaseEnum.Phase1;
-            selectFourPlayersRandomly();
-
-            for (int i = 0; i < 8; i++) {
-                nextThemes.add(allThemes.getAtIndex(allThemes.selectTheme(PhaseEnum.Phase1)));
-            }
-
-            nextQuestion();
+            settingUpPhase1();
             return;
         } else if (!eliminationDone) {
+            // Choosing which player should be eliminated at the end of a phase
             eliminationDone = true;
             if (getCurrentPlayer() != null) {
                 getCurrentPlayer().setStatus(PlayerStatus.hasPlayed);
@@ -193,43 +209,78 @@ public class Game implements Serializable {
         eliminationDone = false;
         nextThemes = new Themes();
 
+
         switch (currentPhase) {
-            case Phase1:
-                currentPhase = PhaseEnum.Phase2;
-                ArrayList<Integer> currentThemesIndex = allThemes.selectSixRandomThemes();
-                for (int currentThemeIndex : currentThemesIndex) {
-                    nextThemes.add(allThemes.getAtIndex(currentThemeIndex));
-                }
-                break;
-
-            case Phase2:
-                currentPhase = PhaseEnum.Phase3;
-                // designer (that means us, developers :p) manually selected themes
-                for (int i = 0; i < 2; i++) {
-                    nextThemes.add("gaming");
-                    nextThemes.add("sciences");
-                    nextThemes.add("technology");
-                }
-                break;
-
-            case Phase3:
-                this.currentPhase = PhaseEnum.End;
-
-                // Select winner
-                if (this.getCurrentPlayer() != null) {
-                    this.getCurrentPlayer().setStatus(PlayerStatus.winner);
-                } else if (listPlayers.selectPlayer(PlayerStatus.hasPlayed) != null) {
-                    listPlayers.selectPlayer(PlayerStatus.hasPlayed).setStatus(PlayerStatus.winner);
-                }
-                if (this.getCurrentPlayer() != null) {
-                    this.getCurrentPlayer().setStatus(PlayerStatus.waiting);
-                }
-                Main.sceneManager.activate("FinalScreen");
-                break;
+            case Phase1 -> settingUpPhase2();
+            case Phase2 -> settingUpPhase3();
+            case Phase3 -> settingUpPhaseEnd();
         }
         nextQuestion();
     }
 
+    /**
+     * Set up Phase1 and load it
+     */
+    private void settingUpPhase1() {
+        currentPhase = PhaseEnum.Phase1;
+        selectPlayers();
+
+        // 2 questions per player
+        for (int i = 0; i < this.listPlayers.getPlaying().size() * 2; i++) {
+            nextThemes.add(allThemes.getAtIndex(allThemes.selectTheme(PhaseEnum.Phase1)));
+        }
+
+        nextQuestion();
+    }
+
+    /**
+     * Set up Phase2 and load it
+     */
+    private void settingUpPhase2() {
+        currentPhase = PhaseEnum.Phase2;
+        ArrayList<Integer> currentThemesIndex = allThemes.selectSixRandomThemes();
+        for (int currentThemeIndex : currentThemesIndex) {
+            nextThemes.add(allThemes.getAtIndex(currentThemeIndex));
+        }
+    }
+
+    /**
+     * Set up Phase3 and load it
+     */
+    private void settingUpPhase3() {
+        currentPhase = PhaseEnum.Phase3;
+        // designer (that means us, developers :p) manually selected themes
+        for (int i = 0; i < 2; i++) {
+            nextThemes.add("gaming");
+            nextThemes.add("sciences");
+            nextThemes.add("technology");
+        }
+    }
+
+    /**
+     * Set up End phase and load it
+     */
+    private void settingUpPhaseEnd() {
+        this.currentPhase = PhaseEnum.End;
+
+        // Select winner
+        if (this.getCurrentPlayer() != null) {
+            this.getCurrentPlayer().setStatus(PlayerStatus.winner);
+        } else if (listPlayers.selectPlayer(PlayerStatus.hasPlayed) != null) {
+            listPlayers.selectPlayer(PlayerStatus.hasPlayed).setStatus(PlayerStatus.winner);
+        }
+        if (this.getCurrentPlayer() != null) {
+            this.getCurrentPlayer().setStatus(PlayerStatus.waiting);
+        }
+        Main.sceneManager.activate("Scoreboard");
+    }
+
+    /**
+     * Save a game
+     *
+     * @param name Name of the save file
+     * @throws IOException Error
+     */
     private void saveGame(String name) throws IOException {
         Files.createDirectories(Paths.get("resources/saves/"));
         FileOutputStream file = new FileOutputStream("resources/saves/" + name);
@@ -240,7 +291,12 @@ public class Game implements Serializable {
         out.close();
         file.close();
     }
-    
+
+    /**
+     * Load a save
+     *
+     * @param name Name of the save file
+     */
     public void loadGame(String name) {
         try {
             FileInputStream file = new FileInputStream("resources/saves/" + name);
@@ -258,16 +314,21 @@ public class Game implements Serializable {
             in.close();
             file.close();
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
+    /**
+     * Eliminating the worst player
+     */
     public void eliminateWorstPlayer() {
         List<Player> possibleEliminatedPlayers = listPlayers.getWorstPlayers();
         if (possibleEliminatedPlayers.size() == 1) {
+            // Only one looser
             possibleEliminatedPlayers.get(0).setStatus(PlayerStatus.eliminated);
             nextPhase();
         } else if (possibleEliminatedPlayers.size() > 1) {
+            // More than one possible looser
             startWorstPlayerEqualityManagement(possibleEliminatedPlayers);
         }
     }
@@ -279,8 +340,9 @@ public class Game implements Serializable {
      */
     public void startWorstPlayerEqualityManagement(List<Player> worstPlayers) {
         listPlayers.selectPlayer(PlayerStatus.selected).setStatus(PlayerStatus.inactive);
+        // Every player not concerned is considered "winner" for the time being
         for (Player p : listPlayers.selectPlayers(PlayerStatus.hasPlayed))
-            p.setStatus(PlayerStatus.inactive);
+            p.setStatus(PlayerStatus.winner);
 
         for (Player p : worstPlayers)
             p.setStatus(PlayerStatus.waiting);
@@ -296,7 +358,7 @@ public class Game implements Serializable {
     }
 
     /**
-     *
+     * Choosing the worst player with question calls
      */
     public void decideWorstPlayer() {
         turnLeftBeforeDeciding--;
@@ -318,10 +380,12 @@ public class Game implements Serializable {
      */
     private void endWorstPlayerEqualityManagement() {
         List<Player> newWorstPlayers = (new SetPlayers(worstPlayers)).getWorstPlayers();
+
         int indexEliminated = (new Random()).nextInt(newWorstPlayers.size());
         newWorstPlayers.get(indexEliminated).setStatus(PlayerStatus.eliminated);
 
-        for (Player p : listPlayers.selectPlayers(PlayerStatus.inactive))
+        // Not concerned players are now back in the game
+        for (Player p : listPlayers.selectPlayers(PlayerStatus.winner))
             p.setStatus(PlayerStatus.waiting);
 
         for (Player p : listPlayers.selectPlayers(PlayerStatus.hasPlayed))
@@ -342,14 +406,5 @@ public class Game implements Serializable {
 
         nextPhase();
     }
-
-//	Phase II :
-//	Le jeu se déroule entre les trois joueurs gagnants de la phase I. Cette phase propose deux questions
-//	de niveau moyen pour chaque joueur (une question par thème choisi).
-//	A ce niveau, les questions porteront sur uniquement 6 thèmes choisis du tableau aléatoirement.
-//	A tour de rôle et de manière alternée, chaque joueur choisit un thème (ensuite un deuxième) qui est
-//	supprimé des choix aussitôt sélectionnés.
-//	Une question de niveau moyen (dans le thème choisi) est sélectionnée selon la politique Round-Robin
-//	et présentée au joueur.
 }
 

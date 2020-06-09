@@ -1,5 +1,8 @@
 package oo.Game;
 
+/**
+ * Phase Enumeration
+ */
 public enum PhaseEnum {
     Phase1("Phase 1"),
     Phase2("Phase 2"),

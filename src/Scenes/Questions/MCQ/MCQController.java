@@ -9,6 +9,9 @@ import javafx.scene.layout.AnchorPane;
 import oo.Questions.MCQ;
 import oo.Questions.Question;
 
+/**
+ * Controller of MCQ questions
+ */
 public class MCQController extends Scenes.Questions.Question {
     public Label question;
     public Button firstAnswer;
@@ -17,13 +20,12 @@ public class MCQController extends Scenes.Questions.Question {
     public AnchorPane tableAnchor;
     public AnchorPane topAnchor;
 
-    private Question<?> questionT;
     private MCQ<String> mcq;
 
 
     @FXML
     private void initialize() {
-        questionT = Main.game.getSelectedQuestion();
+        Question<?> questionT = Main.game.getSelectedQuestion();
         mcq = (MCQ<String>) questionT.getStatement();
 
         // Loading sub nodes
@@ -50,6 +52,11 @@ public class MCQController extends Scenes.Questions.Question {
         submitAnswer(2);
     }
 
+    /**
+     * Submit the answer and move to the next question
+     *
+     * @param index Index of the answer
+     */
     private void submitAnswer(int index) {
         String selectAnswer = mcq.getAnswers().get(index);
         boolean result = mcq.checkAnswer(selectAnswer);

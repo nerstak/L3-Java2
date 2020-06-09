@@ -11,11 +11,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
-public class TopBar {
+/**
+ * Controller for the Top Bar in question's scene
+ */
+public class TopBarController {
     public Label timerLabel;
     public Label phaseInformation;
-
-    private Timeline timeline;
 
     @FXML
     private void initialize() {
@@ -27,7 +28,7 @@ public class TopBar {
      * Display the timer
      */
     private void displayTimer() {
-        timeline = new Timeline(
+        Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0),
                         new EventHandler<ActionEvent>() {
                             @Override

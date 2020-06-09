@@ -41,15 +41,19 @@ public class JSONParser {
         return null;
     }
 
-    public static boolean writeFile(JSONObject json, String name) {
+    /**
+     * Write a JSON Object to a file
+     *
+     * @param json Object
+     * @param name Name of the without extension
+     */
+    public static void writeFile(JSONObject json, String name) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File(resourcesPath + jsonPath + name + ".json")));
             json.write(bw);
             bw.close();
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 }

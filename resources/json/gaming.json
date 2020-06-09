@@ -12,16 +12,62 @@
       "correctAnswer": "11.77 millions"
     },
     {
+      "type": "MCQ",
+      "difficulty": "2",
+      "text": "When did the first video game console appeared?",
+      "answers": [
+        "1963",
+        "1972",
+        "1969"
+      ],
+      "correctAnswer": "1972"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "3",
+      "text": "In 2005, World of Warcraft was hit by:",
+      "answers": [
+        "A shutdown of 3 months",
+        "A terrorist attack",
+        "A pandemic"
+      ],
+      "correctAnswer": "A pandemic"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "1",
+      "text": "GTA 5 is the best selling video game.",
+      "correctAnswer": "False"
+    },
+    {
       "type": "TrueFalse",
       "difficulty": "2",
-      "text": "Is Skyrim the best MMO?",
+      "text": "Barack Obama campaigned in 18 games.",
+      "correctAnswer": "True"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "3",
+      "text": "The Sega MegaDrive was the first console played in space.",
       "correctAnswer": "False"
     },
     {
       "type": "ShortAnswer",
       "difficulty": "3",
-      "text": "Where did Hsieh die while playing video games?",
+      "text": "Where did Roger Hsieh die while playing video games?",
       "correctAnswer": "a cafe"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "What was the original name of Pac-Man?",
+      "correctAnswer": "Puckman"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "1",
+      "text": "What is the most popular video game franchise?",
+      "correctAnswer": "Mario"
     }
   ]
 }

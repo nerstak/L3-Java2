@@ -8,6 +8,9 @@ import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 
+/**
+ * General functions for interfaces of questions
+ */
 public abstract class Question {
     /**
      * Load the side bars
@@ -40,10 +43,10 @@ public abstract class Question {
         alert.setTitle("Information Dialog");
 
         if (result) {
-            alert.setHeaderText("Wow ur good");
+            alert.setHeaderText("Congratulation!");
             alert.setContentText("The answer was indeed " + correctAnswer);
         } else {
-            alert.setHeaderText("boooh");
+            alert.setHeaderText("Too bad!");
             alert.setContentText("The real answer was " + correctAnswer);
         }
         alert.showAndWait();

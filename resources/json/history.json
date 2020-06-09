@@ -1,7 +1,7 @@
 {
   "questions": [
     {
-      "difficulty": 2,
+      "difficulty": 1,
       "text": "In which year was JFK shot?",
       "type": "ShortAnswer",
       "correctAnswer": "1963"
@@ -19,7 +19,7 @@
         "Vercingetorix",
         "Ambigatos"
       ],
-      "text": "Which Gallic leader fought against Ceasar?",
+      "text": "Which Gallic leader fought against Caesar?",
       "type": "MCQ",
       "correctAnswer": "Vercingetorix"
     },
@@ -34,6 +34,40 @@
       "text": "2,000 persons died during Salem witch trials",
       "type": "TrueFalse",
       "correctAnswer": "False"
+    },
+    {
+      "difficulty": 2,
+      "answers": [
+        "Captain Hook",
+        "Captain Sparrow",
+        "Captain Morgan"
+      ],
+      "text": "Which one of these pirates actually existed?",
+      "type": "MCQ",
+      "correctAnswer": "Captain Morgan"
+    },
+    {
+      "difficulty": 3,
+      "text": "How many countries were members of the USSR, at its peak?",
+      "type": "ShortAnswer",
+      "correctAnswer": "16"
+    },
+    {
+      "difficulty": 3,
+      "text": "The Vietnam War is a proxy war.",
+      "type": "TrueFalse",
+      "correctAnswer": "True"
+    },
+    {
+      "difficulty": 3,
+      "answers": [
+        "1947",
+        "1925",
+        "1953"
+      ],
+      "text": "The partition of India was done in:",
+      "type": "MCQ",
+      "correctAnswer": "1947"
     }
   ]
 }

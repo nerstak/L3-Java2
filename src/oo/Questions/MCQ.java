@@ -4,6 +4,11 @@ import org.json.JSONObject;
 
 import java.util.Vector;
 
+/**
+ * Class for multiple choice question
+ *
+ * @param <T> String
+ */
 public class MCQ<T extends String> extends AbstractStatement<T> {
     private final Vector<String> answers;
 
@@ -26,17 +31,17 @@ public class MCQ<T extends String> extends AbstractStatement<T> {
     }
 
     public Vector<String> getAnswers() {
-        return answers; // Might return copy?
+        return answers;
     }
 
     @Override
     public String toString() {
-        String string = "MQC: " + text + ":\n";
+        StringBuilder string = new StringBuilder("MQC: " + text + ":\n");
         for (String s : answers) {
-            string += "   " + s + "\n";
+            string.append("   ").append(s).append("\n");
         }
-        string += "Correct answer: " + correctAnswer;
-        return string;
+        string.append("Correct answer: ").append(correctAnswer);
+        return string.toString();
     }
 
     @Override

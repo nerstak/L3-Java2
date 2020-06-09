@@ -12,6 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class holding a list of question
+ */
 public class ListQuestions implements Serializable {
     private final LinkedList<Question<?>> listQuestions;
     private final int selected = -1;
@@ -46,15 +49,15 @@ public class ListQuestions implements Serializable {
             try {
                 switch (tmp.getString("type")) {
                     case "MCQ":
-                        s = new MCQ(tmp);
+                        s = new MCQ<>(tmp);
                         break;
 
                     case "ShortAnswer":
-                        s = new ShortAnswer(tmp);
+                        s = new ShortAnswer<>(tmp);
                         break;
 
                     case "TrueFalse":
-                        s = new TrueFalse(tmp);
+                        s = new TrueFalse<>(tmp);
                         break;
 
                     default:
@@ -68,14 +71,13 @@ public class ListQuestions implements Serializable {
                 // Creating the question
                 try {
                     listQuestions.add(new Question(
-                        s,
-                        theme,
-                        Difficulty.fromInteger(tmp.getInt("difficulty"))
+                            s,
+                            theme,
+                            Difficulty.fromInteger(tmp.getInt("difficulty"))
                     ));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         }
     }
@@ -104,7 +106,7 @@ public class ListQuestions implements Serializable {
      * @param i the index of the question
      * @return the question at the desired index
      */
-    public Question get (int i) {
+    public Question<?> get(int i) {
         return listQuestions.get(i);
     }
 
@@ -134,23 +136,26 @@ public class ListQuestions implements Serializable {
         System.out.println(this.toString());   //When in display, "ShortAnswer" is printed as "TrueFalse", but it doesn't not seems to impact the list
     }
 
-    public static class NoQuestionForDesiredPhaseException extends Exception {
-        public NoQuestionForDesiredPhaseException (PhaseEnum desiredPhase) {
-            super("Couldn't find a question for the phase '" + desiredPhase + "' and according difficulty in question list");
-        }
-    }
-
+    /**
+     * Selection a question based on the Phase
+     *
+     * @param phaseEnum Current phase
+     * @return One question
+     * @throws NoQuestionForDesiredPhaseException No questions left
+     */
     public Question<?> selectQuestion(PhaseEnum phaseEnum) throws NoQuestionForDesiredPhaseException {
         List<Question<?>> filteredQuestions = switch (phaseEnum) {
-            // TODO : utiliser la méthode round robin pour la première phase
-            case Phase1 ->
-                    listQuestions
+            case Phase1 -> listQuestions
                     .stream()
                     .filter(q -> q.getDifficulty() == Difficulty.easy)
                     .collect(Collectors.toList());
             case Phase2 -> listQuestions
                     .stream()
                     .filter(q -> q.getDifficulty() == Difficulty.medium)
+                    .collect(Collectors.toList());
+            case Phase3 -> listQuestions
+                    .stream()
+                    .filter(q -> q.getDifficulty() == Difficulty.hard)
                     .collect(Collectors.toList());
             default -> listQuestions;
         };
@@ -163,32 +168,33 @@ public class ListQuestions implements Serializable {
         return filteredQuestions.get(index);
     }
 
+    /**
+     * Write questions into a json for a theme
+     *
+     * @param theme Theme to write
+     */
     public void writeJson(String theme) {
         JSONObject object = new JSONObject();
         JSONArray questions = new JSONArray();
+
+        // Creating a JSON object for each question
         for (Question<?> question : this.listQuestions) {
             JSONObject obj = new JSONObject();
             obj.put("text", question.getStatement().getText());
             obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
 
             switch (question.getDifficulty()) {
-                case easy:
-                    obj.put("difficulty", 1);
-                    break;
-                case medium:
-                    obj.put("difficulty", 2);
-                    break;
-                default:
-                    obj.put("difficulty", 3);
-                    break;
+                case easy -> obj.put("difficulty", 1);
+                case medium -> obj.put("difficulty", 2);
+                default -> obj.put("difficulty", 3);
             }
 
             if (question.getStatement() instanceof MCQ) {
                 JSONArray answers = new JSONArray();
                 obj.put("answers", answers);
                 obj.put("type", "MCQ");
-                for (int i = 0; i < 3; i ++) {
-                    answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(i));
+                for (int i = 0; i < 3; i++) {
+                    answers.put(((MCQ<?>) question.getStatement()).getAnswers().get(i));
                 }
             } else if (question.getStatement() instanceof ShortAnswer) {
                 obj.put("type", "ShortAnswer");
@@ -197,12 +203,27 @@ public class ListQuestions implements Serializable {
             }
             questions.put(obj);
         }
-
         object.put("questions", questions);
-        JSONParser.writeFile(object,theme);
+
+        // Writing questions
+        JSONParser.writeFile(object, theme);
     }
 
+    /**
+     * Get list of questions
+     *
+     * @return List of questions
+     */
     public LinkedList<Question<?>> getList() {
         return this.listQuestions;
+    }
+
+    /**
+     * Class for custom exception
+     */
+    public static class NoQuestionForDesiredPhaseException extends Exception {
+        public NoQuestionForDesiredPhaseException(PhaseEnum desiredPhase) {
+            super("Couldn't find a question for the phase '" + desiredPhase + "' and according difficulty in question list");
+        }
     }
 }

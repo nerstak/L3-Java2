@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="500.0" prefWidth="800.0"
             stylesheets="@../../../../resources/css/style.css" xmlns="http://javafx.com/javafx/11.0.1"
-            fx:controller="Scenes.ModifyQuestions.Add.AddController">
+            fx:controller="Scenes.ModifyQuestions.Add.AddQuestionController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="203.0" layoutY="14.0" prefHeight="70.0"
              prefWidth="393.0" styleClass="title" text="NEW QUESTION" textAlignment="CENTER">

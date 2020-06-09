@@ -11,6 +11,9 @@ import oo.Questions.Themes;
 
 import java.util.ArrayList;
 
+/**
+ * Controller for the Theme selection in phase2
+ */
 public class ThemeSelectionController {
 	@FXML
 	public VBox choicesContainer;

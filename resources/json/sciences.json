@@ -1,1 +1,73 @@
-{"questions":[{"difficulty":2,"text":"What does DNA stand for?","type":"ShortAnswer","correctAnswer":"Deoxyribonucleic acid"},{"difficulty":3,"answers":["370-180","350-180","380-200 nm"],"text":"What is the domain of UV?","type":"MCQ","correctAnswer":"380-200 nm"}]}
+{
+  "questions": [
+    {
+      "type": "TrueFalse",
+      "difficulty": "1",
+      "text": "Is a bear carnivore?",
+      "correctAnswer": "False"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "1",
+      "text": "The peregrine falcon is the fastest animal.",
+      "correctAnswer": "True"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "3",
+      "text": "Camels store water in their humps.",
+      "correctAnswer": "False"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "1",
+      "text": "What are red blood cells carrying?",
+      "correctAnswer": "Oxygen"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "How many bones do we have in us?",
+      "correctAnswer": "206"
+    },
+    {
+      "difficulty": "3",
+      "text": "What does DNA stand for?",
+      "type": "ShortAnswer",
+      "correctAnswer": "Deoxyribonucleic acid"
+    },
+    {
+      "difficulty": "1",
+      "answers": [
+        "the Moon",
+        "Mars",
+        "Jupiter"
+      ],
+      "text": "You weight the less on",
+      "type": "MCQ",
+      "correctAnswer": "the Moon"
+    },
+    {
+      "difficulty": "2",
+      "answers": [
+        "370-180 nm",
+        "350-180 nm",
+        "380-200 nm"
+      ],
+      "text": "What is the domain of UV?",
+      "type": "MCQ",
+      "correctAnswer": "380-200 nm"
+    },
+    {
+      "difficulty": "3",
+      "answers": [
+        "underwater",
+        "on land",
+        "in jelly"
+      ],
+      "text": "It is more dangerous to survive a grenade...",
+      "type": "MCQ",
+      "correctAnswer": "underwater"
+    }
+  ]
+}

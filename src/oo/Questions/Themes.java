@@ -6,7 +6,11 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 
+/**
+ * Class holding themes
+ */
 public class Themes implements Serializable {
     private final ArrayList<String> listThemes;
     private int indicator = -1;
@@ -32,15 +36,19 @@ public class Themes implements Serializable {
         }
     }
 
+    public void shuffle() {
+        Collections.shuffle(listThemes);
+    }
+
     public int getIndicator() {
         return indicator;
     }
 
-    public void add (String t) {
+    public void add(String t) {
         listThemes.add(t);
     }
 
-    public String remove (int index) {
+    public String remove(int index) {
         return listThemes.remove(index);
     }
 
@@ -113,31 +121,32 @@ public class Themes implements Serializable {
                 indicator = ++indicator % listThemes.size();
             }
         } else if (phase == PhaseEnum.Phase2) {
+            // The game should not choose the theme for phase 2
             indicator = -1;
         }
 
         return indicator;
     }
-    
+
     /**
-     * Select 5 random themes
+     * Select 5 different random themes. Not used as wrong
      *
      * @return 5 index of selected themes
      */
     public ArrayList<Integer> selectFiveRandomThemes() {
-    	ArrayList<Integer> themesIndex = new ArrayList<Integer>();
-    	int newIndex;
-    	for (int i = 0; i < 5; i++) {
-    		do {
-    			newIndex = (int) (Math.random() * listThemes.size()); 
-    		} while (themesIndex.contains(newIndex));
-    		themesIndex.add(newIndex);
-    	}
-    	return themesIndex;
+        ArrayList<Integer> themesIndex = new ArrayList<>();
+        int newIndex;
+        for (int i = 0; i < 5; i++) {
+            do {
+                newIndex = (int) (Math.random() * listThemes.size());
+            } while (themesIndex.contains(newIndex));
+            themesIndex.add(newIndex);
+        }
+        return themesIndex;
     }
 
     /**
-     * Select 6 random themes
+     * Select 6 different random themes
      *
      * @return 6 index of selected themes
      */

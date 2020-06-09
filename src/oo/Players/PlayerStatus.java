@@ -1,5 +1,8 @@
 package oo.Players;
 
+/**
+ * Enumeration of the different status
+ */
 public enum PlayerStatus {
     superWinner("Super Winner"),
     winner("Winner"),
@@ -7,7 +10,7 @@ public enum PlayerStatus {
     waiting("Waiting"),
     hasPlayed("Has played"),
     eliminated("Eliminated"),
-    inactive("Inactive");
+    inactive("Inactive"); // Used for the non-playing players
 
     private final String meaning;
 

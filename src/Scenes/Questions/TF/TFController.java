@@ -8,6 +8,9 @@ import javafx.scene.layout.AnchorPane;
 import oo.Questions.Question;
 import oo.Questions.TrueFalse;
 
+/**
+ * Controller of TrueFalse questions
+ */
 public class TFController extends Scenes.Questions.Question {
     public Button trueAnswer;
     public Button falseAnswer;
@@ -39,6 +42,11 @@ public class TFController extends Scenes.Questions.Question {
         submitAnswer(false);
     }
 
+    /**
+     * Submit the answer and load the next question
+     *
+     * @param b Answer
+     */
     private void submitAnswer(boolean b) {
         boolean result = trueFalse.checkAnswer(b);
 

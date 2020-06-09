@@ -2,6 +2,11 @@ package oo.Questions;
 
 import org.json.JSONObject;
 
+/**
+ * Class for Short Answer
+ *
+ * @param <T> String
+ */
 public class ShortAnswer<T extends String> extends AbstractStatement<T> {
     public ShortAnswer(String text, T correctAnswer) {
         super(text, correctAnswer);
