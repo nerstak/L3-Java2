@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import oo.Game.Game;
 import oo.Game.PhaseEnum;
 
@@ -23,6 +24,7 @@ public class StartingController {
     public Button startButton;
     public Label descriptionLabel;
     public Label setting;
+    public Button quitButton;
 
     @FXML
     private void initialize() {
@@ -64,4 +66,12 @@ public class StartingController {
             Main.sceneManager.activate("FinalScreen");
         }
     }
-}
+
+    @FXML
+    private void quit() {
+        // get a handle to the stage
+        Stage stage = (Stage) quitButton.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+    }
+} 

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 import oo.Game.Game;
 import oo.Players.Player;
 
@@ -22,6 +23,7 @@ public class FinalScreen {
     public TableColumn<Player, String> score;
     public TableColumn<Player, String> time;
     public Button restartButton;
+    public Button quitButton;
     @FXML
     private TableView<Player> personTable;
 
@@ -51,5 +53,13 @@ public class FinalScreen {
     public void restartGame(ActionEvent actionEvent) {
         Main.game = new Game();
         Main.game.nextQuestion();
+    }
+
+    @FXML
+    private void quit() {
+        // get a handle to the stage
+        Stage stage = (Stage) quitButton.getScene().getWindow();
+        // do what you have to do
+        stage.close();
     }
 }
