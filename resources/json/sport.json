@@ -7,14 +7,49 @@
       "correctAnswer": "8"
     },
     {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "What is the famous sport in \"Harry Potter?\"",
+      "correctAnswer": "Quidditch"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "3",
+      "text": "What was the original name of Badminton?",
+      "correctAnswer": "Poona"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "1",
+      "text": "A boxing ring is called like this because it used to be round.",
+      "correctAnswer": "True"
+    },
+    {
       "type": "TrueFalse",
       "difficulty": "2",
       "text": "There is always a gap of 4 years between each Olympic Games?",
       "correctAnswer": "False"
     },
     {
-      "type": "MCQ",
+      "type": "TrueFalse",
       "difficulty": "3",
+      "text": "Live pigeon shooting was and still is an Olympic Sport.",
+      "correctAnswer": "False"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "1",
+      "text": "In the USA, what does \"soccer\" refers to?",
+      "answers": [
+        "American football",
+        "Rugby",
+        "European football"
+      ],
+      "correctAnswer": "European football"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "2",
       "text": "Which country organized the World Championship of Handball in 2015?",
       "answers": [
         "France",
@@ -22,6 +57,17 @@
         "Slovenia"
       ],
       "correctAnswer": "Qatar"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "3",
+      "text": "How long did the longest boxing match lasted?",
+      "answers": [
+        "110 rounds",
+        "85 rounds",
+        "95 rounds"
+      ],
+      "correctAnswer": "110 rounds"
     }
   ]
 }

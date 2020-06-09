@@ -7,10 +7,56 @@
       "correctAnswer": "True"
     },
     {
+      "type": "TrueFalse",
+      "difficulty": "2",
+      "text": "Javascript is a fork of Java.",
+      "correctAnswer": "False"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "3",
+      "text": "\"GNU\" stands for \"GNU's Not Unix\".",
+      "correctAnswer": "True"
+    },
+    {
       "type": "ShortAnswer",
       "difficulty": "1",
       "text": "What does ROM stand for?",
       "correctAnswer": "Read Only Memory"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "When did Apple launched its first iPhone??",
+      "correctAnswer": "2007"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "3",
+      "text": "How many country went in space?",
+      "correctAnswer": "37"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "1",
+      "text": "The creator of the Morse code is:",
+      "answers": [
+        "Samuel Bell",
+        "Samuel Morse",
+        "Samuel Adams"
+      ],
+      "correctAnswer": "Samuel Morse"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "2",
+      "text": "In which decade was the American Institute of Electrical Engineers (AIEE) founded?",
+      "answers": [
+        "1850",
+        "1880",
+        "1930"
+      ],
+      "correctAnswer": "1880"
     },
     {
       "type": "MCQ",
@@ -22,18 +68,6 @@
         "1968"
       ],
       "correctAnswer": "1971"
-    },
-    {
-      "type": "MCQ",
-      "difficulty": "2",
-      "text": "In which decade was the American Institute of Electrical Engineers (AIEE) founded?",
-      "answers": [
-        "1850",
-        "1880",
-        "1930",
-		"1950"
-      ],
-      "correctAnswer": "1880"
     }
   ]
 }

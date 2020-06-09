@@ -13,9 +13,15 @@
     },
     {
       "type": "ShortAnswer",
-      "difficulty": "3",
-      "text": "What is the first metal band?",
-      "correctAnswer": "Black Sabbath"
+      "difficulty": "1",
+      "text": "Which band created \"We Will Rock You\"?",
+      "correctAnswer": "Queen"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "1",
+      "text": "Loud music makes customers in bars drink less.",
+      "correctAnswer": "False"
     },
     {
       "type": "TrueFalse",
@@ -45,6 +51,12 @@
       "difficulty": "3",
       "text": "Monaco’s national orchestra is bigger that its army.",
       "correctAnswer": "True"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "3",
+      "text": "What is the first metal band?",
+      "correctAnswer": "Black Sabbath"
     }
   ]
 }
