@@ -136,7 +136,7 @@ public class ListQuestions implements Serializable {
         System.out.println(this.toString());   //When in display, "ShortAnswer" is printed as "TrueFalse", but it doesn't not seems to impact the list
     }
 
-    public class NoQuestionForDesiredPhaseException extends Exception {
+    public static class NoQuestionForDesiredPhaseException extends Exception {
         public NoQuestionForDesiredPhaseException (PhaseEnum desiredPhase) {
             super("Couldn't find a question for the phase '" + desiredPhase + "' and according difficulty in question list");
         }
