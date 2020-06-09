@@ -6,7 +6,6 @@ public enum PlayerStatus {
     selected("Selected"),
     waiting("Waiting"),
     hasPlayed("Has played"),
-    doNotPlay("Do not play"),
     eliminated("Eliminated"),
     inactive("Inactive");
 

@@ -10,9 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import oo.Game.Game;
+import oo.Game.PhaseEnum;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -59,6 +58,10 @@ public class StartingController {
         Game.initializeAllThemes();
         Main.game = new Game();
         Main.game.loadGame("save");
-        Main.game.nextQuestion();
+        if (Main.game.getCurrentPhase() != PhaseEnum.End) {
+            Main.game.nextQuestion();
+        } else {
+            Main.sceneManager.activate("FinalScreen");
+        }
     }
 }
