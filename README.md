@@ -16,7 +16,7 @@ This project was developed as an end project for an advanced java course.
 
 #### JDK 14
 
-Download and install the JDK 14. It may be an auto-download in your IDE parameters (in SDK options). Otherwise, you can download [Open JDK 14](https://jdk.java.net/14/), store it in a known folder, and add it in the list of SDK in your IDE.
+Download and install the JDK 14. This version is **mandatory** It may be an auto-download in your IDE parameters (in SDK options). Otherwise, you can download [Open JDK 14](https://jdk.java.net/14/), store it in a known folder, and add it in the list of SDK in your IDE.
 
 #### JavaFX
 
@@ -44,4 +44,4 @@ For JavaFX, you will need to go further and follow the [tutorial](https://openjf
 
 ## Usage <a name = "usage"></a>
 
-Run the application, using the main function located in `src/Project.Main.java` as a target.
+Run the application, using the main function located in `src/Project/Main.java` as a target.
