@@ -2,6 +2,17 @@
   "questions": [
     {
       "type": "MCQ",
+      "difficulty": "3",
+      "text": "How much do you need saved today to reach $1 million if inflation grows at 3% per year?",
+      "answers": [
+        "$302,200",
+        "$510,000",
+        "$412,000"
+      ],
+      "correctAnswer": "$412,000"
+    },
+    {
+      "type": "MCQ",
       "difficulty": "2",
       "text": "What is invested capital?",
       "answers": [
@@ -14,14 +25,32 @@
     {
       "type": "ShortAnswer",
       "difficulty": "2",
-      "text": "Where is most likely findable information about a company's financial position at a point in time",
+      "text": "Where is most likely findable information about a company's financial position at a point in time?",
       "correctAnswer": "Balance statement"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "1",
+      "text": "Who is the richest person in the word?",
+      "correctAnswer": "Jeff Bezos"
     },
     {
       "type": "TrueFalse",
       "difficulty": "1",
-      "text": "In the balance sheet, provisions are always classified as long-term debts",
+      "text": "In the balance sheet, provisions are always classified as long-term debts.",
       "correctAnswer": "False"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "2",
+      "text": "Is a credit card considered a type of revolving credit?",
+      "correctAnswer": "False"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "3",
+      "text": "Lenders mortgage insurance protects the bank, not the common persons.",
+      "correctAnswer": "True"
     },
     {
       "type": "MCQ",

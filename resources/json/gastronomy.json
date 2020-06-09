@@ -3,14 +3,60 @@
     {
       "type": "ShortAnswer",
       "difficulty": "1",
-      "text": "How long does it take to boil a hard boiled egg",
+      "text": "How long does it take to boil a hard boiled egg?",
       "correctAnswer": "9 minutes"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "2",
+      "text": "Smoking meat and fish increase the risk of...",
+      "correctAnswer": "Cancer"
+    },
+    {
+      "type": "ShortAnswer",
+      "difficulty": "3",
+      "text": "What is the most stolen food?",
+      "correctAnswer": "Cheese"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "1",
+      "text": "Eating bugs increased obesity rates.",
+      "correctAnswer": "False"
     },
     {
       "type": "TrueFalse",
       "difficulty": "2",
       "text": "Do carrots help to tan?",
       "correctAnswer": "True"
+    },
+    {
+      "type": "TrueFalse",
+      "difficulty": "3",
+      "text": "Black pepper used to be a currency.",
+      "correctAnswer": "True"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "1",
+      "text": "What is the most dangerous dish to prepare?",
+      "answers": [
+        "Steak tartare",
+        "Quiche",
+        "Puffer fish"
+      ],
+      "correctAnswer": "Puffer fish"
+    },
+    {
+      "type": "MCQ",
+      "difficulty": "2",
+      "text": "The very first restaurant opened in?",
+      "answers": [
+        "London",
+        "Paris",
+        "Barcelona"
+      ],
+      "correctAnswer": "Paris"
     },
     {
       "type": "MCQ",

@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Class holding themes
@@ -35,15 +36,19 @@ public class Themes implements Serializable {
         }
     }
 
+    public void shuffle() {
+        Collections.shuffle(listThemes);
+    }
+
     public int getIndicator() {
         return indicator;
     }
 
-    public void add (String t) {
+    public void add(String t) {
         listThemes.add(t);
     }
 
-    public String remove (int index) {
+    public String remove(int index) {
         return listThemes.remove(index);
     }
 
