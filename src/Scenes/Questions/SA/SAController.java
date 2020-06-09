@@ -9,6 +9,9 @@ import javafx.scene.layout.AnchorPane;
 import oo.Questions.Question;
 import oo.Questions.ShortAnswer;
 
+/**
+ * Controller of ShortAnswer questions
+ */
 public class SAController extends Scenes.Questions.Question {
     private final Question<?> questionT;
     private final ShortAnswer<String> shortAnswer;
@@ -39,6 +42,11 @@ public class SAController extends Scenes.Questions.Question {
         submitAnswer(selectedAnswer);
     }
 
+    /**
+     * Submit answer and move to next question
+     *
+     * @param s Answer
+     */
     private void submitAnswer(String s) {
         boolean result = shortAnswer.checkAnswer(s);
 

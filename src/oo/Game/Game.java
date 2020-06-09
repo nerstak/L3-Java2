@@ -272,7 +272,7 @@ public class Game implements Serializable, Phase {
         if (this.getCurrentPlayer() != null) {
             this.getCurrentPlayer().setStatus(PlayerStatus.waiting);
         }
-        Main.sceneManager.activate("FinalScreen");
+        Main.sceneManager.activate("Scoreboard");
     }
 
     /**

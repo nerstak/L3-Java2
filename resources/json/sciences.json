@@ -1,1 +1,21 @@
-{"questions":[{"difficulty":2,"text":"What does DNA stand for?","type":"ShortAnswer","correctAnswer":"Deoxyribonucleic acid"},{"difficulty":3,"answers":["370-180","350-180","380-200 nm"],"text":"What is the domain of UV?","type":"MCQ","correctAnswer":"380-200 nm"}]}
+{
+  "questions": [
+    {
+      "difficulty": 2,
+      "text": "What does DNA stand for?",
+      "type": "ShortAnswer",
+      "correctAnswer": "Deoxyribonucleic acid"
+    },
+    {
+      "difficulty": 3,
+      "answers": [
+        "370-180",
+        "350-180",
+        "380-200 nm"
+      ],
+      "text": "What is the domain of UV?",
+      "type": "MCQ",
+      "correctAnswer": "380-200 nm"
+    }
+  ]
+}

@@ -8,11 +8,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import oo.Players.Player;
-import oo.Players.PlayerStatus;
 
 import static oo.Players.Player.PlayerStatusComparator;
 
-public class TablePlayer {
+/**
+ * Controller for the Table of Players in question's scene
+ */
+public class TablePlayerController {
     public TableColumn<Player, String> playerScore;
     @FXML
     private TableView<Player> personTable;
@@ -32,10 +34,7 @@ public class TablePlayer {
         ));
 
 
-        ObservableList<Player> observableList = FXCollections.observableArrayList(Main.game.getListPlayers().selectPlayers(PlayerStatus.waiting));
-        observableList.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.eliminated));
-        observableList.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.hasPlayed));
-        observableList.addAll(Main.game.getListPlayers().selectPlayers(PlayerStatus.selected));
+        ObservableList<Player> observableList = FXCollections.observableArrayList(Main.game.getListPlayers().getPlaying());
         observableList.sort(PlayerStatusComparator);
 
         personTable.setItems(observableList);

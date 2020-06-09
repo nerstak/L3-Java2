@@ -1,4 +1,4 @@
-package Scenes.FinalScreen;
+package Scenes.Scoreboard;
 
 import Project.Main;
 import ProjectUtilities.Utilities;
@@ -17,7 +17,7 @@ import oo.Players.Player;
 import java.util.Collections;
 import java.util.Vector;
 
-public class FinalScreen {
+public class ScoreboardController {
     private final Vector<Player> ranking;
     public TableColumn<Player, String> playerName;
     public TableColumn<Player, String> score;
@@ -28,7 +28,7 @@ public class FinalScreen {
     private TableView<Player> personTable;
 
 
-    public FinalScreen() {
+    public ScoreboardController() {
         ranking = Main.game.getListPlayers().getPlaying();
         ranking.sort(Player.PlayerRanking);
         Collections.sort(ranking, Collections.reverseOrder());

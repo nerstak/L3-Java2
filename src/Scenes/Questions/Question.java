@@ -8,6 +8,9 @@ import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 
+/**
+ * General functions for interfaces of questions
+ */
 public abstract class Question {
     /**
      * Load the side bars

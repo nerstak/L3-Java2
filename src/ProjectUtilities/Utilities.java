@@ -1,5 +1,8 @@
 package ProjectUtilities;
 
+/**
+ * Utility functions in the project
+ */
 public class Utilities {
 
     /**
@@ -16,6 +19,12 @@ public class Utilities {
         return s;
     }
 
+    /**
+     * Create a string formatted from a millis value
+     *
+     * @param millis Time in milliseconds
+     * @return String
+     */
     public static String convertTimestampToString(long millis) {
         String seconds = Utilities.lengthTime(String.valueOf((int) (millis / 1000) % 60));
         String minutes = Utilities.lengthTime(String.valueOf((int) ((millis / (1000 * 60)) % 60)));
