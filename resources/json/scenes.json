@@ -38,11 +38,11 @@
     },
     {
       "name": "Themes",
-      "path": "src/Scenes/ModifyQuestions/Themes.fxml"
+      "path": "src/Scenes/ModifyQuestions/Themes/Themes.fxml"
     },
     {
       "name": "AddQuestion",
-      "path": "src/Scenes/ModifyQuestions/AddQuestion.fxml"
+      "path": "src/Scenes/ModifyQuestions/Add/AddQuestion.fxml"
     }
   ]
 }

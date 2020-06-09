@@ -1,8 +1,11 @@
-package Scenes.ModifyQuestions;
+package Scenes.ModifyQuestions.Add;
 
 import Project.Main;
+import Scenes.ModifyQuestions.Themes.ThemesController;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import oo.Game.Difficulty;
 import oo.Questions.*;
 
