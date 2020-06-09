@@ -8,8 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.io.*;
-import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,42 +43,34 @@ public class ListQuestions implements Serializable {
             AbstractStatement<?> s = null;
 
             // Creating the Statement
-            switch (tmp.getString("type")) {
-                case "MCQ": {
-                    try {
+            try {
+                switch (tmp.getString("type")) {
+                    case "MCQ":
                         s = new MCQ(tmp);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-                case "ShortAnswer": {
-                    try {
+                        break;
+
+                    case "ShortAnswer":
                         s = new ShortAnswer(tmp);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-                case "TrueFalse": {
-                    try {
+                        break;
+
+                    case "TrueFalse":
                         s = new TrueFalse(tmp);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
+                        break;
+
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + tmp.getString("type"));
                 }
-                default:
-                    throw new IllegalStateException("Unexpected value: " + tmp.getString("type"));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             if (s != null) {
                 // Creating the question
                 try {
                     listQuestions.add(new Question(
-                            s,
-                            theme,
-                            Difficulty.fromInteger(tmp.getInt("difficulty"))
+                        s,
+                        theme,
+                        Difficulty.fromInteger(tmp.getInt("difficulty"))
                     ));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -144,7 +134,7 @@ public class ListQuestions implements Serializable {
         System.out.println(this.toString());   //When in display, "ShortAnswer" is printed as "TrueFalse", but it doesn't not seems to impact the list
     }
 
-    public class NoQuestionForDesiredPhaseException extends Exception {
+    public static class NoQuestionForDesiredPhaseException extends Exception {
         public NoQuestionForDesiredPhaseException (PhaseEnum desiredPhase) {
             super("Couldn't find a question for the phase '" + desiredPhase + "' and according difficulty in question list");
         }
@@ -176,47 +166,43 @@ public class ListQuestions implements Serializable {
     public void writeJson(String theme) {
         JSONObject object = new JSONObject();
         JSONArray questions = new JSONArray();
-        for(Question<?> question : this.listQuestions)
-        {
+        for (Question<?> question : this.listQuestions) {
             JSONObject obj = new JSONObject();
+            obj.put("text", question.getStatement().getText());
+            obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
 
-            // Difficulty
             switch (question.getDifficulty()) {
-                case easy: {
-                    obj.put("difficulty", 1); break;
-                }
-                case medium: {
-                    obj.put("difficulty", 2); break;
-                }
-                default: {
-                    obj.put("difficulty", 3); break;
-                }
+                case easy:
+                    obj.put("difficulty", 1);
+                    break;
+                case medium:
+                    obj.put("difficulty", 2);
+                    break;
+                default:
+                    obj.put("difficulty", 3);
+                    break;
             }
 
-            // Text
-            obj.put("text", question.getStatement().getText());
-
-            if(question.getStatement() instanceof MCQ)
-            {
-                obj.put("type", "MCQ");
+            if (question.getStatement() instanceof MCQ) {
                 JSONArray answers = new JSONArray();
-                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(0));
-                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(1));
-                answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(2));
                 obj.put("answers", answers);
+                obj.put("type", "MCQ");
+                for (int i = 0; i < 3; i ++) {
+                    answers.put(( (MCQ<?>) question.getStatement()).getAnswers().get(i));
+                }
             } else if (question.getStatement() instanceof ShortAnswer) {
                 obj.put("type", "ShortAnswer");
             } else if (question.getStatement() instanceof TrueFalse) {
-                obj.put("type", "ShortAnswer");
+                obj.put("type", "TrueFalse");
             }
-            obj.put("correctAnswer", question.getStatement().getCorrectAnswer());
-
             questions.put(obj);
         }
-        object.put("questions", questions);
 
+        object.put("questions", questions);
         JSONParser.writeFile(object,theme);
     }
 
-    public LinkedList<Question<?>> getList() {return this.listQuestions;}
+    public LinkedList<Question<?>> getList() {
+        return this.listQuestions;
+    }
 }
