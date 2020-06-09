@@ -5,6 +5,7 @@ import Scenes.ModifyQuestions.Themes.ThemesController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import oo.Game.Difficulty;
 import oo.Questions.*;
@@ -18,11 +19,14 @@ public class AddController {
     public TextField Text;
     public ChoiceBox difficulty;
     public ChoiceBox typeQuestion;
+    public Label LabelAnswer1;
+    public Label LabelAnswer2;
+    public Label LabelAnswer3;
 
     private String errorMsg = "";
 
     @FXML
-    private void initialize () {
+    private void initialize() {
         TextAnswer1.setEditable(false);
         TextAnswer2.setEditable(false);
         TextAnswer3.setEditable(false);
@@ -32,17 +36,10 @@ public class AddController {
             boolean itemEqualsMCQ = typeQuestion.getItems().get((Integer) number2).equals("MCQ");
 
             // if we want to add a MCQ, we have to be able to write different answers
-            TextAnswer1.setEditable(itemEqualsMCQ);
-            TextAnswer2.setEditable(itemEqualsMCQ);
-            TextAnswer3.setEditable(itemEqualsMCQ);
-            // if not, we should not be able to write in the TextFields (I reset them to prevent errors)
-            if (!itemEqualsMCQ) {
-                TextAnswer1.setText("");
-                TextAnswer2.setText("");
-                TextAnswer3.setText("");
-            }
+            setAvailability(itemEqualsMCQ);
         });
 
+        setAvailability(false);
         difficulty.getItems().addAll("", 1, 2, 3);
     }
 
@@ -66,7 +63,12 @@ public class AddController {
         TextAnswer3.setText("");
     }
 
-    private boolean checkAll () {
+    /**
+     * Check general fields
+     *
+     * @return
+     */
+    private boolean checkAll() {
         errorMsg = "";
 
         // all of this is just to have a message with all the errors to print
@@ -86,10 +88,15 @@ public class AddController {
         return false;
     }
 
-    private boolean checkType () {
+    /**
+     * Check fields depending on type of question
+     *
+     * @return Assert
+     */
+    private boolean checkType() {
         if (CorrectAnswer.getText().equals("") || typeQuestion.getValue() == null) {
             if (typeQuestion.getValue() == null)
-                errorMsg += "Which type of Question do you want?\n";
+                errorMsg += "Which type of question do you want?\n";
 
             if (CorrectAnswer.getText().equals(""))
                 errorMsg += "There is no Correct Answer\n";
@@ -112,8 +119,7 @@ public class AddController {
                     // each answer is different from the others
                     if(TextAnswer1.getText().equals(TextAnswer2.getText())
                             || TextAnswer1.getText().equals(TextAnswer3.getText())
-                            || TextAnswer2.getText().equals(TextAnswer3.getText()))
-                    {
+                            || TextAnswer2.getText().equals(TextAnswer3.getText())) {
                         errorMsg += "You can not have multiple times the same answer !!!\n";
                         return false;
                     }
@@ -140,15 +146,15 @@ public class AddController {
             case "TrueFalse":
                 // just to be sure the answer corresponds to the json file
                 Boolean answer = CorrectAnswer.getText().equalsIgnoreCase("true");
-                s = new TrueFalse(Text.getText(), answer);
+                s = new TrueFalse<>(Text.getText(), answer);
                 break;
 
             case "MCQ":
-                s = new MCQ(Text.getText(), TextAnswer1.getText(), TextAnswer2.getText(), TextAnswer3.getText(), CorrectAnswer.getText());
+                s = new MCQ<>(Text.getText(), TextAnswer1.getText(), TextAnswer2.getText(), TextAnswer3.getText(), CorrectAnswer.getText());
                 break;
 
             default:
-                s = new ShortAnswer(Text.getText(), CorrectAnswer.getText());
+                s = new ShortAnswer<>(Text.getText(), CorrectAnswer.getText());
                 break;
         }
         lq.addQuestion(new Question(s, ThemesController.getThemeSelected(), Difficulty.fromInteger((Integer) difficulty.getValue()) ));
@@ -156,12 +162,38 @@ public class AddController {
     }
 
     @FXML
-    private void missingParameters () {
+    private void missingParameters() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Error in creation of a Question");
         alert.setHeaderText("There are some points you have to modify !");
         alert.setContentText(errorMsg);
 
         alert.showAndWait();
+    }
+
+    /**
+     * Change availability of field's answers
+     *
+     * @param b Availability
+     */
+    private void setAvailability(boolean b) {
+        TextAnswer1.setVisible(b);
+        TextAnswer2.setVisible(b);
+        TextAnswer3.setVisible(b);
+
+        TextAnswer1.setDisable(!b);
+        TextAnswer2.setDisable(!b);
+        TextAnswer3.setDisable(!b);
+
+        LabelAnswer1.setVisible(b);
+        LabelAnswer2.setVisible(b);
+        LabelAnswer3.setVisible(b);
+
+        // if not, we should not be able to write in the TextFields (I reset them to prevent errors)
+        if (!b) {
+            TextAnswer1.setText("");
+            TextAnswer2.setText("");
+            TextAnswer3.setText("");
+        }
     }
 }
