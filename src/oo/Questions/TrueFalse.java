@@ -2,6 +2,11 @@ package oo.Questions;
 
 import org.json.JSONObject;
 
+/**
+ * Class for True / False
+ *
+ * @param <T> Boolean
+ */
 public class TrueFalse<T extends Boolean> extends AbstractStatement<T> {
     public TrueFalse(String text, T correctAnswer) {
         super(text, correctAnswer);

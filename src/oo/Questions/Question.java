@@ -4,6 +4,11 @@ import oo.Game.Difficulty;
 
 import java.io.Serializable;
 
+/**
+ * Class for complete Question
+ *
+ * @param <T> MCQ, ShortAnswer, TrueFalse
+ */
 public class Question<T extends AbstractStatement<T>> implements Serializable {
     private final int number;
     private final String theme;
