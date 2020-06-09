@@ -2,10 +2,19 @@ package oo.Game;
 
 /**
  * Interface for Phase
- * Not used, as we prefer centralizing everything in class Game, supported by the enum PhaseEnum
+ * Not useful, mainly useless and confusing, but asked
  */
 public interface Phase {
-    void SelectPlayers();
+    /**
+     * Select 4 random players
+     * Could be moved to the Game class
+     */
+    void selectPlayers();
 
-    void gamePhase();
+    /**
+     * Get the current phase
+     *
+     * @return Current phase
+     */
+    PhaseEnum getCurrentPhase();
 }
