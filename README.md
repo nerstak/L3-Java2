@@ -8,7 +8,9 @@
 
 ## About <a name = "about"></a>
 
-This project was developed as an end project for an advanced java course.
+This project was developed as an end project for a Java-2 course. It is composed of a graphical interface built with JavaFX with a small scene manager, and uses JSON files.
+
+It is a game based on the weakest link, where 4 players have to answer questions (Round-Robin selection) on various topics, with an increasing difficulty, until there is only one player left.
 
 ## Getting Started <a name = "getting_started"></a>
 
